@@ -18,7 +18,7 @@ class Main extends React.Component{
             window.gapi.auth2
                 .init({ // не забудьте указать ваш ключ в .env
                     client_id:
-                    process.env.REACT_APP_GOOGLE_CLIENT_ID,
+                        `1040836497320-5l8asulqvqgv0a01jp6caoesdc7a59lq.apps.googleusercontent.com`,
                 })
                 .then(_onInit, _onError)
         })
