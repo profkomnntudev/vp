@@ -126,9 +126,27 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
     //return res.send('Ничего не произошло, но ты всё равно молодец');
 })
 
-//промежуточные итоги
+//Список кандидатов
 app.get("/api/candidates", (req, res) => {
 
+    const nomination = req.query['nomination'];
+
+    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
+        (nomination ? `where nomination = '${nomination}'` : '') +
+        "order by nomination, \"countVotes\" desc")
+        .then(result => {
+            console.log(`Отпрввлено ${result['rows'].length} записей`);
+            res.send(result['rows']);
+        })
+        .catch(err => {
+            console.log('Ошибка');
+            console.error(err);
+            res.status(500).send({status: 'unknown error'});
+        })
+})
+
+//Промежуточные итоги
+app.get("/api/nominations/result", (req, res) => {
     clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
         "order by nomination, \"countVotes\" desc")
         .then(result => {
@@ -169,6 +187,8 @@ app.get("/api/nominations/winners", (req, res) => {
         })
 })
 
+//НЕ ПРОТЕСТИРОВАННО!!!!!!!!!!!!!!
+//Добавить кандидата
 app.post("/api/candidates/add", jsonParse, (req, res) =>{
 
     //Проверка на существование полей
@@ -190,9 +210,9 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
         nomination: req.body['nomination']
     }
 
-    clientPg.query('if (select * from "Candidates" where name = $1, ,' +
+    clientPg.query('if (select * from "Candidates" where name = $1 and surname = $2 and patronymic = $3 and nomination = $4,' +
         'insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4),' +
-        ')',
+        '0)',
         [cand.name, cand.surname, cand.patronymic, cand.nomination])
         .then(result => {
             console.log(`Затронуто строк: ${result.rowCount}`);
