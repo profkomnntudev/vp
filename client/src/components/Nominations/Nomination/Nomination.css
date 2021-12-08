@@ -1,0 +1,38 @@
+.nomination{
+    width: 220px;
+    height: 332px;
+
+
+    /* Dark */
+    background: #3A3E47;
+    border-radius: 12px;
+}
+
+.label{
+    position: relative;
+    width: 180px;
+    height: 37px;
+    margin: 0 auto;
+    top: 20px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: linear-gradient(273.73deg, #FBCF69 14.77%, #FFFBD0 38.38%, #FEEDB0 52.43%, #FBCF69 83.29%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.img{
+    position: relative;
+    top: 32px;
+    margin: 0 auto;
+    align-items: center;
+    width: 180px;
+    height: 197px;
+    background: linear-gradient(0.92deg, #3A3E47 2.08%, rgba(58, 62, 71, 0) 38.94%);
+}

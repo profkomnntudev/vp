@@ -1,0 +1,18 @@
+.header{
+    position: absolute;
+    height: 72px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+
+    /* Dark */
+    background: #3A3E47;
+}
+
+.logo{
+    position: absolute;
+    left: 8.47%;
+    right: 81.46%;
+    top: 22.22%;
+    bottom: 22.22%;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from "axios";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import Nominations from '../Nominations/Nominations';
+import banner from "../../static/banner.png"
+import "./Main.css"
 
 class Main extends React.Component{
 
@@ -10,25 +10,22 @@ class Main extends React.Component{
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <button onClick={this.signIn}>Log in</button>
-                    <button onClick={this.signOut}>Log out</button>
-                </header>
+                <div className="banner">
+                    <div className="name">
+                        Время первых
+                    </div>
+                    <div className="desc">
+                        ЕЖЕГОДНАЯ ПРЕМИЯ
+                    </div>
+                    <div className={"banner-img"}>
+                        <img className={"banner-img"} src={banner}></img>
+                    </div>
+                    <Nominations isStudent={true}/>
+                    <Nominations isStudent={false}/>
+                </div>
             </div>
         )
     }
 }
-//     render() {
-//         return(
-//             // <div>
-//             //     <Header/>
-//             //     <div>Main page</div>
-//             //     <button onClick={this.signIn}>Log in</button>
-//             //     <button onClick={this.signOut}>Log out</button>
-//             //     <Footer/>
-//             // </div>
-//
-//         )
-//             };
-// }
+
 export default Main;
