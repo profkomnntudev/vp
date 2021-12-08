@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     padding: 9px 97px;
-
+    border: none;
     outline: 0 none !important;
     /* Gold linear */
     background: linear-gradient(273.73deg, #FBCF69 14.77%, #FFFBD0 38.38%, #FEEDB0 52.43%, #FBCF69 83.29%);
