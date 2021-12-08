@@ -9,6 +9,7 @@
     width: 1196px;
     left: calc(50% - 1196px/2);
     top: 150px;
+    margin-bottom: 48px;
 
     font-family: Lato;
     font-style: normal;
