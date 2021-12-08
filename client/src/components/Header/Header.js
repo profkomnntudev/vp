@@ -13,6 +13,7 @@ class Header extends React.Component{
     render() {
         let buttonStyle={
             left: "calc(50% - 220px/2 + 488px)",
+            outline:"none",
             top: "16px"
         }
         return(

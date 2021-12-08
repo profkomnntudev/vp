@@ -1,7 +1,10 @@
 .link{
     position: relative;
     top: 92.5px;
-    left: -800px
+
+    width: 1196px;
+    margin-left: 1%;
+    text-align: left;
 }
 
 .intro{
@@ -23,3 +26,21 @@
 
 
 }
+.text{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 43px;
+    display: flex;
+    align-items: center;
+
+    /* Ink */
+    color: #27282B;
+    position: relative;
+    top: 112px;
+    width: 1196px;
+    left: calc(50% - 1196px/2);
+    padding-top: 72px;
+}
+

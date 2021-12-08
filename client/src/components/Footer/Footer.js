@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleLogin } from 'react-google-login';
+// import { GoogleLogin } from 'react-google-login';
 import CustomButton from '../CustomButton/CustomButton';
 import logo from "../../static/logo.svg"
 import "./Footer.css"

@@ -6,7 +6,7 @@
     align-items: center;
     padding: 9px 97px;
 
-
+    outline: 0 none !important;
     /* Gold linear */
     background: linear-gradient(273.73deg, #FBCF69 14.77%, #FFFBD0 38.38%, #FEEDB0 52.43%, #FBCF69 83.29%);
     border-radius: 8px;   
@@ -17,5 +17,9 @@
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
-    line-height: 19px
+    line-height: 19px;
+    outline: 0 none !important;
+}
+.customButton:hover{
+    background-color: #FFE7B0;
 }

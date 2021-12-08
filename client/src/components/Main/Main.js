@@ -25,9 +25,9 @@ class Main extends React.Component{
                 </div>
                 <Nominations isStudent={true}/>
                 <Nominations isStudent={false}/>
-                <Sponsors/> 
+                <Sponsors/>
                 </div>
-                
+
             </div>
         )
     }
