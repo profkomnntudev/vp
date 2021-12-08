@@ -80,7 +80,7 @@ function Vote() {
                <div className="link">
                    <a href="/">Главная</a> / {title}
                </div>
-                <div className="text" >
+                <div className="text" style={{marginLeft: "calc(50% - 1196px/2)", marginTop: "48.5px", marginBottom: "-110px" }} >
                     {title}
                 </div>
                 <div  className="intro">

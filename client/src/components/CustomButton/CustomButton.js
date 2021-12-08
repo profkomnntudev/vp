@@ -9,6 +9,6 @@ class CustomButton extends React.Component{
         </button>
         )
     }
-};
+}
 
 export default CustomButton;

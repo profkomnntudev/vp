@@ -37,10 +37,7 @@
 
     /* Ink */
     color: #27282B;
-    position: relative;
-    top: 112px;
-    width: 1196px;
-    left: calc(50% - 1196px/2);
+
     padding-top: 72px;
 }
 

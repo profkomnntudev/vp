@@ -5,19 +5,17 @@
     left: calc(50% - 1196px/2);
 }
 
-.text{
-    font-family: Lato;
+.text1{
 font-style: normal;
 font-weight: bold;
 font-size: 36px;
 line-height: 43px;
 display: flex;
 align-items: center;
-
-/* Ink */
-color: #27282B;
-
+text-align: center;
 padding-top: 72px;
+/* Ink */
+color: #27282B ;
 }
 .formBlock{
   width: 1220px;
