@@ -30,7 +30,6 @@ class Nominations extends React.Component{
 
     setNominations(){
         this.setState({used: this.props.nominants ? this.props.nominants : this.props.isStudent ? this.state.students : this.state.teachers})
-        console.log(this.state.used[0])
     }
 
     async componentWillMount() {
@@ -83,7 +82,6 @@ class Nominations extends React.Component{
         //         link: "teacherOfTheYear"
         //     },
         // ];
-        console.log(this.state.used)
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
         return (
             <div className="nominations">

@@ -3,30 +3,6 @@ import Nominations from '../Nominations/Nominations';
 import Sponsors from '../Sponsors/Sponsors';
 import "./Vote.css"
 
-class Votes extends React.Component{
-    constructor(props){
-        super(props);
-        this.choose = "";
-    }
-
-    componentDidMount() {
-    }
-
-    render() {
-        console.log(this.props)
-        return (
-            <div className="App">
-                <div>
-                   <div>
-                       <a href="/">Главная</a> / {}
-                   </div>
-                <Sponsors/> 
-                </div>
-            </div>
-        )
-    }
-}
-
 function Vote() {
     //ЕБУЧИЙ РЕАКТ РОУТЕР БЛЯТЬ ЗАСТАВИЛ ИСПОЛЬЗОВАТЬ ЕБАНЫЙ ВИНДОВ ЛОКАТИОН СУКА
     const  voteId  = window.location.pathname.split("/")[2];
