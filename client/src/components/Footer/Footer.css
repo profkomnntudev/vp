@@ -1,0 +1,13 @@
+.footer{
+    position: relative;
+    bottom: -187px;
+    height: 160px;
+    /* Dark */
+    background: #3A3E47;
+}
+
+.footerlogo{
+    position: relative;
+    top: 60px;
+    left: 121px;
+}

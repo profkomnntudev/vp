@@ -8,16 +8,16 @@ import Vote from './components/Vote/Vote'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Header/>
       <BrowserRouter> 
-      <Routes>
-        <Route path="/" element={<Main/>}/>
-        <Route path="/vote/:voteId" element={<Vote />}/>
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Main/>}/>
+          <Route path="/vote/:voteId" element={<Vote />}/>
+        </Routes>
       </BrowserRouter>
       <Footer/>
-    </div>
+    </>
   );
 }
 

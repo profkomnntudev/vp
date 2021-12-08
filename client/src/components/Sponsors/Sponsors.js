@@ -11,7 +11,7 @@ class Sponsors extends React.Component{
         const sponsors = importAll(require.context('../../static/sponsors', false, /\.(png|jpe?g|svg)$/));
         console.log(sponsors[0].default)
         return (
-            <div>
+            <div className="sponsors">
                 <div className="text">
                     Наши партнеры
                 </div>

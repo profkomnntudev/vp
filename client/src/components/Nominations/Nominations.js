@@ -9,7 +9,7 @@ class Nominations extends React.Component{
 
         let used = this.props.isStudent ? students : teachers
         return (
-            <div>
+            <div className="nominations">
                 <div className="text">
                     {this.props.isStudent ? "Номинации для студентов" : "Номинации для преподавателей"}
                 </div>

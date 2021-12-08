@@ -3,7 +3,7 @@
 }
 
 .banner{
-    position: absolute;
+    position: relative;
     width: 1196px;
     height: 277px;
     left: calc(50% - 1196px/2);

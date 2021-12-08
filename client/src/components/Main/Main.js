@@ -11,7 +11,8 @@ class Main extends React.Component{
     render() {
         return (
             <div className="App">
-                <div className="banner">
+                <div>
+                   <div className="banner">
                     <div className="name">
                         Время первых
                     </div>
@@ -21,10 +22,12 @@ class Main extends React.Component{
                     <div className={"banner-img"}>
                         <img className={"banner-img"} src={banner}></img>
                     </div>
-                    <Nominations isStudent={true}/>
-                    <Nominations isStudent={false}/>
-                    <Sponsors/>
                 </div>
+                <Nominations isStudent={true}/>
+                <Nominations isStudent={false}/>
+                <Sponsors/> 
+                </div>
+                
             </div>
         )
     }

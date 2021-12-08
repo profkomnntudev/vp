@@ -1,3 +1,10 @@
+.nominations{
+    position: relative;
+    top: 112px;
+    width: 1196px;
+    left: calc(50% - 1196px/2);
+}
+
 .text{
     font-family: Lato;
 font-style: normal;
