@@ -1,0 +1,24 @@
+.link{
+    position: relative;
+    top: 92.5px;
+    left: -800px
+}
+
+.intro{
+    position: relative;
+    width: 1196px;
+    left: calc(50% - 1196px/2);
+    top: 150px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 155%;
+    text-align: left;
+
+    /* or 25px */
+    display: flex;
+
+
+}

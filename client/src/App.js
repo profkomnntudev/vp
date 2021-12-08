@@ -10,12 +10,14 @@ function App() {
   return (
     <>
       <Header/>
-      <BrowserRouter> 
+      < BrowserRouter>
         <Routes>
           <Route path="/" element={<Main/>}/>
-          <Route path="/vote/:voteId" element={<Vote />}/>
+          <Route path="/vote/" >
+            <Route path=":voteId" element={<Vote />} />
+          </Route>
         </Routes>
-      </BrowserRouter>
+      </ BrowserRouter>
       <Footer/>
     </>
   );
