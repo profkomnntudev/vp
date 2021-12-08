@@ -29,8 +29,8 @@
     left: 122px;
     top: 95px;
 
-    /* Lato bold 36 */
-    font-family: Lato;
+    /* 'Inter', sans-serif bold 36 */
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
@@ -45,13 +45,13 @@
 
 .desc{
     position: absolute;
-    width: 170px;
+    width: 180px;
     height: 23px;
     left: 124px;
     top: 159px;
 
-    /* Lato regular 16 */
-    font-family: Lato;
+    /* 'Inter', sans-serif regular 16 */
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;

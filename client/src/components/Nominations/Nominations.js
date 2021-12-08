@@ -4,31 +4,38 @@ import "./Nominations.css"
 import axios from "axios";
 
 class Nominations extends React.Component{
-    teachers =[];
-    students = [];
+    constructor(props){
+        super(props)
+        this.state = {
+            teachers : [],
+            students : [],
+            used : [],
+        };
+    }
     async getNominations(){
         const domen = `http://localhost:3001`;
         await axios.get(domen+ "/api/nominations")
             .then(res=>{
-                console.log(res.data.length);
                 for(let i=0;i<res.data.length;i++){
-                    //console.log(res.data[i].teacher);
                     if(res.data[i]['teacher']  ===false){
-                        this.students.push(res.data[i]);
+                        this.state.students.push(res.data[i]);
                     }
                     else{
-                        this.teachers.push(res.data[i]);
+                        this.state.teachers.push(res.data[i]);
                     }
                 }
-               console.log(this.teachers);
-               console.log(this.students);
             })
 
     }
-    async componentDidMount() {
-        await this.getNominations();
-        // console.log(this.students);
-        // console.log(this.teachers);
+
+    setNominations(){
+        this.setState({used: this.props.nominants ? this.props.nominants : this.props.isStudent ? this.state.students : this.state.teachers})
+        console.log(this.state.used[0])
+    }
+
+    async componentWillMount() {
+        await this.getNominations()
+        this.setNominations()
     }
 
     render(){
@@ -76,9 +83,7 @@ class Nominations extends React.Component{
         //         link: "teacherOfTheYear"
         //     },
         // ];
-        let used = this.props.nominants ? this.props.nominants : this.props.isStudent ? this.students : this.teachers;
-        // console.log(this.students);
-        // console.log(this.teachers);
+        console.log(this.state.used)
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
         return (
             <div className="nominations">
@@ -86,7 +91,8 @@ class Nominations extends React.Component{
                     {this.props.isStudent ? "Номинации для студентов" : "Номинации для преподавателей"}
                 </div>}
                 <div className="formBlock">
-                    {used.map((item) => <div className="forms"><Nomination label={item.title || item} buttonText={buttonText} onClick={() => {
+                    {this.state.used.map((item) =>
+                        <div className="forms"><Nomination label={item.title || item} buttonText={buttonText} onClick={() => {
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
