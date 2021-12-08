@@ -104,7 +104,7 @@ app.get("/api/nominations", (req, res) => {
   //
   //   }
   // });
-  clientPg.query('select title from "Nominations"')
+  clientPg.query('select * from "Nominations"')
       .then(result => {
         return res.send(result['rows']);
       })
@@ -208,11 +208,13 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
         nomination: req.body['nomination']
     }
 
-    clientPg.query('insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4)',
+    clientPg.query('if (,' +
+        'insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4),' +
+        ')',
         [cand.name, cand.surname, cand.patronymic, cand.nomination])
         .then(result => {
             console.log(`Затронуто строк: ${result.rowCount}`);
-            console.log(`Номинация '${title}' успешно добавлена`);
+            console.log(` '${title}' успешно добавлена`);
             res.send({status: true});
         })
         .catch(err => {
