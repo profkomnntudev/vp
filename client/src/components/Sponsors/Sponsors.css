@@ -1,0 +1,24 @@
+.text{
+    font-family: Lato;
+font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 43px;
+display: flex;
+align-items: center;
+
+/* Ink */
+color: #27282B;
+
+padding-top: 72px;
+}
+
+.formBlockSponsors{
+    height: 80px;
+    padding-top: 40px;
+}
+
+.partners{
+    display: inline-block;
+    padding-right: 24px;
+}

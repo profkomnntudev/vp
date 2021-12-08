@@ -1,6 +1,7 @@
 import React from 'react';
 import Nominations from '../Nominations/Nominations';
 import banner from "../../static/banner.png"
+import Sponsors from '../Sponsors/Sponsors';
 import "./Main.css"
 
 class Main extends React.Component{
@@ -22,6 +23,7 @@ class Main extends React.Component{
                     </div>
                     <Nominations isStudent={true}/>
                     <Nominations isStudent={false}/>
+                    <Sponsors/>
                 </div>
             </div>
         )
