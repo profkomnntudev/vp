@@ -1,7 +1,7 @@
-const express = require("express");
-const path = require('path');
-const pg = require('pg');
-
+const express = require("express"),
+    path = require('path'),
+    pg = require('pg'),
+    cors = require("cors");
 
 const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
 
@@ -28,6 +28,8 @@ app.use(function (request, response, next) {
     //fs.appendFile("server.log", data + "\n", function(){});
     next();
 });
+
+app.use(cors());
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
@@ -143,7 +145,7 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
 })
 
 //промежуточные итоги
-app.get("/api/nominations/result", (req, res) => {
+app.get("/api/candidates", (req, res) => {
 
     clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
         "order by nomination, \"countVotes\" desc")
@@ -185,15 +187,54 @@ app.get("/api/nominations/winners", (req, res) => {
         })
 })
 
-//Тест логина в гугле
-app.get("/api/tests/google/sing", (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'tests', 'google', 'sing.html'));
+app.post("/api/candidates/add", jsonParse, (req, res) =>{
+
+    //Проверка на существование полей
+    if (!req.body
+        || !req.body['nomination']
+        || !req.body['name']
+        || !req.body['surname']
+        //|| !req.body['patronymic']
+    )
+    {
+        console.log('Недостаточно данных для доабвления кандидата');
+        return res.status(400).send({message: 'rejected'});
+    }
+
+    const cand = {
+        name: req.body['name'],
+        surname: req.body['surname'],
+        patronymic: req.body['patronymic'] ?? null,
+        nomination: req.body['nomination']
+    }
+
+    clientPg.query('insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4)',
+        [cand.name, cand.surname, cand.patronymic, cand.nomination])
+        .then(result => {
+            console.log(`Затронуто строк: ${result.rowCount}`);
+            console.log(`Номинация '${title}' успешно добавлена`);
+            res.send({status: true});
+        })
+        .catch(err => {
+            console.log('Ошибка');
+            if (err.code === '23505'){
+                console.error(`Пользователь ${cand.name} ${cand.surname} уже существует`);
+                return res.status(401).send({status: 'already exist'});
+            }
+            console.error(err);
+            return res.status(500).send({status: 'unknown error'});
+        })
 })
 
-//Редирект для авторизированных пользователей с гугла
-app.get("/user/login", (req, res) => {
-    res.send("Вы авторизованы");
-})
+// //Тест логина в гугле
+// app.get("/api/tests/google/sing", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'tests', 'google', 'sing.html'));
+// })
+
+// //Редирект для авторизированных пользователей с гугла
+// app.get("/user/login", (req, res) => {
+//     res.send("Вы авторизованы");
+// })
 
 //Основной сайт
 app.get('*', (req, res) => {
