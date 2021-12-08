@@ -83,28 +83,10 @@ app.get("/api/tables", (req, res) => {
 
 //Получить массив номинаций
 app.get("/api/nominations", (req, res) => {
-  // clientPg.connect(err => {
-  //   if (err) {
-  //     console.error('Не удалось установить соединение с базой данных');
-  //     res.status(500).send('Error');
-  //   }
-  //   else {
-  //     clientPg.query('select title from "Nominations"')
-  //         .then(result => {
-  //           return res.send(result['rows']);
-  //         })
-  //         .catch(err => {
-  //           console.error(err);
-  //         })
-  //         // .finally(()=>{
-  //         //   console.log('соединение закрыто');
-  //         //   clientPg.end();
-  //         // })
-  //
-  //
-  //   }
-  // });
-  clientPg.query('select * from "Nominations"')
+
+    const isTeacher = req.query['nominant'] ? (req.query['nominant'] === 'teacher' ? true : (req.query['nominant'] === 'student' ? false : undefined)) : undefined;
+
+    clientPg.query('select * from "Nominations"' + (isTeacher !== undefined ? (isTeacher ? 'where teacher = true' : 'where teacher = false') : ''))
       .then(result => {
         return res.send(result['rows']);
       })
@@ -208,7 +190,7 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
         nomination: req.body['nomination']
     }
 
-    clientPg.query('if (,' +
+    clientPg.query('if (select * from "Candidates" where name = $1, ,' +
         'insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4),' +
         ')',
         [cand.name, cand.surname, cand.patronymic, cand.nomination])
