@@ -5,6 +5,10 @@ import axios from "axios";
 import Modal from "../Modal/Modal"
 
 class Nominations extends React.Component{
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+      };
+
     constructor(props){
         super(props)
         this.state = {
@@ -36,6 +40,21 @@ class Nominations extends React.Component{
     async componentWillMount() {
         await this.getNominations()
         this.setNominations()
+    }
+
+    voting = (nomination) => {
+        const { cookies } = this.props;
+        token = cookies.get('id_token')
+        const domen = `http://localhost:3001`;
+        axios.post(domen, {
+            idToken: token,
+            nomination: nomination,
+            nomineeID: 3
+        })
+            .catch(err=>{console.log(err)})
+        // let content = [];
+        // content.push(<Modal/>);
+   return <Modal/>
     }
 
     render(){
@@ -127,6 +146,9 @@ function voting(nomination) {
     // content.push(<Modal/>);
    return <Modal/>
 }
+
 function ModalWindow() {
+
 return <Modal/>
+
 }

@@ -4,8 +4,14 @@ import CustomButton from '../CustomButton/CustomButton';
 import logo from "../../static/logo.svg"
 import "./Header.css"
 import axios from "axios";
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class Header extends React.Component {
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+      };
+
     constructor(props){
         super(props);
         this.state = {
@@ -14,15 +20,18 @@ class Header extends React.Component {
     }
 
     responseGoogle = (response) => {
-        console.log(response);
-        console.log(response.profileObj)
-        //добавляем куки access_token
-        //посылаем на бек запрос с acess_token
+        const { cookies } = this.props;
+        //добавляем куки id_token
+        cookies.set('id_token', response.id_token, { path: '/' });
+        
+        //посылаем на бек запрос с googleId
         this.setState({'loggedIn': true})
     }
 
-    logout = (response) => {
+    logout = () => {
+        const { cookies } = this.props;
         //чистим куки от access_token
+        cookies.set('id_token', "", { path: '/' });
         this.setState({'loggedIn': false})
     }
 
@@ -63,4 +72,4 @@ class Header extends React.Component {
     };
 }
 
-export default Header;
+export default withCookies(Header);
