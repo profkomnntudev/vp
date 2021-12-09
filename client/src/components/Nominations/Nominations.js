@@ -3,6 +3,8 @@ import Nomination from "./Nomination/Nomination";
 import "./Nominations.css"
 import axios from "axios";
 import Modal from "../Modal/Modal"
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class Nominations extends React.Component{
     static propTypes = {
@@ -44,7 +46,7 @@ class Nominations extends React.Component{
 
     voting = (nomination) => {
         const { cookies } = this.props;
-        token = cookies.get('id_token')
+        const token = cookies.get('id_token')
         const domen = `http://localhost:3001`;
         axios.post(domen, {
             idToken: token,
@@ -130,8 +132,9 @@ class Nominations extends React.Component{
     }
 };
 
-export default Nominations;
+export default withCookies(Nominations);
 
+//перенес в класс
 function voting(nomination) {
 
     //alert("голос+1");

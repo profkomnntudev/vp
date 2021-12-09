@@ -20,9 +20,10 @@ class Header extends React.Component {
     }
 
     responseGoogle = (response) => {
+        console.log(response)
         const { cookies } = this.props;
         //добавляем куки id_token
-        cookies.set('id_token', response.id_token, { path: '/' });
+        cookies.set('id_token', response.tokenId, { path: '/' });
         
         //посылаем на бек запрос с googleId
         this.setState({'loggedIn': true})
@@ -30,8 +31,10 @@ class Header extends React.Component {
 
     logout = () => {
         const { cookies } = this.props;
-        //чистим куки от access_token
-        cookies.set('id_token', "", { path: '/' });
+        //чистим куки
+        cookies.remove('id_token');
+        cookies.remove('G_ENABLED_IDPS');
+        cookies.remove('G_AUTHUSER_H');
         this.setState({'loggedIn': false})
     }
 
