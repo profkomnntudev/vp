@@ -2,6 +2,7 @@ import React from "react";
 import Nomination from "./Nomination/Nomination";
 import "./Nominations.css"
 import axios from "axios";
+import Modal from "../Modal/Modal"
 
 class Nominations extends React.Component{
     constructor(props){
@@ -82,6 +83,9 @@ class Nominations extends React.Component{
         //         link: "teacherOfTheYear"
         //     },
         // ];
+        let used = this.props.nominants ? this.props.nominants : this.props.isStudent ? this.students : this.teachers;
+        // console.log(this.students);
+        // console.log(this.teachers);
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
         return (
             <div className="nominations">
@@ -94,10 +98,11 @@ class Nominations extends React.Component{
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
-                            //here voting function
-                            alert("ТУТ НОМИНАНТЫ НИКУДА НЕ ПЕРЕЙДЕШЬ")
+                            ModalWindow();
+                            // voting(item.link);
+
                         }
-                    }}/></div>)}
+                        }}/></div>)}
                 </div>
                 
             </div>
@@ -108,6 +113,20 @@ class Nominations extends React.Component{
 
 export default Nominations;
 
-function Voting() {
+function voting(nomination) {
 
+    //alert("голос+1");
+    const domen = `http://localhost:3001`;
+    axios.post(domen, {
+        googleID: 1,
+        nomination: nomination,
+        nomineeID: 3
+    })
+        .catch(err=>{console.log(err)})
+    // let content = [];
+    // content.push(<Modal/>);
+   return <Modal/>
+}
+function ModalWindow() {
+return <Modal/>
 }
