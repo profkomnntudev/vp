@@ -24,8 +24,7 @@ class Header extends React.Component {
         const { cookies } = this.props;
         //добавляем куки id_token
         cookies.set('id_token', response.tokenId, { path: '/' });
-        
-        //посылаем на бек запрос с googleId
+        //посылаем на бек запрос с response.googleId
         this.setState({'loggedIn': true})
     }
 
