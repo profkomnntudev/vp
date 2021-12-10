@@ -2,7 +2,7 @@ import React from "react";
 import CustomButton from "../../CustomButton/CustomButton";
 import "./Nomination.css"
 import sample from "../../../static/sampleDude.png"
-import Modal from "../../Modal/Modal";
+// import Modal from "../../Modal/Modal";
 
 class Nomination extends React.Component{
     render(){
@@ -26,6 +26,6 @@ class Nomination extends React.Component{
 };
 
 export default Nomination;
-function ModalWindow() {
-    return <Modal/>
-}
+// function ModalWindow() {
+//     return <Modal/>
+// }

@@ -2,9 +2,11 @@ import React from "react";
 import Nomination from "./Nomination/Nomination";
 import "./Nominations.css"
 import axios from "axios";
-import Modal from "../Modal/Modal"
+ import Modal from "../Modal/Modal"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import ReactModal from "react-modal";
+import CustomButton from "../CustomButton/CustomButton";
 
 class Nominations extends React.Component{
     static propTypes = {
@@ -51,12 +53,12 @@ class Nominations extends React.Component{
         axios.post(domen, {
             idToken: token,
             nomination: nomination,
-            nomineeID: 3
+            nomineeID: 1
         })
             .catch(err=>{console.log(err)})
         // let content = [];
         // content.push(<Modal/>);
-   return <Modal/>
+        return <Modal/>
     }
 
     render(){
@@ -119,9 +121,9 @@ class Nominations extends React.Component{
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
-                            ModalWindow();
-                            // voting(item.link);
-
+                            //this.ModalWindow(this.handleOpenModal);
+                            //this.voting(item.title);
+                            alert("+1")
                         }
                         }}/></div>)}
                 </div>
@@ -135,23 +137,17 @@ class Nominations extends React.Component{
 export default withCookies(Nominations);
 
 //перенес в класс
-function voting(nomination) {
-
-    //alert("голос+1");
-    const domen = `http://localhost:3001`;
-    axios.post(domen, {
-        googleID: 1,
-        nomination: nomination,
-        nomineeID: 3
-    })
-        .catch(err=>{console.log(err)})
-    // let content = [];
-    // content.push(<Modal/>);
-   return <Modal/>
-}
-
-function ModalWindow() {
-
-return <Modal/>
-
-}
+// function voting(nomination) {
+//
+//     //alert("голос+1");
+//     const domen = `http://localhost:3001`;
+//     axios.post(domen, {
+//         googleID: 1,
+//         nomination: nomination,
+//         nomineeID: 3
+//     })
+//         .catch(err=>{console.log(err)})
+//     // let content = [];
+//     // content.push(<Modal/>);
+//    return <Modal/>
+// }
