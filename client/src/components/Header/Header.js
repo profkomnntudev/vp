@@ -6,12 +6,12 @@ import "./Header.css"
 import axios from "axios";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import {domen} from "../../App"
 
 class Header extends React.Component {
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
       };
-
     constructor(props){
         super(props);
         this.state = {
@@ -25,6 +25,11 @@ class Header extends React.Component {
         //добавляем куки id_token
         cookies.set('id_token', response.tokenId, { path: '/' });
         //посылаем на бек запрос с response.googleId
+        axios.post(domen, {params:{
+            googleID: response.googleId,
+            }})
+            .then(res=>console.log(res))
+            .catch(err=>console.error(err))
         this.setState({'loggedIn': true})
     }
 

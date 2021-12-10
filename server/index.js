@@ -145,6 +145,18 @@ app.get("/api/candidates", (req, res) => {
         })
 })
 
+//Пользователь вошёл в систему
+app.post("/api/login", jsonParse, (req, res)=>{
+
+    const googleId = req.body['googleID'];
+
+    if (!googleId) {
+        return res.status(404).send('Rejected');
+    }
+
+    // clientPg.query()
+})
+
 //Промежуточные итоги
 app.get("/api/nominations/result", (req, res) => {
     clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +

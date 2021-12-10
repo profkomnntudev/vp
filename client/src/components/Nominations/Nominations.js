@@ -7,6 +7,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import ReactModal from "react-modal";
 import CustomButton from "../CustomButton/CustomButton";
+import {domen} from "../../App"
 
 class Nominations extends React.Component{
     static propTypes = {
@@ -48,8 +49,7 @@ class Nominations extends React.Component{
 
     voting = (nomination) => {
         const { cookies } = this.props;
-        const token = cookies.get('id_token')
-        const domen = `http://localhost:3001`;
+        const token = cookies.get('id_token');
         axios.post(domen, {
             idToken: token,
             nomination: nomination,
