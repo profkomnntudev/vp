@@ -187,7 +187,6 @@ app.get("/api/nominations/winners", (req, res) => {
         })
 })
 
-//НЕ ПРОТЕСТИРОВАННО!!!!!!!!!!!!!!
 //Добавить кандидата
 app.post("/api/candidates/add", jsonParse, (req, res) =>{
 
@@ -210,18 +209,30 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
         nomination: req.body['nomination']
     }
 
-    clientPg.query('if (select * from "Candidates" where name = $1 and surname = $2 and patronymic = $3 and nomination = $4,' +
-        'insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4),' +
-        '0)',
+    // const sql = 'select if (select * from "Candidates" where name = $1 and surname = $2 and patronymic = $3 and nomination = $4,' +
+    //     'insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4),' +
+    //     '0)';
+
+
+
+    clientPg.query('select * from "Candidates" where name = $1 and surname = $2 and patronymic = $3 and nomination = $4',
         [cand.name, cand.surname, cand.patronymic, cand.nomination])
         .then(result => {
+            //console.log(result);
+            if (result.rowCount === 0 ){
+                return clientPg.query('insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4)',
+                    [cand.name, cand.surname, cand.patronymic, cand.nomination])
+            }
+            else throw 'candidate was exist';
+        })
+        .then(result => {
             console.log(`Затронуто строк: ${result.rowCount}`);
-            console.log(` '${title}' успешно добавлена`);
+            console.log(`Пользователь ${cand.name} ${cand.surname} успешно добавлен`);
             res.send({status: true});
         })
         .catch(err => {
             console.log('Ошибка');
-            if (err.code === '23505'){
+            if (err.code === '23505' || err === 'candidate was exist'){
                 console.error(`Пользователь ${cand.name} ${cand.surname} уже существует`);
                 return res.status(401).send({status: 'already exist'});
             }
