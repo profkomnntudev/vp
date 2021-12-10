@@ -1,7 +1,9 @@
 const express = require("express"),
     path = require('path'),
     pg = require('pg'),
-    cors = require("cors");
+    cors = require("cors"),
+    axios = require("axios").default;
+
 
 const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
 
@@ -146,16 +148,137 @@ app.get("/api/candidates", (req, res) => {
 })
 
 //Пользователь вошёл в систему
-app.post("/api/login", jsonParse, (req, res)=>{
+app.post("/api/voted/login", jsonParse, (req, res)=>{
 
     const googleId = req.body['googleID'];
 
+    //console.log(req.body);
+
     if (!googleId) {
-        return res.status(404).send('Rejected');
+        console.log('Отсутствуют необходимые параметры');
+        return res.status(400).send('Rejected');
     }
 
-    // clientPg.query()
+    clientPg.query('insert into "Voted" (' +
+        'id, ' +
+        'nomination1, ' +
+        'nomination2, ' +
+        'nomination3, ' +
+        'nomination4, ' +
+        'nomination5, ' +
+        'nomination6, ' +
+        'nomination7, ' +
+        'nomination8, ' +
+        'nomination9, ' +
+        'nomination10) values ($1, $2, $2, $2, $2, $2, $2, $2, $2, $2, $2)',
+        [googleId, null])
+        .then(result => {
+            console.log(`Затронуто строк: ${result.rowCount}`);
+            console.log(`Избиратель '${googleId}' успешно добавлен`);
+            return res.status(201).send({status: 'created'});
+        })
+        .catch(err => {
+            if (err.code === '23505'){
+                console.log(`Избиратель '${googleId}' вошёл в систему`);
+                return res.status(200).send({status: 'exist'});
+            }
+            console.log('Ошибка');
+            console.error(err);
+            return res.status(500).send({status: 'unknown error'});
+        })
 })
+
+//Учёт голоса
+app.post("/api/voted/getVote", jsonParse, (req, res) => {
+
+    const token = req.body['idToken'],
+        nomId = req.body['nomineeID'],
+        nomination = req.body['nomination'];
+        //voterId = req.body['voterId'];
+
+    if (!token || !nomId || !nomination)
+    {
+        console.log('Отсутствуют необходимые параметры');
+        return res.status(400).send('Rejected');
+    }
+
+    const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
+    let voterId;
+
+    axios.get(googleCheck, {
+        params: {
+            id_token: token
+        }
+    })
+        .then(result => {
+            //console.log(result.data);
+            //console.log(result.status);
+            //console.log(result);
+            // if (voterId !== result.data['sub']){
+            //     throw 'token not equal sub';
+            // }
+            //res.send('ok');
+            if (!result || !result.data || !result.data['sub']){
+                throw new Error('Непонятно почему, но googleId не пришёл');
+            }
+            voterId = result.data['sub'];
+            return clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId]);
+        })
+        .then(src => {
+            //console.log(src);
+            if (src['rows'].length === 0){
+                throw new Error('Не залогинен');
+            }
+            const nom = searchNomination(nomination);
+            //console.log(nom);
+            return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
+                [nomId, voterId]);
+        })
+        .then(updt => {
+            //console.log(`Затронуто строк: ${updt.rowCount}`);
+            console.log(`Голос успешно учтён`);
+            res.status(201).send({status: true});
+        })
+        .catch(err => {
+            if (err && err.response && err.response.status && err.response.status === 400){
+                console.error('Неверный токен');
+                return res.status(404).send({status: 'invalid token'});
+            }
+            // if (err === 'token not equal sub'){
+            //     console.error('Токен пользователя не принадлежит ему');
+            //     return res.status(405).send({status: 'invalid token or id'});
+            // }
+            console.log('Ошибка');
+            console.error(err);
+            res.status(500).send({status: 'unknown error'});
+        })
+
+    //res.send('ok');
+})
+
+//Перечисление номинаций
+//Определяется для БД
+const Nominations = Object.freeze({
+    'nomination1': 'Активист года',
+    'nomination2': 'Лучший лектор',
+    'nomination3': 'Политехник года',
+    'nomination4': 'Преподаватель года',
+    'nomination5': 'Самый изобретательный',
+    'nomination6': 'Самый инновационный',
+    'nomination7': 'Самый позитивный',
+    'nomination8': 'Самый стильный',
+    'nomination9': 'Самый умный',
+    'nomination10': 'Спортсмен года',
+})
+
+//Поиск номинации
+function searchNomination(nomination){
+    for (let key in Nominations){
+        if (Nominations.hasOwnProperty(key) && Nominations[key] === nomination){
+            return key;
+        }
+    }
+}
 
 //Промежуточные итоги
 app.get("/api/nominations/result", (req, res) => {

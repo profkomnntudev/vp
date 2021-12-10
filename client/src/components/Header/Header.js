@@ -25,9 +25,9 @@ class Header extends React.Component {
         //добавляем куки id_token
         cookies.set('id_token', response.tokenId, { path: '/' });
         //посылаем на бек запрос с response.googleId
-        axios.post(domen, {params:{
+        axios.post(domen + "/api/voted/login", {
             googleID: response.googleId,
-            }})
+            })
             .then(res=>console.log(res))
             .catch(err=>console.error(err))
         this.setState({'loggedIn': true})
