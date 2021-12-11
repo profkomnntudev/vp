@@ -133,7 +133,7 @@ app.get("/api/candidates", (req, res) => {
 
     const nomination = req.query['nomination'];
     //console.log(nomination)
-    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id, about from \"Candidates\"\n" +
+    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id, about, img from \"Candidates\"\n" +
         (nomination ? `where nomination = '${nomination}'` : '') +
         "order by nomination, \"countVotes\" desc")
         .then(result => {
@@ -185,6 +185,28 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
             console.log('Ошибка');
             console.error(err);
             return res.status(500).send({status: 'unknown error'});
+        })
+})
+
+app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
+    const token = req.body['id_token'],
+        nomination = searchNomination(req.body['nomination']);
+
+    if (nomination === undefined || !token){
+        console.error('Неверная номинация или токен');
+        return res.status(400).send({status: 'rejected'});
+    }
+
+    const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
+    let voterId;
+
+    axios.get(googleCheck, {
+        params: {
+            id_token: token
+        }
+    })
+        .then(result => {
+
         })
 })
 
@@ -267,6 +289,13 @@ const Nominations = Object.freeze({
     'nomination10': 'Спортсмен года',
 })
 
+// //Пересичление категорий
+// const Categories = Object.freeze({
+//     'teacher': 'true',
+//     'student': 'false',
+//
+// })
+
 //Поиск номинации
 function searchNomination(nomination){
     for (let key in Nominations){
@@ -274,6 +303,7 @@ function searchNomination(nomination){
             return key;
         }
     }
+    return undefined;
 }
 
 //Промежуточные итоги
