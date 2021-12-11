@@ -42,11 +42,13 @@
     align-items: center;
     justify-content: space-around;
     background: gray;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-img{
+.img{
     position: relative;
-    top: 32px;
+    top: 26px;
     margin: 0 auto;
     align-items: center;
     width: 180px;
@@ -54,7 +56,7 @@ img{
     object-fit: scale-down;
 }
 
-img:after {
+.img:after {
 	content: "";
 
 	display: block;    
