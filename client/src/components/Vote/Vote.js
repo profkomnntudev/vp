@@ -75,6 +75,7 @@ class Votee extends React.Component{
         this.setState({title: tempTitle});
         const domen = `http://localhost:3001`;
         let nominee = [];
+        let photos = [];
         await  axios.get(domen + "/api/candidates", {
             params:{
                 nomination: noms
@@ -85,7 +86,7 @@ class Votee extends React.Component{
                 for(let i=0;i<res.data.length;i++)
                 {
                     //candidate = {name:res.data[i].name, surname:res.data[i].surname,patronymic: res.data[i].patronymic};
-                    nominee.push({'name': res.data[i].name+" "+res.data[i].surname, 'id': res.data[i].id});
+                    nominee.push({'name': res.data[i].name+" "+res.data[i].surname, 'id': res.data[i].id, 'img': res.data[i].img});
                 }
                 this.setState({nominants: nominee});
             })

@@ -1,7 +1,7 @@
 import React from 'react';
 // import { GoogleLogin } from 'react-google-login';
 import CustomButton from '../CustomButton/CustomButton';
-import logo from "../../static/logo.svg"
+import logo from "/logo.svg"
 import "./Footer.css"
 
 class Footer extends React.Component{

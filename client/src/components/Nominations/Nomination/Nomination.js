@@ -3,7 +3,7 @@ import CustomButton from "../../CustomButton/CustomButton";
 import HistoryModal from "../../historyModal/historyModal";
 import { withCookies, Cookies } from 'react-cookie';
 import "./Nomination.css"
-import sample from "../../../static/sampleDude.png"
+import sample from "/sampleDude.png"
 
 
 class Nomination extends React.Component{

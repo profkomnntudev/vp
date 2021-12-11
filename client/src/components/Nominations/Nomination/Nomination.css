@@ -51,6 +51,7 @@ img{
     align-items: center;
     width: 180px;
     height: 197px;
+    object-fit: scale-down;
 }
 
 img:after {

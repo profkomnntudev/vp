@@ -1,7 +1,7 @@
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
 import CustomButton from '../CustomButton/CustomButton';
-import logo from "../../static/logo.svg"
+import logo from "/logo.svg"
 import "./Header.css"
 import axios from "axios";
 import { instanceOf } from 'prop-types';
