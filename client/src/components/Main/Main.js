@@ -22,9 +22,9 @@ class Main extends React.Component{
                         <img className={"banner-img"} src={window.location.origin + '/banner.png'}></img>
                     </div>
                 </div>
-                <Nominations isStudent={true}/>
-                <Nominations isTeacher={true}/>
-                <Nominations />
+                <Nominations isStudent={true} nominants={false}/>
+                <Nominations isTeacher={true} nominants={false}/>
+                <Nominations nominants={false}/>
                 <Sponsors/>
                 </div>
 
