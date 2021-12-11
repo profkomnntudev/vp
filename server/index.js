@@ -206,9 +206,44 @@ app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
         }
     })
         .then(result => {
-
+            if (!result || !result.data || !result.data['sub']){
+                throw new Error('Непонятно почему, но googleId не пришёл');
+            }
+            voterId = result.data['sub'];
+            return clientPg.query(`select ${nomination} as nom from "Voted" where id = $1`, [voterId])
         })
+        .then(src => {
+            //console.log(src['rows']);
+            const id = src['rows'].length === 0 ? null : src['rows'][0]['nom'];
+            //console.log(id);
+            res.send({id: id});
+        })
+        // .catch(err => {
+        //     if (err && err.response && err.response.status && err.response.status === 400){
+        //         console.error('Неверный токен');
+        //         return res.status(404).send({status: 'invalid token'});
+        //     }
+        //     console.log('Ошибка');
+        //     console.error(err);
+        //     res.status(500).send({status: 'unknown error'});
+        // })
+        .catch(err => catchGoogle(err, res))
 })
+
+//Обработка ошибок при гугл запросе
+function catchGoogle(err, res){
+    if (err && err.response && err.response.status && err.response.status === 400){
+        console.error('Неверный токен');
+        return res.status(404).send({status: 'invalid token'});
+    }
+    // if (err === 'token not equal sub'){
+    //     console.error('Токен пользователя не принадлежит ему');
+    //     return res.status(405).send({status: 'invalid token or id'});
+    // }
+    console.log('Ошибка');
+    console.error(err);
+    res.status(500).send({status: 'unknown error'});
+}
 
 //Учёт голоса
 app.post("/api/voted/getVote", jsonParse, (req, res) => {
@@ -258,17 +293,7 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
             res.status(201).send({status: true});
         })
         .catch(err => {
-            if (err && err.response && err.response.status && err.response.status === 400){
-                console.error('Неверный токен');
-                return res.status(404).send({status: 'invalid token'});
-            }
-            // if (err === 'token not equal sub'){
-            //     console.error('Токен пользователя не принадлежит ему');
-            //     return res.status(405).send({status: 'invalid token or id'});
-            // }
-            console.log('Ошибка');
-            console.error(err);
-            res.status(500).send({status: 'unknown error'});
+            catchGoogle(err, res);
         })
 
     //res.send('ok');
