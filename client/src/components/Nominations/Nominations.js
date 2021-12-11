@@ -85,13 +85,14 @@ class Nominations extends React.Component{
     checkVoting = (nomination) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
-        axios.put(domen+"/api/voted/checkNomination", {
+        console.log(token);
+        if(token){axios.put(domen+"/api/voted/checkNomination", {
             idToken: token,
             nomination: nomination
         })
         .then((res)=>{
             this.setState({'votedFor': res.data.id})
-        })
+        })}
 
     }
 
