@@ -282,8 +282,23 @@ function searchNomination(nomination){
 
 //Промежуточные итоги
 app.get("/api/nominations/result", (req, res) => {
-    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
-        "order by nomination, \"countVotes\" desc")
+    //Старый запрос
+    // clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
+    //     "order by nomination, \"countVotes\" desc")
+    clientPg.query('select nomination, name, surname, patronymic, (select count(*) from "Voted" as vot where ' +
+        '   vot.nomination1 = can.id' +
+        '   or vot.nomination1 = can.id' +
+        '   or vot.nomination2 = can.id' +
+        '   or vot.nomination3 = can.id' +
+        '   or vot.nomination4 = can.id' +
+        '   or vot.nomination5 = can.id' +
+        '   or vot.nomination6 = can.id' +
+        '   or vot.nomination7 = can.id' +
+        '   or vot.nomination8 = can.id' +
+        '   or vot.nomination9 = can.id' +
+        '   or vot.nomination10 = can.id' +
+        '  ) as "countVotes" from "Candidates" as can ' +
+        'order by nomination, "countVotes" desc')
         .then(result => {
             console.log(`Отпрввлено ${result['rows'].length} записей`);
             res.send(result['rows']);
