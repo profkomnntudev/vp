@@ -132,8 +132,8 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
 app.get("/api/candidates", (req, res) => {
 
     const nomination = req.query['nomination'];
-
-    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
+    console.log(nomination)
+    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id from \"Candidates\"\n" +
         (nomination ? `where nomination = '${nomination}'` : '') +
         "order by nomination, \"countVotes\" desc")
         .then(result => {
@@ -211,13 +211,6 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
         }
     })
         .then(result => {
-            //console.log(result.data);
-            //console.log(result.status);
-            //console.log(result);
-            // if (voterId !== result.data['sub']){
-            //     throw 'token not equal sub';
-            // }
-            //res.send('ok');
             if (!result || !result.data || !result.data['sub']){
                 throw new Error('Непонятно почему, но googleId не пришёл');
             }
@@ -230,12 +223,15 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
                 throw new Error('Не залогинен');
             }
             const nom = searchNomination(nomination);
-            //console.log(nom);
+            console.log(nom);
             return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
                 [nomId, voterId]);
         })
         .then(updt => {
-            //console.log(`Затронуто строк: ${updt.rowCount}`);
+            
+        })
+        .then(updt => {
+            console.log(updt['rows'])
             console.log(`Голос успешно учтён`);
             res.status(201).send({status: true});
         })

@@ -1,0 +1,40 @@
+.voteText {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 150%;
+    
+    /* or 30px */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    /* Ink */
+    color: #27282B;
+    margin-top: 48px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-around;
+}
+
+.voteName {
+    font-family: Inter;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 150%;
+
+/* identical to box height, or 30px */
+display: flex;
+justify-content: space-around;
+align-items: center;
+text-align: center;
+
+/* Ink */
+color: #27282B;
+margin-top: 24px;
+margin-bottom: 40px;
+margin-left: auto;
+    margin-right: auto;
+}

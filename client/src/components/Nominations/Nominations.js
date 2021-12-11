@@ -9,6 +9,7 @@ import ReactModal from "react-modal";
 import CustomButton from "../CustomButton/CustomButton";
 import {domen} from "../../App"
 
+
 class Nominations extends React.Component{
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
@@ -20,6 +21,11 @@ class Nominations extends React.Component{
             teachers : [],
             students : [],
             used : [],
+            showModal: false,
+            choosedItem: {
+                title: '',
+                id: 0
+            }
         };
     }
     async getNominations(){
@@ -47,68 +53,40 @@ class Nominations extends React.Component{
         this.setNominations()
     }
 
-    voting = (nomination) => {
+    voting = (nomination, id) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
-        axios.post(domen, {
+        console.log(domen+"/api/candidates")
+        axios.post(domen+"/api/voted/getVote", {
             idToken: token,
             nomination: nomination,
-            nomineeID: 1
+            nomineeID: id
         })
             .catch(err=>{console.log(err)})
-        // let content = [];
-        // content.push(<Modal/>);
-        return <Modal/>
+    }
+
+    handleOpenModal = () => {
+        this.setState({'showModal': true})
+    }
+
+    handleCancelModal = () => {
+        this.setState({'choosedItem': {
+            title: '',
+            id: 0
+        }})
+        this.setState({'showModal': false})
+    }
+
+    handleCloseModal = () => {
+        this.voting(this.props.nomination, this.state.choosedItem.id)
+        this.setState({'showModal': false})
+    }
+
+    handleSetItem = (item) => {
+        this.setState({'choosedItem': item})
     }
 
     render(){
-        // let students = [
-        //         {
-        //             title: "АКТИВИСТ ГОДА",
-        //             link: "activeOfTheYear"
-        //         },
-        //         {
-        //             title: "ПОЛИТЕХНИК ГОДА",
-        //             link: "politehnikOfTheYear"
-        //         },
-        //         {
-        //         title: "САМЫЙ УМНЫЙ",
-        //         link: "theMostKind"
-        //     },
-        //     {
-        //         title: "САМЫЙ ИЗОБРЕТАТЕЛЬНЫЙ",
-        //         link: "theMostInventive"
-        //     },
-        //     {
-        //         title: "СТУДЕНТ ГОДА",
-        //         link: "sportsmanOfTheYear"
-        //     }
-        // ];
-        // let teachers = [
-        //     {
-        //         title: "САМЫЙ СТИЛЬНЫЙ",
-        //         link: "theMostStylish"
-        //     },
-        //     {
-        //         title: "ЛУЧШИЙ ЛЕКТОР",
-        //         link: "bestLector"
-        //     },
-        //     {
-        //         title: "САМЫЙ ПОЗИТИВНЫЙ",
-        //         link: "theMostPositive"
-        //     },
-        //     {
-        //         title: "САМЫЙ ИННОВАЦИОННЫЙ",
-        //         link: "theMostInnovative"
-        //     },
-        //     {
-        //         title: "ПРЕПОДАВАТЕЛЬ ГОДА",
-        //         link: "teacherOfTheYear"
-        //     },
-        // ];
-        let used = this.props.nominants ? this.props.nominants : this.props.isStudent ? this.students : this.teachers;
-        // console.log(this.students);
-        // console.log(this.teachers);
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
         return (
             <div className="nominations">
@@ -117,17 +95,20 @@ class Nominations extends React.Component{
                 </div>}
                 <div className="formBlock">
                     {this.state.used.map((item) =>
-                        <div className="forms"><Nomination label={item.title || item} buttonText={buttonText} onClick={() => {
+                        <div className="forms">
+                            <Nomination label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} onClick={() => {
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
-                            //this.ModalWindow(this.handleOpenModal);
-                            //this.voting(item.title);
-                            alert("+1")
+                            this.handleSetItem(item)
+                            this.handleOpenModal()
                         }
-                        }}/></div>)}
+                        }}/>
+                        
+                        </div>
+                        )}
                 </div>
-                
+                <Modal votingFunc={this.voting} showModal={this.state.showModal} close={this.handleCloseModal} cancel={this.handleCancelModal} name={this.state.choosedItem.name}/>
             </div>
             
             )
@@ -135,19 +116,3 @@ class Nominations extends React.Component{
 };
 
 export default withCookies(Nominations);
-
-//перенес в класс
-// function voting(nomination) {
-//
-//     //alert("голос+1");
-//     const domen = `http://localhost:3001`;
-//     axios.post(domen, {
-//         googleID: 1,
-//         nomination: nomination,
-//         nomineeID: 3
-//     })
-//         .catch(err=>{console.log(err)})
-//     // let content = [];
-//     // content.push(<Modal/>);
-//    return <Modal/>
-// }

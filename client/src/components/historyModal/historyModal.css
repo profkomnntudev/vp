@@ -1,0 +1,39 @@
+.modalName {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 150%;
+
+    /* identical to box height, or 30px */
+    display: flex;
+    align-items: center;
+
+    /* Ink */
+    color: #27282B;
+    height: 30px;
+    margin-top: 48px;
+}
+
+.modalStory {
+    font-family: Montserrat;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 155%;
+
+/* or 25px */
+display: flex;
+align-items: center;
+
+/* Ink */
+color: #27282B;
+height: 200px;
+margin-top: 24px;
+}
+
+.modalStoryButton {
+    width: 220px;
+    align-items: center;
+    margin: 0 auto;
+}
