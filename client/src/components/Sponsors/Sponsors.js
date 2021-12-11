@@ -8,7 +8,8 @@ function importAll(r) {
 
 class Sponsors extends React.Component{
     render(){
-        const sponsors = importAll(require.context('../../static/sponsors', false, /\.(png|jpe?g|svg)$/));
+        //const sponsors = importAll(require.context('../../static/sponsors', false, /\.(png|jpe?g|svg)$/));
+        const sponsors = []
         return (
             <div className="sponsors">
                 <div className="text">

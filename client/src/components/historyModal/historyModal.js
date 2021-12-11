@@ -32,7 +32,7 @@ class HistoryModal extends React.Component{
                 }}>
                     <div className="modalName">ОБО МНЕ</div>
                     <div className="modalStory">{this.props.story}</div>
-                    <div className="modalStoryButton"><CustomButton onClick={this.props.close} style={buttonStyle} text={'Назад'}></CustomButton></div>
+                    <div className="modalStoryButton"><CustomButton onClick={this.props.close} style={buttonStyle} text={'Назад'} disabled={""}></CustomButton></div>
                 </ReactModal>
             </div>
         );

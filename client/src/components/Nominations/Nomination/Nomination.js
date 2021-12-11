@@ -23,6 +23,8 @@ class Nomination extends React.Component{
     }
 
     render(){
+        const { cookies } = this.props;
+        const token = cookies.get('id_token');
         const buttonStyleAbout = {
             outline: "none",
             width: "180px",
@@ -36,17 +38,17 @@ class Nomination extends React.Component{
             width: "180px",
             heigth: "40px",
         }
-
-        const additionalClassName = this.props.isNonActive ? "Disabled" : ""
+        const additionalClassName = this.props.isNonActive || !token ? "Disabled" : ""
+        console.log(this.props.story)
         return(
             <div className={"nomination"}>
                 <span className={"label"+additionalClassName}>{this.props.label}</span>
                 <div className="img">
-                    <img  src={this.props.img || window.location.origin + '/sampleDude.png'}/>
+                    <img className={"img"} src={this.props.img || window.location.origin + '/sampleDude.png'}/>
                 </div>
                 {this.props.isNominant && <CustomButton text={"Об участнике"} disabled={additionalClassName} onClick={this.handleOpenModal} style={buttonStyleAbout}/>}
                 <CustomButton text={this.props.buttonText} disabled={additionalClassName} onClick={this.props.onClick} style={buttonStyle}/>
-                <HistoryModal name={this.props.name || 'sample name'} story={this.props.story || 'sample story'} showModal={this.state.showModal} close={this.handleCloseModal} />
+                <HistoryModal name={"Обо мне"} story={this.props.story || ""} showModal={this.state.showModal} close={this.handleCloseModal} />
                 {this.props.isNonActive && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
             </div>
         )

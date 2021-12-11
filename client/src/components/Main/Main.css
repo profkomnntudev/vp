@@ -18,8 +18,9 @@
     max-width: 100% !important;
     height: auto;
     width: auto;
-    margin-left: 26%;
+    margin-left: 26.2%;
     overflow: hidden;
+    top: auto;
 }
 
 .name{
