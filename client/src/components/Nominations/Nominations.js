@@ -8,6 +8,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import ReactModal from "react-modal";
 import CustomButton from "../CustomButton/CustomButton";
 import {domen} from "../../App"
+import Zorina from "../../static/nominants/Zorina.jpg"
 
 
 class Nominations extends React.Component{
@@ -57,6 +58,7 @@ class Nominations extends React.Component{
     voting = (nomination, id) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
+        console.log(domen+"/api/candidates")
         axios.post(domen+"/api/voted/getVote", {
             idToken: token,
             nomination: nomination,

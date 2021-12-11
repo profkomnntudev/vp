@@ -2,6 +2,7 @@
     width: 220px;
     height: 332px;
 
+
     /* Dark */
     background: #3A3E47;
     border-radius: 12px;
@@ -43,7 +44,7 @@
     background: gray;
 }
 
-.img{
+img{
     position: relative;
     top: 32px;
     margin: 0 auto;
@@ -52,18 +53,26 @@
     height: 197px;
 }
 
-.img:after {
+img:after {
 	content: "";
+
 	display: block;    
+
 	width: 100%;
+
 	height: 100%;    
+
 	position: absolute;
+
 	top: 0;      
+
 	left: 0;   
+
 	background: transparent;
+
 	background: linear-gradient(0.92deg, #3A3E47 2.08%, rgba(58, 62, 71, 0) 38.94%);
+
 	opacity: 0.8;
-}
 
 .nonActive{
     font-family: Montserrat;
