@@ -105,7 +105,6 @@ class Nominations extends React.Component{
 
     render(){
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
-        const way= window.location.origin + '/nominants/';
         return (
             <div className="nominations">
                 {!this.props.nominants && <div className="text">
@@ -114,7 +113,7 @@ class Nominations extends React.Component{
                 <div className="formBlock">
                     {this.state.used.map((item) =>
                         <div className="forms">
-                            <Nomination img={window.location.origin + '/nominants/'+this.props.nominants.img} label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={item.id === this.state.votedFor} isActiveButton={this.state.votedFor === 0} onClick={() => {
+                            <Nomination img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={item.id === this.state.votedFor} isActiveButton={this.state.votedFor === 0} onClick={() => {
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
