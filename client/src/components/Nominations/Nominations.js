@@ -20,6 +20,7 @@ class Nominations extends React.Component{
         this.state = {
             teachers : [],
             students : [],
+            events:[],
             used : [],
             votedFor: null,
             showModal: false,
@@ -31,23 +32,31 @@ class Nominations extends React.Component{
     }
     async getNominations(){
         const domen = `http://localhost:3001`;
+        let stud=[];
+        let teach=[];
+        let event=[];
         await axios.get(domen+ "/api/nominations")
             .then(res=>{
+                console.log(res);
                 for(let i=0;i<res.data.length;i++){
-                    if(res.data[i]['teacher']  ===false){
-                        this.state.students.push(res.data[i]);
+                    if(res.data[i]['teacher'] ==='student'){
+                        stud.push(res.data[i]);
                     }
-                    else{
-                        this.state.teachers.push(res.data[i]);
+                    if(res.data[i]['teacher'] ==='teacher'){
+                        teach.push(res.data[i]);
+                    }
+                    if(res.data[i]['teacher'] ==='event'){
+                        event.push(res.data[i]);
                     }
                 }
+                this.setState({students:stud, teachers: teach, events: event});
                 //console.log(this.state.students);
             })
 
     }
 
     setNominations(){
-        this.setState({used: this.props.nominants ? this.props.nominants : this.props.isStudent ? this.state.students : this.state.teachers})
+        this.setState({used: this.props.nominants ? this.props.nominants : this.props.isEvent ? this.state.events : this.props.isStudent? this.state.students: this.state.teachers})
     }
 
     async componentWillMount() {
