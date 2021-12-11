@@ -312,6 +312,7 @@ const Nominations = Object.freeze({
     'nomination8': 'Самый стильный',
     'nomination9': 'Самый умный',
     'nomination10': 'Спортсмен года',
+    'nomination11': 'Лучшее мероприятие',
 })
 
 // //Пересичление категорий
