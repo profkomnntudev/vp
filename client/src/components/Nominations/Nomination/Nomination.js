@@ -11,7 +11,7 @@ class Nomination extends React.Component{
         super(props)
         this.state = {
             showModal: false,
-            buttonDisabled = false
+            buttonDisabled: false
         }
     }
 
