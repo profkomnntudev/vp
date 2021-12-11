@@ -63,6 +63,7 @@ class Nominations extends React.Component{
             nomineeID: id
         })
             .catch(err=>{console.log(err)})
+        alert('Ваш голос успешно учтён!');
     }
 
     handleOpenModal = () => {
@@ -118,7 +119,7 @@ class Nominations extends React.Component{
                             this.handleOpenModal()
                         }
                         }}/>
-                        
+
                         </div>
                         )}
                 </div>
