@@ -56,7 +56,7 @@ class Header extends React.Component {
                 <GoogleLogin
                     clientId="1040836497320-5l8asulqvqgv0a01jp6caoesdc7a59lq.apps.googleusercontent.com"
                     render={renderProps => (
-                        <CustomButton text={"Войти"} disabled={renderProps.disabled} onClick={renderProps.onClick}
+                        <CustomButton text={"Войти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
                                       style={buttonStyle}/>
                     )}
                     onSuccess={this.responseGoogle}
@@ -68,7 +68,7 @@ class Header extends React.Component {
                     clientId="1040836497320-5l8asulqvqgv0a01jp6caoesdc7a59lq.apps.googleusercontent.com"
                     buttonText="Logout"
                     render={renderProps => (
-                        <CustomButton text={"Выйти"} disabled={renderProps.disabled} onClick={renderProps.onClick}
+                        <CustomButton text={"Выйти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
                                       style={buttonStyle}/>
                     )}
                     onLogoutSuccess={this.logout}
