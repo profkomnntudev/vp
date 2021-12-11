@@ -27,20 +27,33 @@
     -webkit-text-fill-color: transparent;
 }
 
+.labelDisabled{
+    position: relative;
+    width: 180px;
+    height: 37px;
+    margin: 0 auto;
+    top: 20px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: gray;
+}
+
 img{
     position: relative;
     top: 32px;
     margin: 0 auto;
     align-items: center;
-    max-width: 180px;
-    max-height: 197px;
-    object-fit: fill;
     width: 180px;
-
+    height: 197px;
 }
 
 img:after {
-
 	content: "";
 
 	display: block;    
@@ -61,4 +74,14 @@ img:after {
 
 	opacity: 0.8;
 
+.nonActive{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+
+    color: #3AA76D;
 }
