@@ -71,6 +71,10 @@ class Votee extends React.Component{
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
+            case "bestEvent":
+                tempTitle = "Лучшее мероприятие"
+                noms=tempTitle;
+                break
         }
         this.setState({title: tempTitle});
         const domen = `http://localhost:3001`;

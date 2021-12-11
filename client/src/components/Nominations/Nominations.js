@@ -49,7 +49,7 @@ class Nominations extends React.Component{
                     }
                 }
                 this.setState({students:stud, teachers: teach, events: event});
-                //console.log(this.state.students);
+                console.log(this.state);
             })
 
     }
