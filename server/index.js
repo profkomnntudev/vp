@@ -132,8 +132,8 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
 app.get("/api/candidates", (req, res) => {
 
     const nomination = req.query['nomination'];
-    console.log(nomination)
-    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id from \"Candidates\"\n" +
+    //console.log(nomination)
+    clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id, about from \"Candidates\"\n" +
         (nomination ? `where nomination = '${nomination}'` : '') +
         "order by nomination, \"countVotes\" desc")
         .then(result => {
@@ -223,15 +223,15 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
                 throw new Error('Не залогинен');
             }
             const nom = searchNomination(nomination);
-            console.log(nom);
+            //console.log(nom);
             return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
                 [nomId, voterId]);
         })
-        .then(updt => {
-            
-        })
-        .then(updt => {
-            console.log(updt['rows'])
+        // .then(updt => {
+        //
+        // })
+        .then(updateResult => {
+            console.log(`Затронуто строк: ${updateResult['rowCount']}`)
             console.log(`Голос успешно учтён`);
             res.status(201).send({status: true});
         })
