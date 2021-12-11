@@ -3,7 +3,6 @@ import CustomButton from "../../CustomButton/CustomButton";
 import HistoryModal from "../../historyModal/historyModal";
 import { withCookies, Cookies } from 'react-cookie';
 import "./Nomination.css"
-import sample from "/sampleDude.png"
 
 
 class Nomination extends React.Component{
@@ -43,7 +42,7 @@ class Nomination extends React.Component{
             <div className={"nomination"}>
                 <span className={"label"+additionalClassName}>{this.props.label}</span>
                 <div className="img">
-                    <img  src={this.props.img || sample}/>
+                    <img  src={this.props.img || window.location.origin + '/sampleDude.png'}/>
                 </div>
                 {this.props.isNominant && <CustomButton text={"Об участнике"} disabled={additionalClassName} onClick={this.handleOpenModal} style={buttonStyleAbout}/>}
                 <CustomButton text={this.props.buttonText} disabled={additionalClassName} onClick={this.props.onClick} style={buttonStyle}/>

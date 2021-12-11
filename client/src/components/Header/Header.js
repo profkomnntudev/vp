@@ -1,7 +1,6 @@
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
 import CustomButton from '../CustomButton/CustomButton';
-import logo from "/logo.svg"
 import "./Header.css"
 import axios from "axios";
 import { instanceOf } from 'prop-types';
@@ -51,7 +50,7 @@ class Header extends React.Component {
         }
         return (
             <div className="header">
-                <img src={logo} className={"logo"}/>
+                <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 {!this.state.loggedIn ? 
                 <GoogleLogin
                     clientId="1040836497320-5l8asulqvqgv0a01jp6caoesdc7a59lq.apps.googleusercontent.com"
