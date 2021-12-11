@@ -37,7 +37,6 @@ class Nominations extends React.Component{
         let event=[];
         await axios.get(domen+ "/api/nominations")
             .then(res=>{
-                console.log(res);
                 for(let i=0;i<res.data.length;i++){
                     if(res.data[i]['teacher'] ==='student'){
                         stud.push(res.data[i]);
@@ -62,19 +61,21 @@ class Nominations extends React.Component{
     async componentWillMount() {
         await this.getNominations()
         this.setNominations()
+        if (this.props.nominants) {
+            this.checkVoting(this.props.nomination)
+        }
     }
 
     voting = (nomination, id) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
-        console.log(domen+"/api/candidates")
         axios.post(domen+"/api/voted/getVote", {
             idToken: token,
             nomination: nomination,
             nomineeID: id
         })
             .catch(err=>{console.log(err)})
-        alert('Ваш голос успешно учтён!');
+        this.checkVoting(nomination)
     }
 
     handleOpenModal = () => {
@@ -84,12 +85,12 @@ class Nominations extends React.Component{
     checkVoting = (nomination) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
-        axios.get(domen+"", {
+        axios.put(domen+"/api/voted/checkNomination", {
             idToken: token,
             nomination: nomination
         })
         .then((res)=>{
-            this.setState({'votedFor': res.id})
+            this.setState({'votedFor': res.data.id})
         })
 
     }
@@ -122,7 +123,7 @@ class Nominations extends React.Component{
                 <div className="formBlock">
                     {this.state.used.map((item) =>
                         <div className="forms">
-                            <Nomination story={item.story ? item.story : ""} img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={item.id === this.state.votedFor} isActiveButton={this.state.votedFor === 0} onClick={() => {
+                            <Nomination story={item.story ? item.story : ""} img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={!!this.state.votedFor} isActiveButton={this.state.votedFor === 0} choosen={item.id===this.state.votedFor} onClick={() => {
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
@@ -135,6 +136,7 @@ class Nominations extends React.Component{
                         )}
                 </div>
                 <Modal votingFunc={this.voting} showModal={this.state.showModal} close={this.handleCloseModal} cancel={this.handleCancelModal} name={this.state.choosedItem.name}/>
+                {this.state.votedFor && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
             </div>
             
             )

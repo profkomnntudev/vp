@@ -189,8 +189,10 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
 })
 
 app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
-    const token = req.body['id_token'],
+    const token = req.body['idToken'],
         nomination = searchNomination(req.body['nomination']);
+    console.log(token)
+    console.log(nomination)
 
     if (nomination === undefined || !token){
         console.error('Неверная номинация или токен');

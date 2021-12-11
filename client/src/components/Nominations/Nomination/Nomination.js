@@ -39,17 +39,16 @@ class Nomination extends React.Component{
             heigth: "40px",
         }
         const additionalClassName = this.props.isNonActive || !token ? "Disabled" : ""
-        console.log(this.props.story)
+        const additionalClassNameTitle = !this.props.choosen && (this.props.isNonActive || !token) ? "Disabled" : ""
         return(
             <div className={"nomination"}>
-                <span className={"label"+additionalClassName}>{this.props.label}</span>
+                <span className={"label"+additionalClassNameTitle}>{this.props.label}</span>
                 <div className="img">
                     <img className={"img"} src={this.props.img || window.location.origin + '/sampleDude.png'}/>
                 </div>
-                {this.props.isNominant && <CustomButton text={"Об участнике"} disabled={additionalClassName} onClick={this.handleOpenModal} style={buttonStyleAbout}/>}
+                {this.props.isNominant && <CustomButton text={"Об участнике"} disabled={""} onClick={this.handleOpenModal} style={buttonStyleAbout}/>}
                 <CustomButton text={this.props.buttonText} disabled={additionalClassName} onClick={this.props.onClick} style={buttonStyle}/>
                 <HistoryModal name={"Обо мне"} story={this.props.story || ""} showModal={this.state.showModal} close={this.handleCloseModal} />
-                {this.props.isNonActive && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
             </div>
         )
     }
