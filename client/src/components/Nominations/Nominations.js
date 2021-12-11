@@ -8,6 +8,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import ReactModal from "react-modal";
 import CustomButton from "../CustomButton/CustomButton";
 import {domen} from "../../App"
+import Zorina from "../../static/nominants/Zorina.jpg"
 
 
 class Nominations extends React.Component{
@@ -97,7 +98,7 @@ class Nominations extends React.Component{
                 <div className="formBlock">
                     {this.state.used.map((item) =>
                         <div className="forms">
-                            <Nomination label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} onClick={() => {
+                            <Nomination label={item.title || item.name} buttonText={buttonText} img={Zorina} isNominant={!!this.props.nominants} onClick={() => {
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {
