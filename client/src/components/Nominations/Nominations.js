@@ -21,6 +21,7 @@ class Nominations extends React.Component{
             teachers : [],
             students : [],
             used : [],
+            votedFor: null,
             showModal: false,
             choosedItem: {
                 title: '',
@@ -56,7 +57,6 @@ class Nominations extends React.Component{
     voting = (nomination, id) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
-        console.log(domen+"/api/candidates")
         axios.post(domen+"/api/voted/getVote", {
             idToken: token,
             nomination: nomination,
@@ -69,6 +69,19 @@ class Nominations extends React.Component{
         this.setState({'showModal': true})
     }
 
+    checkVoting = (nomination) => {
+        const { cookies } = this.props;
+        const token = cookies.get('id_token');
+        axios.get(domen+"", {
+            idToken: token,
+            nomination: nomination
+        })
+        .then((res)=>{
+            this.setState({'votedFor': res.id})
+        })
+
+    }
+
     handleCancelModal = () => {
         this.setState({'choosedItem': {
             title: '',
@@ -79,6 +92,7 @@ class Nominations extends React.Component{
 
     handleCloseModal = () => {
         this.voting(this.props.nomination, this.state.choosedItem.id)
+        this.checkVoting(this.props.nomination)
         this.setState({'showModal': false})
     }
 
@@ -91,12 +105,12 @@ class Nominations extends React.Component{
         return (
             <div className="nominations">
                 {!this.props.nominants && <div className="text">
-                    {this.props.isStudent ? "Номинации для студентов" : "Номинации для преподавателей"}
+                    {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}
                 <div className="formBlock">
                     {this.state.used.map((item) =>
                         <div className="forms">
-                            <Nomination label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} onClick={() => {
+                            <Nomination label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={item.id === this.state.votedFor} isActiveButton={this.state.votedFor === 0} onClick={() => {
                         if (!this.props.nominants){
                             window.location.href = "/vote/"+item.link
                         } else {

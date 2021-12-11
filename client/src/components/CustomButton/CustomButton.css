@@ -12,6 +12,29 @@
     border-radius: 8px;   
 }
 
+.customButtonDisabled{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 97px;
+    border: none;
+    outline: 0 none !important;
+    /* Gold linear */
+    background: gray;
+    border-radius: 8px;   
+}
+
+.customButtonDisabled div{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    outline: 0 none !important;
+}
+
 .customButton div{
     font-family: 'Inter', sans-serif;
     font-style: normal;
