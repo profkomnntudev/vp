@@ -48,6 +48,7 @@ class Header extends React.Component {
             outline: "none",
             top: "16px"
         }
+        console.log(window.location.origin)
         return (
             <div className="header">
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
