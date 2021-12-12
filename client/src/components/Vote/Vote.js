@@ -103,7 +103,7 @@ class Votee extends React.Component{
 
     }
     render() {
-        const isTabletOrMobile = device.type == 'mobile'
+        const isTabletOrMobile = false
         return (
              <div className="App">
                {!isTabletOrMobile && <div>

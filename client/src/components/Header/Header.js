@@ -57,7 +57,7 @@ class Header extends React.Component {
             outline: "none",
             top: "16px"
         }
-        const isTabletOrMobile = device.type == 'mobile'
+        const isTabletOrMobile = false
         return (
             <div className="header">
                 {!isTabletOrMobile && <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>

@@ -9,7 +9,7 @@ class Main extends React.Component{
     componentDidMount() {
     }
     render() {
-        const isTabletOrMobile = device.type == 'mobile'
+        const isTabletOrMobile = false
         return (
             <div className="App">
                 {isTabletOrMobile && <div className={'text'}>Сайт отображается только на полной версии с компьютера.</div>}

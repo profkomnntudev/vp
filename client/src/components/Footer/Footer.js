@@ -4,7 +4,7 @@ import device from "current-device"
 
 class Footer extends React.Component{
     render() {
-        const isTabletOrMobile = device.type == 'mobile'
+        const isTabletOrMobile = false
         return(<>
             {!isTabletOrMobile &&<div className="footer">
                 <img src={window.location.origin + '/logo.svg'} className={"footerlogo"}/>
