@@ -31,7 +31,7 @@ class Nominations extends React.Component{
         };
     }
     async getNominations(){
-        const domen = `http://localhost:3001`;
+        const domen = `https://vremyapervih.herokuapp.com`;
         let stud=[];
         let teach=[];
         let event=[];
