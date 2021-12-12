@@ -54,7 +54,7 @@ class Header extends React.Component {
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 {!this.state.loggedIn ? 
                 <GoogleLogin
-                    clientId="1040836497320-5l8asulqvqgv0a01jp6caoesdc7a59lq.apps.googleusercontent.com"
+                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
                     render={renderProps => (
                         <CustomButton text={"Войти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
                                       style={buttonStyle}/>
@@ -65,7 +65,7 @@ class Header extends React.Component {
                 /> 
                 :
                 <GoogleLogout
-                    clientId="1040836497320-5l8asulqvqgv0a01jp6caoesdc7a59lq.apps.googleusercontent.com"
+                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
                     buttonText="Logout"
                     render={renderProps => (
                         <CustomButton text={"Выйти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
