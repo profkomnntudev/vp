@@ -77,7 +77,7 @@ class Votee extends React.Component{
                 break
         }
         this.setState({title: tempTitle});
-        const domen = `http://localhost:3001`;
+        const domen = `https://vremyapervih.herokuapp.com`;
         let nominee = [];
         let photos = [];
         await  axios.get(domen + "/api/candidates", {
