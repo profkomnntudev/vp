@@ -12,7 +12,7 @@ class Main extends React.Component{
         const isTabletOrMobile = device.type == 'mobile'
         return (
             <div className="App">
-                {isTabletOrMobile && <div className={''}>Сайт отображается только на полной версии с компьютера.</div>}
+                {isTabletOrMobile && <div className={'text'}>Сайт отображается только на полной версии с компьютера.</div>}
                 {!isTabletOrMobile && <div>
                    <div className="banner">
                     <div className="name">
