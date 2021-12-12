@@ -2,15 +2,18 @@ import React from 'react';
 import Nominations from '../Nominations/Nominations';
 import Sponsors from '../Sponsors/Sponsors';
 import "./Main.css"
+import { useMediaQuery } from 'react-responsive'
 
 class Main extends React.Component{
 
     componentDidMount() {
     }
     render() {
+        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
         return (
             <div className="App">
-                <div>
+                {isTabletOrMobile && <>Сайт отображается только на полной версии с компьютера.</>}
+                {!isTabletOrMobile && <div>
                    <div className="banner">
                     <div className="name">
                         Время первых
@@ -27,7 +30,7 @@ class Main extends React.Component{
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
                 <Sponsors/>
-                </div>
+                </div>}
 
             </div>
         )

@@ -1,13 +1,15 @@
 import React from 'react';
-// import { GoogleLogin } from 'react-google-login';
 import "./Footer.css"
+import { useMediaQuery } from 'react-responsive'
 
 class Footer extends React.Component{
     render() {
-        return(
-            <div className="footer">
+        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+        return(<>
+            {!isTabletOrMobile &&<div className="footer">
                 <img src={window.location.origin + '/logo.svg'} className={"footerlogo"}/>
-            </div>
+            </div>}
+            </>
         )
     };
 }

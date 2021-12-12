@@ -6,6 +6,7 @@ import axios from "axios";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {domen} from "../../App"
+import { useMediaQuery } from 'react-responsive'
 
 class Header extends React.Component {
     static propTypes = {
@@ -28,7 +29,6 @@ class Header extends React.Component {
     }
 
     responseGoogle = (response) => {
-        console.log(response)
         const { cookies } = this.props;
         //добавляем куки id_token
         cookies.set('id_token', response.tokenId, { path: '/' });
@@ -57,10 +57,10 @@ class Header extends React.Component {
             outline: "none",
             top: "16px"
         }
-        console.log(window.location.origin)
+        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
         return (
             <div className="header">
-                <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
+                {!isTabletOrMobile && <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 {!this.state.loggedIn ? 
                 <GoogleLogin
                     clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
@@ -82,7 +82,7 @@ class Header extends React.Component {
                     )}
                     onLogoutSuccess={this.logout}
                     >
-                </GoogleLogout>}
+                </GoogleLogout>}</>}
             </div>
         )
     };

@@ -5,6 +5,7 @@ import "./Vote.css"
 import axios from "axios";
 import { withCookies, Cookies } from 'react-cookie';
 import {instanceOf} from "prop-types";
+import { useMediaQuery } from 'react-responsive'
 
 class Votee extends React.Component{
     static propTypes = {
@@ -102,9 +103,10 @@ class Votee extends React.Component{
 
     }
     render() {
+        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
         return (
-            <div className="App">
-                <div>
+             <div className="App">
+               {!isTabletOrMobile && <div>
                     <div className="link">
                         <a href="/">Главная</a> / {this.state.title}
                     </div>
@@ -116,7 +118,7 @@ class Votee extends React.Component{
                     </div>
                     <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
                     <Sponsors/>
-                </div>
+                </div>}
             </div>
         )
     }
