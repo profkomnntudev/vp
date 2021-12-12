@@ -21,7 +21,6 @@ class Header extends React.Component {
     componentDidMount() {
         const { cookies } = this.props;
         //добавляем куки id_token
-        cookies.set('id_token', response.tokenId, { path: '/' });
         const token = cookies.get('id_token');
         if(token){
             this.setState({'loggedIn': true})
