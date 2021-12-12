@@ -6,7 +6,7 @@ import axios from "axios";
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {domen} from "../../App"
-import { useMediaQuery } from 'react-responsive'
+import device from "current-device"
 
 class Header extends React.Component {
     static propTypes = {
@@ -57,7 +57,7 @@ class Header extends React.Component {
             outline: "none",
             top: "16px"
         }
-        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+        const isTabletOrMobile = device.type == 'mobile'
         return (
             <div className="header">
                 {!isTabletOrMobile && <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>

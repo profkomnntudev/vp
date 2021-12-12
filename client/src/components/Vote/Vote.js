@@ -5,7 +5,7 @@ import "./Vote.css"
 import axios from "axios";
 import { withCookies, Cookies } from 'react-cookie';
 import {instanceOf} from "prop-types";
-import { useMediaQuery } from 'react-responsive'
+import device from "current-device"
 
 class Votee extends React.Component{
     static propTypes = {
@@ -103,7 +103,7 @@ class Votee extends React.Component{
 
     }
     render() {
-        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+        const isTabletOrMobile = device.type == 'mobile'
         return (
              <div className="App">
                {!isTabletOrMobile && <div>

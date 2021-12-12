@@ -2,17 +2,17 @@ import React from 'react';
 import Nominations from '../Nominations/Nominations';
 import Sponsors from '../Sponsors/Sponsors';
 import "./Main.css"
-import { useMediaQuery } from 'react-responsive'
+import device from "current-device"
 
 class Main extends React.Component{
 
     componentDidMount() {
     }
     render() {
-        const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+        const isTabletOrMobile = device.type == 'mobile'
         return (
             <div className="App">
-                {isTabletOrMobile && <>Сайт отображается только на полной версии с компьютера.</>}
+                {isTabletOrMobile && <div className={''}>Сайт отображается только на полной версии с компьютера.</div>}
                 {!isTabletOrMobile && <div>
                    <div className="banner">
                     <div className="name">
