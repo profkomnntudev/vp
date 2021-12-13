@@ -57,10 +57,17 @@ class Header extends React.Component {
             outline: "none",
             top: "16px"
         }
-        const isTabletOrMobile = false
+        let buttonStyleMobile = {
+            left: "50%",
+            outline: "none",
+            top: "16px",
+            width: "122px",
+            heigth: "20px"
+        }
+        const isTabletOrMobile = device.type == 'mobile'
         return (
             <div className="header">
-                {!isTabletOrMobile && <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>
+                {!isTabletOrMobile ? <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 {!this.state.loggedIn ? 
                 <GoogleLogin
                     clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
@@ -79,6 +86,30 @@ class Header extends React.Component {
                     render={renderProps => (
                         <CustomButton text={"Выйти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
                                       style={buttonStyle}/>
+                    )}
+                    onLogoutSuccess={this.logout}
+                    >
+                </GoogleLogout>}</>
+                :
+                <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>
+                {!this.state.loggedIn ? 
+                <GoogleLogin
+                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
+                    render={renderProps => (
+                        <CustomButton text={"Войти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
+                                      style={buttonStyleMobile}/>
+                    )}
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                /> 
+                :
+                <GoogleLogout
+                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
+                    buttonText="Logout"
+                    render={renderProps => (
+                        <CustomButton text={"Выйти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
+                                      style={buttonStyleMobile}/>
                     )}
                     onLogoutSuccess={this.logout}
                     >
