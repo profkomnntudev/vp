@@ -103,10 +103,10 @@ class Votee extends React.Component{
 
     }
     render() {
-        const isTabletOrMobile = false
+        const isTabletOrMobile = device.type == 'mobile'
         return (
              <div className="App">
-               {!isTabletOrMobile && <div>
+               {!isTabletOrMobile ? <div>
                     <div className="link">
                         <a href="/">Главная</a> / {this.state.title}
                     </div>
@@ -118,7 +118,20 @@ class Votee extends React.Component{
                     </div>
                     <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
                     <Sponsors/>
-                </div>}
+                </div> : 
+                <div>
+                <div className="link">
+                    <a href="/">Главная</a> / {this.state.title}
+                </div>
+                <div className="text" style={{marginLeft: "calc(50%)", marginTop: "48.5px", marginBottom: "-110px" }} >
+                    {this.state.title}
+                </div>
+                <div  className="intro">
+                    Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
+                </div>
+                <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
+                <Sponsors/>
+            </div>}
             </div>
         )
     }
