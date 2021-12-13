@@ -9,11 +9,10 @@ class Main extends React.Component{
     componentDidMount() {
     }
     render() {
-        const isTabletOrMobile = false
+        const isTabletOrMobile = device.type == 'mobile'
         return (
             <div className="App">
-                {isTabletOrMobile && <div className={'text'}>Сайт отображается только на полной версии с компьютера.</div>}
-                {!isTabletOrMobile && <div>
+                {!isTabletOrMobile ? <div>
                    <div className="banner">
                     <div className="name">
                         Время первых
@@ -30,7 +29,21 @@ class Main extends React.Component{
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
                 <Sponsors/>
-                </div>}
+                </div> : 
+                <div>
+                    <div className="name">
+                        Время первых
+                    </div>
+                    <div className="desc">
+                        ЕЖЕГОДНАЯ ПРЕМИЯ
+                    </div>
+                    <div className="text" style={{fontSize:"20px",marginLeft:"50%", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
+                <Nominations isStudent={true} nominants={false}/>
+                <Nominations isTeacher={true} nominants={false}/>
+                <Nominations isEvent={true} nominants={false}/>
+                <Sponsors/>
+                </div>
+                }
 
             </div>
         )

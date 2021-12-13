@@ -115,9 +115,11 @@ class Nominations extends React.Component{
     }
 
     render(){
+        const isTabletOrMobile = device.type == 'mobile'
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
         return (
-            <div className="nominations">
+            <>
+            {!isTabletOrMobile ? <div className="nominations">
                 {!this.props.nominants && <div className="text">
                     {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}
@@ -138,8 +140,29 @@ class Nominations extends React.Component{
                 </div>
                 <Modal votingFunc={this.voting} showModal={this.state.showModal} close={this.handleCloseModal} cancel={this.handleCancelModal} name={this.state.choosedItem.name}/>
                 {this.state.votedFor && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
-            </div>
-            
+            </div> : <div className="nominations">
+                {!this.props.nominants && <div className="text">
+                    {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
+                </div>}
+                <div>
+                    {this.state.used.map((item) =>
+                        <div className="formsMobile">
+                            <Nomination story={item.story ? item.story : ""} img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={!!this.state.votedFor} isActiveButton={this.state.votedFor === 0} choosen={item.id===this.state.votedFor} onClick={() => {
+                        if (!this.props.nominants){
+                            window.location.href = "/vote/"+item.link
+                        } else {
+                            this.handleSetItem(item)
+                            this.handleOpenModal()
+                        }
+                        }}/>
+
+                        </div>
+                        )}
+                </div>
+                <Modal votingFunc={this.voting} showModal={this.state.showModal} close={this.handleCloseModal} cancel={this.handleCancelModal} name={this.state.choosedItem.name}/>
+                {this.state.votedFor && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
+            </div>}
+            </>
             )
     }
 };
