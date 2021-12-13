@@ -40,7 +40,7 @@ class HistoryModal extends React.Component{
                     content: {
                         width: '350px',
                         height: '350px',
-                        top: '30%',
+                        top: '10%',
                         left: 'auto',
                         right: 'auto',
                         bottom: 'auto',
