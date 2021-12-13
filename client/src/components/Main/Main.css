@@ -20,7 +20,7 @@
 
     /* Dark */
     background: #3A3E47;
-    border-radius: 0 16px 0 16px;
+    border-radius: 0 16px 16px 0;
 }
 
 .banner-img{
