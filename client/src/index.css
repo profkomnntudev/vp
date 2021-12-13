@@ -1,6 +1,7 @@
 
 body {
   margin: 0;
+  overflow-y: hidden;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
