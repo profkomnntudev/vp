@@ -117,7 +117,6 @@ class Votee extends React.Component{
                         Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
                     </div>
                     <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
-                    <Sponsors/>
                 </div> : 
                 <div>
                 <div className="link">
@@ -132,8 +131,6 @@ class Votee extends React.Component{
                 <div style={{marginTop: "60px"}}>
                     <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
                 </div>
-                
-                <Sponsors/>
             </div>}
             </div>
         )

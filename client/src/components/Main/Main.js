@@ -28,7 +28,6 @@ class Main extends React.Component{
                 <Nominations isStudent={true} nominants={false}/>
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
-                <Sponsors/>
                 </div> : 
                 <div>
                     <div className="nameMobile">
@@ -41,7 +40,6 @@ class Main extends React.Component{
                 <Nominations isStudent={true} nominants={false}/>
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
-                <Sponsors/>
                 </div>
                 }
 
