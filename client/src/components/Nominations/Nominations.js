@@ -141,7 +141,8 @@ class Nominations extends React.Component{
                 </div>
                 <Modal votingFunc={this.voting} showModal={this.state.showModal} close={this.handleCloseModal} cancel={this.handleCancelModal} name={this.state.choosedItem.name}/>
                 {this.state.votedFor && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
-            </div> : <div className="nominations">
+            </div> : 
+            <div className="nominationsMobile">
                 {!this.props.nominants && <div className="text">
                     {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}

@@ -37,7 +37,7 @@ class Main extends React.Component{
                     <div className="desc">
                         ЕЖЕГОДНАЯ ПРЕМИЯ
                     </div>
-                    <div className="text" style={{fontSize:"20px",marginLeft:"50%", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
+                    <div className="text" style={{fontSize:"20px", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
                 <Nominations isStudent={true} nominants={false}/>
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>

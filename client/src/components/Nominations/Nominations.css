@@ -5,6 +5,11 @@
     left: calc(50% - 1196px/2);
 }
 
+.nominations{
+  position: relative;
+  top: 112px;
+}
+
 .text1{
 font-family: Montserrat;
 font-style: normal;
