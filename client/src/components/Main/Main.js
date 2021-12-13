@@ -10,7 +10,7 @@ class Main extends React.Component{
     }
     render() {
         const isTabletOrMobile = device.type == 'mobile'
-        const isOver = Date.now() < Date.parse('2021-12-13T22:00:00')
+        const isOver = Date.now() >= Date.parse('2021-12-13T22:00:00')
         return (
             <div className="App">
                 {
