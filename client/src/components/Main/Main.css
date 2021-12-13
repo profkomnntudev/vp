@@ -14,6 +14,15 @@
     border-radius: 16px;
 }
 
+.bannerMobile{
+    position: relative;
+    width: 300px;
+
+    /* Dark */
+    background: #3A3E47;
+    border-radius: 0 16px 0 16px;
+}
+
 .banner-img{
     max-width: 100% !important;
     height: auto;

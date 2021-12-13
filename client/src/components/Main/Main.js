@@ -30,11 +30,13 @@ class Main extends React.Component{
                 <Nominations isEvent={true} nominants={false}/>
                 </div> : 
                 <div>
+                    <div className="bannerMobile">
                     <div className="nameMobile">
                         Время первых
                     </div>
                     <div className="descMobile">
                         ЕЖЕГОДНАЯ ПРЕМИЯ
+                    </div>
                     </div>
                     <div className="textMobile" style={{fontSize:"20px", marginLeft:"auto", marginTop:"72px"}}>*Для голосования войдите в систему</div>
                 <Nominations isStudent={true} nominants={false}/>
