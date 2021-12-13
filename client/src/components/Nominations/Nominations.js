@@ -8,6 +8,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import ReactModal from "react-modal";
 import CustomButton from "../CustomButton/CustomButton";
 import {domen} from "../../App"
+import device from "current-device"
 
 
 class Nominations extends React.Component{

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactModal from 'react-modal';
+import device from "current-device"
 import CustomButton from "../CustomButton/CustomButton";
 import "./historyModal.css"
 
