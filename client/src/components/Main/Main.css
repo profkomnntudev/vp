@@ -44,12 +44,56 @@
     -webkit-text-fill-color: transparent;
 }
 
+.nameMobile{
+    position: relative;
+    width: 271px;
+    height: 40px;
+    margin: auto;
+    justify-content: space-around;
+
+    /* 'Inter', sans-serif bold 36 */
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 43px;
+    display: flex;
+    align-items: center;
+
+    background: linear-gradient(273.73deg, #FBCF69 14.77%, #FFFBD0 38.38%, #FEEDB0 52.43%, #FBCF69 83.29%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .desc{
     position: absolute;
     width: 180px;
     height: 23px;
     left: 124px;
     top: 159px;
+
+    /* 'Inter', sans-serif regular 16 */
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 155%;
+
+    /* or 25px */
+    display: flex;
+    align-items: center;
+
+    background: linear-gradient(273.73deg, #FBCF69 14.77%, #FFFBD0 38.38%, #FEEDB0 52.43%, #FBCF69 83.29%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.descMobile{
+    position: relative;
+    width: 180px;
+    height: 23px;
+    margin: auto;
+    justify-content: space-around;
 
     /* 'Inter', sans-serif regular 16 */
     font-family: 'Inter', sans-serif;

@@ -31,13 +31,13 @@ class Main extends React.Component{
                 <Sponsors/>
                 </div> : 
                 <div>
-                    <div className="name">
+                    <div className="nameMobile">
                         Время первых
                     </div>
-                    <div className="desc">
+                    <div className="descMobile">
                         ЕЖЕГОДНАЯ ПРЕМИЯ
                     </div>
-                    <div className="text" style={{fontSize:"20px", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
+                    <div className="textMobile" style={{fontSize:"20px", marginLeft:"auto", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
                 <Nominations isStudent={true} nominants={false}/>
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
