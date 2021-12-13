@@ -1,6 +1,6 @@
 import React from 'react';
 import Nominations from '../Nominations/Nominations';
-import Sponsors from '../Sponsors/Sponsors';
+import VotingIsOver from '../VotingIsOver/VotingIsOver';
 import "./Main.css"
 import device from "current-device"
 
@@ -10,9 +10,13 @@ class Main extends React.Component{
     }
     render() {
         const isTabletOrMobile = device.type == 'mobile'
+        const isOver = Date.now() < Date.parse('2021-12-13T22:00:00')
         return (
             <div className="App">
-                {!isTabletOrMobile ? <div>
+                {
+                    !isOver ? 
+                    <>
+                    {!isTabletOrMobile ? <div>
                    <div className="banner">
                     <div className="name">
                         Время первых
@@ -44,6 +48,12 @@ class Main extends React.Component{
                 <Nominations isEvent={true} nominants={false}/>
                 </div>
                 }
+                    </> :
+                    <>
+                        <VotingIsOver isMobile={isTabletOrMobile}/>
+                    </>
+                }
+                
 
             </div>
         )
