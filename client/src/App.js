@@ -13,19 +13,12 @@ function App() {
       <Header/>
       <BrowserRouter>
         <Routes>
-          {
-            Date.now() < Date.parse('2021-12-13T22:00:00') ?
             <Routes>
              <Route path="/" element={<Main/>}/>
           <Route path="/vote/" >
             <Route path=":voteId" element={<Vote />} />
           </Route>
-          </Routes> : 
-          <Routes>
-            <Route path="*" element={<Main/>}/>
-          </Routes>
-          }
-          
+          </Routes>          
         </Routes>
       </ BrowserRouter>
       <Footer/>
