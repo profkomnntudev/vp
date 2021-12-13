@@ -123,13 +123,16 @@ class Votee extends React.Component{
                 <div className="link">
                     <a href="/">Главная</a> / {this.state.title}
                 </div>
-                <div className="text" style={{marginLeft: "calc(50%)", marginTop: "48.5px", marginBottom: "-110px" }} >
+                <div className="text" style={{marginTop: "48.5px", marginBottom: "-110px" }} >
                     {this.state.title}
                 </div>
-                <div  className="intro">
+                <div  className="introMobile">
                     Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
                 </div>
-                <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
+                <div style={{marginTop: "60px"}}>
+                    <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
+                </div>
+                
                 <Sponsors/>
             </div>}
             </div>

@@ -26,6 +26,24 @@
 
 
 }
+
+.intro{
+    position: relative;
+    top: 150px;
+    margin-bottom: 48px;
+
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 155%;
+    text-align: left;
+
+    /* or 25px */
+    display: flex;
+
+
+}
 .text{
     font-family: 'Inter', sans-serif;
     font-style: normal;
