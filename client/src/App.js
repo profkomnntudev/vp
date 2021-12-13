@@ -13,12 +13,10 @@ function App() {
       <Header/>
       <BrowserRouter>
         <Routes>
-            <Routes>
              <Route path="/" element={<Main/>}/>
           <Route path="/vote/" >
             <Route path=":voteId" element={<Vote />} />
-          </Route>
-          </Routes>          
+          </Route>        
         </Routes>
       </ BrowserRouter>
       <Footer/>
