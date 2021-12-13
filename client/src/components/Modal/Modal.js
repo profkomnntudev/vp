@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import ReactModal from 'react-modal';
 import CustomButton from "../CustomButton/CustomButton";
+import device from "current-device"
 import './Modal.css'
 
 const customStyles = {
@@ -35,9 +36,10 @@ const buttonStyleCancel = {
 
 class Modal extends React.Component{
     render () {
+        const isTabletOrMobile = device.type == 'mobile'
         return (
             <div>
-                <ReactModal isOpen={this.props.showModal} style={{
+                {!isTabletOrMobile ? <ReactModal isOpen={this.props.showModal} style={{
                     content: {
                         height: '265px',
                         width: '560px',
@@ -63,6 +65,33 @@ class Modal extends React.Component{
                     <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'}></CustomButton>
                     </div>
                 </ReactModal>
+                :
+                <ReactModal isOpen={this.props.showModal} style={{
+                    content: {
+                        width: '350px',
+                        height: '350px',
+                        top: '10%',
+                        left: 'auto',
+                        right: 'auto',
+                        bottom: 'auto',
+                        border: '1px solid #ccc',
+                        borderRadius: '16px',
+                        background: '#fff',
+                        overflow: 'auto',
+                        WebkitOverflowScrolling: 'touch',
+                        outline: 'none',
+                        padding: '20px'
+                    }
+                }}>
+                    <span className="voteText">Вы уверены что хотите проголосовать за</span>
+                    <span className="voteName">{this.props.name}</span>
+                    <div style={{display: "inline-block", marginLeft:"48px", marginRight:"24px"}}>
+                        <CustomButton onClick={this.props.close} style={buttonStyle} text={'Проголосовать'}></CustomButton>
+                    </div>
+                    <div style={{display: "inline-block"}}>
+                    <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'}></CustomButton>
+                    </div>
+                </ReactModal>}
             </div>
         );
     }
