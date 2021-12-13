@@ -85,10 +85,10 @@ class Modal extends React.Component{
                 }}>
                     <span className="voteText">Вы уверены что хотите проголосовать за</span>
                     <span className="voteName">{this.props.name}</span>
-                    <div style={{marginLeft:"48px", marginRight:"24px", marginBottom: "14px"}}>
+                    <div style={{marginLeft:"48px", marginBottom: "14px"}}>
                         <CustomButton onClick={this.props.close} style={buttonStyle} text={'Проголосовать'} disabled={""}></CustomButton>
                     </div>
-                    <div >
+                    <div style={{marginLeft:"48px", marginBottom: "14px"}}>
                     <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'} disabled={""}></CustomButton>
                     </div>
                 </ReactModal>}
