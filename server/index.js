@@ -351,6 +351,7 @@ app.get("/api/nominations/result", (req, res) => {
         '   or vot.nomination8 = can.id' +
         '   or vot.nomination9 = can.id' +
         '   or vot.nomination10 = can.id' +
+        '   or vot.nomination11 = can.id' +
         '  ) as "countVotes" from "Candidates" as can ' +
         'order by nomination, "countVotes" desc')
         .then(result => {
