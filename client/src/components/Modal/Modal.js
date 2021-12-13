@@ -59,10 +59,10 @@ class Modal extends React.Component{
                     <span className="voteText">Вы уверены что хотите проголосовать за</span>
                     <span className="voteName">{this.props.name}</span>
                     <div style={{display: "inline-block", marginLeft:"48px", marginRight:"24px"}}>
-                        <CustomButton onClick={this.props.close} style={buttonStyle} text={'Проголосовать'}></CustomButton>
+                        <CustomButton onClick={this.props.close} style={buttonStyle} text={'Проголосовать'} disabled={""}></CustomButton>
                     </div>
                     <div style={{display: "inline-block"}}>
-                    <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'}></CustomButton>
+                    <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'} disabled={""}></CustomButton>
                     </div>
                 </ReactModal>
                 :
@@ -85,11 +85,11 @@ class Modal extends React.Component{
                 }}>
                     <span className="voteText">Вы уверены что хотите проголосовать за</span>
                     <span className="voteName">{this.props.name}</span>
-                    <div style={{display: "inline-block", marginLeft:"48px", marginRight:"24px"}}>
-                        <CustomButton onClick={this.props.close} style={buttonStyle} text={'Проголосовать'}></CustomButton>
+                    <div style={{marginLeft:"48px", marginRight:"24px", marginBottom: "14px"}}>
+                        <CustomButton onClick={this.props.close} style={buttonStyle} text={'Проголосовать'} disabled={""}></CustomButton>
                     </div>
-                    <div style={{display: "inline-block"}}>
-                    <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'}></CustomButton>
+                    <div >
+                    <CustomButton onClick={this.props.cancel} style={buttonStyleCancel} text={'Отмена'} disabled={""}></CustomButton>
                     </div>
                 </ReactModal>}
             </div>
