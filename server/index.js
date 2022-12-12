@@ -410,7 +410,7 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
     const cand = {
         name: req.body['name'],
         surname: req.body['surname'],
-        patronymic: req.body['patronymic'] ?? null,
+        patronymic: req.body['patronymic'] || null,
         nomination: req.body['nomination']
     }
 
