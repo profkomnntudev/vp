@@ -1,3 +1,9 @@
+@font-face {
+    font-family:"Fashion Fetish Light";
+    font-weight: normal;
+    font-style:normal;
+    src:url("../../../src/static/fonts/Fashion Fetish Regular.ttf");
+}
 .customButton{
     position: relative;
     display: flex;
@@ -9,7 +15,7 @@
     outline: 0 none !important;
     /* Gold linear */
     background: linear-gradient(273.73deg, #FBCF69 14.77%, #FFFBD0 38.38%, #FEEDB0 52.43%, #FBCF69 83.29%);
-    border-radius: 8px;   
+    border-radius: 8px;
 }
 
 .customButtonDisabled{
@@ -27,7 +33,7 @@
 }
 
 .customButtonDisabled div{
-    font-family: 'Inter', sans-serif;
+    font-family:"Fashion Fetish Light";
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -36,7 +42,7 @@
 }
 
 .customButton div{
-    font-family: 'Inter', sans-serif;
+    font-family:"Fashion Fetish Light";
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -44,7 +50,7 @@
     outline: 0 none !important;
 }
 .customButton:hover{
-    background: #FFE7B0;
+    background: #c9a563;
 }
 .customButton:active{
     background: #FBCF69

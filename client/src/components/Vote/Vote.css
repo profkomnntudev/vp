@@ -1,3 +1,9 @@
+@font-face {
+    font-family:"Fashion Fetish Light";
+    font-weight: normal;
+    font-style:normal;
+    src:url("../../../src/static/fonts/Fashion Fetish Regular.ttf");
+}
 .link{
     position: relative;
     top: 92.5px;
@@ -13,8 +19,6 @@
     left: calc(50% - 1196px/2);
     top: 150px;
     margin-bottom: 48px;
-
-    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
@@ -28,9 +32,8 @@
 }
 
 .intro{
+    font-family:"Fashion Fetish Light";
     position: relative;
-
-    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
@@ -44,9 +47,9 @@
 }
 
 .introMobile{
+    font-family:"Fashion Fetish Light";
     position: relative;
     margin-top: 150px;
-    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
@@ -59,9 +62,9 @@
 
 }
 .text{
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: bold;
+    font-family:"Fashion Fetish Light";
+    /*font-style: normal;*/
+    font-weight: lighter;
     font-size: 36px;
     line-height: 43px;
     display: flex;
