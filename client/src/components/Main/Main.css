@@ -8,6 +8,7 @@
     height: 277px;
     left: calc(50% - 1196px/2);
     top: 132px;
+    overflow: hidden;
 
     /* Dark */
     background: #3A3E47;
@@ -29,9 +30,15 @@
     width: auto;
     margin-left: 26.2%;
     overflow: hidden;
+
     top: auto;
 }
-
+.banner-img img{
+    margin-top: -13vw;
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+}
 .name{
     position: absolute;
     width: 100%;

@@ -25,7 +25,7 @@ class Main extends React.Component{
                         ЕЖЕГОДНАЯ ПРЕМИЯ
                     </div>
                     <div className={"banner-img"}>
-                        <img className={"banner-img"} src={window.location.origin + '/banner.png'}></img>
+                        <img className={"banner-img"} src={window.location.origin + '/back3.jpg'}></img>
                     </div>
                 </div>
                     <div className="text" style={{fontSize:"20px",marginLeft:"calc(50% - 1196px/2)", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
