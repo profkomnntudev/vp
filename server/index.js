@@ -3,6 +3,8 @@ const express = require("express"),
     pg = require('pg'),
     cors = require("cors"),
     axios = require("axios").default;
+    var http = require('http');
+    var https = require('https');
 
 
 const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
@@ -16,6 +18,7 @@ client.query("insert sql query")
 const clientPg = new pg.Client(conString);
 
 const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || 'http://localhost';
 
 const app = express();
 
@@ -462,12 +465,12 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-  clientPg.connect((error)=> {
-    if (error) {console.error('Ошибка установки связи с бд'); return}
-    console.log('Связь с бд установлена');
+    console.log(`Application started on URL ${HOST}:${PORT} ?`);
+    clientPg.connect((error)=> {
+      if (error) {console.error('Ошибка установки связи с бд'); return}
+      console.log('Связь с бд установлена');
+    });
   });
-});
 
 //Формирует строку запроса для логгирования
 function formDate(request) {
