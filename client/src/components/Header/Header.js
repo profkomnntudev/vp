@@ -54,8 +54,7 @@ class Header extends React.Component {
 
     handleVkResponse = (data) => {
         const { cookies } = this.props;
-        console.log(data)
-        const token = data["payload"][1][0][0]
+        const token = data.uid
         cookies.set('id_token', token, { path: '/' });
         //посылаем на бек запрос с response.googleId
         axios.post(domen + "/api/voted/login", {
@@ -87,6 +86,7 @@ class Header extends React.Component {
         return (
 
             <div className="header">
+                {this.state.loggedIn}
                 {!isTabletOrMobile ? 
                 <>
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>

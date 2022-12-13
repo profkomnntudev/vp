@@ -13,7 +13,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
-    "build": "cd client && npm install && npm run build"
+    "build": "cd client && npm install && npm run build",
+    "restart": "git pull && cd client && npm install && npm run build && pm2"
   },
   "author": "iao.it",
   "license": "ISC"
