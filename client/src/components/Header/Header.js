@@ -53,7 +53,7 @@ class Header extends React.Component {
     }
 
     handleVkResponse = (data) => {
-        console.log(data)
+        alert(data)
     }
 
 
@@ -97,3 +97,6 @@ class Header extends React.Component {
 }
 
 export default withCookies(Header);
+
+
+
