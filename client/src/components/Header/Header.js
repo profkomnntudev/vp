@@ -87,7 +87,7 @@ class Header extends React.Component {
                 :
                 <>
                 <VK apiId={51502517}>
-                    <Auth options={} onAuth={this.handleVkResponse}/>
+                    <Auth options={width: 100} onAuth={this.handleVkResponse}/>
                 </VK>
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 </>}
