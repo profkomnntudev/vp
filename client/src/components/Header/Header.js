@@ -1,5 +1,5 @@
 import React from 'react';
-import VkAuth from 'react-vk-auth';
+import VK, { Auth } from "react-vk";
 import CustomButton from '../CustomButton/CustomButton';
 import "./Header.css"
 import axios from "axios";
@@ -53,8 +53,15 @@ class Header extends React.Component {
     }
 
     handleVkResponse = (data) => {
-            console.warn(data)
-          }
+        VK.Auth.login((r) => {
+            if (r.session) {
+                let username = r.session.user.first_name;
+                console.log(r)
+            } else {
+              console.log(r)
+            }
+          }, 4); // запрос прав на доступ к photo
+        };
 
 
     render() {
@@ -79,11 +86,15 @@ class Header extends React.Component {
                 {!isTabletOrMobile ? 
                 <>
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
-                    <VkAuth apiId="57b9247157b9247157b92471ee54a8f9c4557b957b924713421a4a49b4a641e4dd99e2f" callback={this.handleVkResponse} />
+                    <VK apiId={51502517}>
+                    <Auth />
+                </VK>
                </>
                 :
                 <>
-                <VkAuth apiId="51502517" callback={this.handleVkResponse} />
+                <VK apiId={51502517}>
+                    <Auth />
+                </VK>
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 </>}
             </div>
