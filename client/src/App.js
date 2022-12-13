@@ -25,4 +25,4 @@ function App() {
 }
 
 export default App;
-export const domen = `https://vremya-pervih.ru/`;
+export const domen = `https://vremya-pervih.ru`;

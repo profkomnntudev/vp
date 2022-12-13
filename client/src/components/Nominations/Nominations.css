@@ -10,7 +10,7 @@
   top: 112px;
 }
 
-.text1{
+.nomtext{
 font-style: normal;
 font-weight: bold;
 font-size: 36px;
@@ -21,7 +21,24 @@ text-align: center;
 padding-top: 72px;
 /* Ink */
 color: #27282B ;
+text-align: center;
+justify-content: center;
 }
+
+.nomtextmob{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 35px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  padding-top: 72px;
+  /* Ink */
+  color: #27282B ;
+  text-align: center;
+  justify-content: center;
+  }
 .formBlock{
   width: 1220px;
 }

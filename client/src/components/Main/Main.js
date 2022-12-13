@@ -9,7 +9,7 @@ class Main extends React.Component{
     componentDidMount() {
     }
     render() {
-        const isTabletOrMobile = device.type == 'mobile'
+        const isTabletOrMobile = true
         const isOver = false
         return (
             <div className="App">

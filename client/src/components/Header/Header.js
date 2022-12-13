@@ -1,5 +1,5 @@
 import React from 'react';
-import {GoogleLogin, GoogleLogout} from 'react-google-login';
+import VkAuth from 'react-vk-auth';
 import CustomButton from '../CustomButton/CustomButton';
 import "./Header.css"
 import axios from "axios";
@@ -23,7 +23,8 @@ class Header extends React.Component {
         const { cookies } = this.props;
         //добавляем куки id_token
         const token = cookies.get('id_token');
-        if(token){
+        if(token!=="undefined"){
+            console.log(undefined===true)
             this.setState({'loggedIn': true})
         }
     }
@@ -44,11 +45,16 @@ class Header extends React.Component {
     logout = () => {
         const { cookies } = this.props;
         //чистим куки
+        console.log("logout")
         cookies.remove('id_token');
         cookies.remove('G_ENABLED_IDPS');
         cookies.remove('G_AUTHUSER_H');
         this.setState({'loggedIn': false})
     }
+
+    handleVkResponse = (data) => {
+            console.warn(data)
+          }
 
 
     render() {
@@ -58,62 +64,28 @@ class Header extends React.Component {
             top: "16px"
         }
         let buttonStyleMobile = {
-            left: "50%",
+            position: "absolute",
+            right: "20px",
             outline: "none",
             top: "16px",
             width: "122px",
             heigth: "20px"
         }
+
         const isTabletOrMobile = device.type == 'mobile'
         return (
+
             <div className="header">
-                {!isTabletOrMobile ? <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>
-                {!this.state.loggedIn ? 
-                <GoogleLogin
-                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
-                    render={renderProps => (
-                        <CustomButton text={"Войти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
-                                      style={buttonStyle}/>
-                    )}
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                /> 
+                {!isTabletOrMobile ? 
+                <>
+                    <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
+                    <VkAuth apiId="57b9247157b9247157b92471ee54a8f9c4557b957b924713421a4a49b4a641e4dd99e2f" callback={this.handleVkResponse} />
+               </>
                 :
-                <GoogleLogout
-                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
-                    buttonText="Logout"
-                    render={renderProps => (
-                        <CustomButton text={"Выйти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
-                                      style={buttonStyle}/>
-                    )}
-                    onLogoutSuccess={this.logout}
-                    >
-                </GoogleLogout>}</>
-                :
-                <><img src={window.location.origin + '/logo.svg'} className={"logo"}/>
-                {!this.state.loggedIn ? 
-                <GoogleLogin
-                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
-                    render={renderProps => (
-                        <CustomButton text={"Войти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
-                                      style={buttonStyleMobile}/>
-                    )}
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                /> 
-                :
-                <GoogleLogout
-                    clientId="1040836497320-u9e9nufpbcga9bf6jqbunv0ji321464p.apps.googleusercontent.com"
-                    buttonText="Logout"
-                    render={renderProps => (
-                        <CustomButton text={"Выйти"} disabled={renderProps.disabled ? "Disabled" : ""} onClick={renderProps.onClick}
-                                      style={buttonStyleMobile}/>
-                    )}
-                    onLogoutSuccess={this.logout}
-                    >
-                </GoogleLogout>}</>}
+                <>
+                <VkAuth apiId="51502517" callback={this.handleVkResponse} />
+                <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
+                </>}
             </div>
         )
     };

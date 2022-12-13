@@ -121,7 +121,7 @@ class Nominations extends React.Component{
         return (
             <>
             {!isTabletOrMobile ? <div className="nominations">
-                {!this.props.nominants && <div className="text">
+                {!this.props.nominants && <div className="nomtext">
                     {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}
                 <div className="formBlock">
@@ -143,7 +143,7 @@ class Nominations extends React.Component{
                 {this.state.votedFor && <div className="nonActive">*Вы уже проголосовали в данной категории</div>}
             </div> : 
             <div className="nominationsMobile">
-                {!this.props.nominants && <div className="text">
+                {!this.props.nominants && <div className="nomtextmob">
                     {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}
                 <div>
