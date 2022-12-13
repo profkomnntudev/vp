@@ -53,15 +53,9 @@ class Header extends React.Component {
     }
 
     handleVkResponse = (data) => {
-        VK.Auth.login((r) => {
-            if (r.session) {
-                let username = r.session.user.first_name;
-                console.log(r)
-            } else {
-              console.log(r)
-            }
-          }, 4); // запрос прав на доступ к photo
-        };
+        console.log(data)
+    }
+
 
 
     render() {
@@ -87,13 +81,13 @@ class Header extends React.Component {
                 <>
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                     <VK apiId={51502517}>
-                    <Auth />
-                </VK>
+                        <Auth onAuth={this.handleVkResponse}/>
+                    </VK>
                </>
                 :
                 <>
                 <VK apiId={51502517}>
-                    <Auth />
+                    <Auth options={} onAuth={this.handleVkResponse}/>
                 </VK>
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 </>}
