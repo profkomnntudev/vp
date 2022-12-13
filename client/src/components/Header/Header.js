@@ -53,7 +53,17 @@ class Header extends React.Component {
     }
 
     handleVkResponse = (data) => {
-        alert(data)
+        const { cookies } = this.props;
+        console.log(data)
+        token = data["payload"][1][0][0]
+        cookies.set('id_token', token, { path: '/' });
+        //посылаем на бек запрос с response.googleId
+        axios.post(domen + "/api/voted/login", {
+            googleID: token,
+            })
+            .then(res=>console.log(res))
+            .catch(err=>console.error(err))
+        this.setState({'loggedIn': true})
     }
 
 
@@ -81,13 +91,13 @@ class Header extends React.Component {
                 <>
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                     <VK apiId={51502517}>
-                        <Auth onAuth={this.handleVkResponse}/>
+                        <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
                     </VK>
                </>
                 :
                 <>
                 <VK apiId={51502517}>
-                    <Auth options={{width: 100}} onAuth={this.handleVkResponse}/>
+                    <Auth options={{width: 100, onAuth: this.handleVkResponse}} />
                 </VK>
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 </>}
