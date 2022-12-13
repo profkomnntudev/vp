@@ -459,6 +459,11 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
 //     res.send("Вы авторизованы");
 // })
 
+app.get('/.well-known/acme-challenge/_1C78JO_hv4b52eJ7pdBhnio0wzDWeB7XC41ZHs_kiE', function(req, res) {
+    res.status(200);
+    res.send('_1C78JO_hv4b52eJ7pdBhnio0wzDWeB7XC41ZHs_kiE.lkfAKRCKw9Ats1YecbShSzelFE18Aejvm1n3rRDIjMw');
+  });
+
 //Основной сайт
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
