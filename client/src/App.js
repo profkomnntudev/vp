@@ -25,4 +25,4 @@ function App() {
 }
 
 export default App;
-export const domen = `https://vremyapervih.herokuapp.com`;
+export const domen = `https://vremya-pervih.ru/`;
