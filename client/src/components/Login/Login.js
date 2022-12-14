@@ -83,7 +83,7 @@ class Login extends React.Component {
                     <div className={'loginWhrapper'}>
                         <div className='loginWhrapper__text'>Войти через ВК</div>
                         <VK apiId={51502517}>
-                            <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
+                            <Auth options={{width: 223, onAuth: this.handleVkResponse}}/>
                         </VK> 
                     </div>
             </Modal>
