@@ -90,7 +90,7 @@ class Header extends React.Component {
                 <>
                 {!this.state.loggedIn 
                         ? 
-                        <Login buttonStyle={buttonStyleMobile} login={this.login}></Login> 
+                        <Login buttonStyle={buttonStyleMobile} login={this.login} isMobile={true}></Login> 
                         :
                         <CustomButton onClick={this.logout} text={'Выйти'} style={buttonStyleMobile} disabled={''}></CustomButton> 
                     }

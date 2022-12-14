@@ -57,7 +57,10 @@ class Login extends React.Component {
             content: {
                 width: 350,
                 height: 500,
-                margin: 'auto',
+                marginLeft: this.props.isMobile ? '-7.5vw' : 'auto',
+                marginRight: this.props.isMobile ? '0' :'auto',
+                marginTop: 'auto',
+                marginBottom: 'auto',
               maxHeight: '70%',
               textAlign: 'center',
               display: 'flex',
