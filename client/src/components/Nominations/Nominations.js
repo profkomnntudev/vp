@@ -50,7 +50,6 @@ class Nominations extends React.Component{
                     }
                 }
                 this.setState({students:stud, teachers: teach, events: event});
-                console.log(this.state);
             })
 
     }
@@ -86,7 +85,6 @@ class Nominations extends React.Component{
     checkVoting = (nomination) => {
         const { cookies } = this.props;
         const token = cookies.get('id_token');
-        console.log(token);
         if(token){axios.put(domen+"/api/voted/checkNomination", {
             idToken: token,
             nomination: nomination

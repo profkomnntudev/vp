@@ -24,24 +24,9 @@ class Header extends React.Component {
         const { cookies } = this.props;
         //добавляем куки id_token
         const token = cookies.get('id_token');
-        if(token!=="undefined"){
-            console.log(undefined===true)
+        if(token){
             this.setState({'loggedIn': true})
-            console.log(this.state.loggedIn)
         }
-    }
-
-    responseGoogle = (response) => {
-        const { cookies } = this.props;
-        //добавляем куки id_token
-        cookies.set('id_token', response.tokenId, { path: '/' });
-        //посылаем на бек запрос с response.googleId
-        axios.post(domen + "/api/voted/login", {
-            googleID: response.googleId,
-            })
-            .then(res=>console.log(res))
-            .catch(err=>console.error(err))
-        this.setState({'loggedIn': true})
     }
 
     logout = () => {
@@ -74,7 +59,7 @@ class Header extends React.Component {
 
         const isTabletOrMobile = device.type == 'mobile'
         return (
-
+            
             <div className="header">
                 {!isTabletOrMobile ? 
                 <>
