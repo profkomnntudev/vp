@@ -45,10 +45,7 @@ class Header extends React.Component {
     logout = () => {
         const { cookies } = this.props;
         //чистим куки
-        console.log("logout")
         cookies.remove('id_token');
-        cookies.remove('G_ENABLED_IDPS');
-        cookies.remove('G_AUTHUSER_H');
         this.setState({'loggedIn': false})
     }
 
@@ -93,12 +90,14 @@ class Header extends React.Component {
                     <VK apiId={51502517}>
                         <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
                     </VK>
+                    <button onClick={this.logout}>logout</button>
                </>
                 :
                 <>
                 <VK apiId={51502517}>
-                    <Auth options={{width: 100, onAuth: this.handleVkResponse}} />
+                    <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
                 </VK>
+                <button onClick={this.logout}>logout</button>
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 </>}
             </div>

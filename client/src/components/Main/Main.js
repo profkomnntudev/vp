@@ -1,6 +1,7 @@
 import React from 'react';
 import Nominations from '../Nominations/Nominations';
 import VotingIsOver from '../VotingIsOver/VotingIsOver';
+import { withCookies, Cookies } from 'react-cookie';
 import "./Main.css"
 import device from "current-device"
 
@@ -9,8 +10,10 @@ class Main extends React.Component{
     componentDidMount() {
     }
     render() {
-        const isTabletOrMobile = true
+        const isTabletOrMobile = device.type == 'mobile'
         const isOver = false
+        const { cookies } = this.props;
+        const token = cookies.get('id_token');
         return (
             <div className="App">
                 {
@@ -28,7 +31,7 @@ class Main extends React.Component{
                         <img className={"banner-img"} src={window.location.origin + '/back3.jpg'}></img>
                     </div>
                 </div>
-                    <div className="text" style={{fontSize:"20px",marginLeft:"calc(50% - 1196px/2)", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>
+                    {!token && <div className="text" style={{fontSize:"20px",marginLeft:"calc(50% - 1196px/2)", marginTop:"72px", marginBottom:"-152px"}}>*Для голосования войдите в систему</div>}
                 <Nominations isStudent={true} nominants={false}/>
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
@@ -42,7 +45,7 @@ class Main extends React.Component{
                         ЕЖЕГОДНАЯ ПРЕМИЯ
                     </div>
                     </div>
-                    <div className="textMobile" style={{fontSize:"20px", marginLeft:"auto", marginTop:"72px"}}>*Для голосования войдите в систему</div>
+                    {!token && <div className="textMobile" style={{fontSize:"20px", marginLeft:"auto", marginTop:"72px"}}>*Для голосования войдите в систему</div>}
                 <Nominations isStudent={true} nominants={false}/>
                 <Nominations isTeacher={true} nominants={false}/>
                 <Nominations isEvent={true} nominants={false}/>
@@ -60,4 +63,4 @@ class Main extends React.Component{
     }
 }
 
-export default Main;
+export default withCookies(Main);
