@@ -55,9 +55,9 @@ class Login extends React.Component {
         const { modalIsOpen} = this.state;
         const customStyles = {
             content: {
-                width: 350,
+                width: this.props.isMobile ? '100vw' : 350,
                 height: 500,
-                marginLeft: this.props.isMobile ? '-7.5vw' : 'auto',
+                marginLeft: this.props.isMobile ? '0' : 'auto',
                 marginRight: this.props.isMobile ? '0' :'auto',
                 marginTop: 'auto',
                 marginBottom: 'auto',
