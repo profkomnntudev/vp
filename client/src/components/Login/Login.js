@@ -47,6 +47,7 @@ class Login extends React.Component {
             })
             .then(res=>console.log(res))
             .catch(err=>console.error(err))
+        this.props.login();
         this.closeModal();
     }
 

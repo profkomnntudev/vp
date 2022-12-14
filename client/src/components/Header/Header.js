@@ -51,16 +51,7 @@ class Header extends React.Component {
         this.setState({'loggedIn': false})
     }
 
-    handleVkResponse = (data) => {
-        const { cookies } = this.props;
-        const token = data.uid
-        cookies.set('id_token', token, { path: '/' });
-        //посылаем на бек запрос с response.googleId
-        axios.post(domen + "/api/voted/login", {
-            googleID: token,
-            })
-            .then(res=>console.log(res))
-            .catch(err=>console.error(err))
+    login = () => {
         this.setState({'loggedIn': true})
     }
 
@@ -90,7 +81,7 @@ class Header extends React.Component {
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                     {!this.state.loggedIn 
                         ? 
-                        <Login buttonStyle={buttonStyle}></Login> 
+                        <Login buttonStyle={buttonStyle} login={this.login}></Login> 
                         :
                         <CustomButton onClick={this.logout} text={'Выйти'} style={buttonStyle} disabled={''}></CustomButton> 
                     }
@@ -99,7 +90,7 @@ class Header extends React.Component {
                 <>
                 {!this.state.loggedIn 
                         ? 
-                        <Login buttonStyle={buttonStyleMobile}></Login> 
+                        <Login buttonStyle={buttonStyleMobile} login={this.login}></Login> 
                         :
                         <CustomButton onClick={this.logout} text={'Выйти'} style={buttonStyleMobile} disabled={''}></CustomButton> 
                     }
