@@ -7,6 +7,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {domen} from "../../App"
 import device from "current-device"
+import Login from '../Login/Login';
 
 class Header extends React.Component {
     static propTypes = {
@@ -83,21 +84,26 @@ class Header extends React.Component {
         return (
 
             <div className="header">
-                {this.state.loggedIn}
                 {!isTabletOrMobile ? 
                 <>
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
-                    <VK apiId={51502517}>
-                        <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
-                    </VK>
-                    <button onClick={this.logout}>logout</button>
+                    {this.state.loggedIn 
+                        ? 
+                        <Login buttonStyle={buttonStyle}></Login> 
+                        :
+                        <CustomButton onClick={this.logout} text={'Выйти'} style={buttonStyle} disabled={''}></CustomButton> 
+                    }
                </>
                 :
                 <>
-                <VK apiId={51502517}>
-                    <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
-                </VK>
-                <button onClick={this.logout}>logout</button>
+                че нахуй
+                {this.state.loggedIn 
+                        ? 
+                        
+                        <Login buttonStyle={buttonStyleMobile}></Login> 
+                        :
+                        <CustomButton onClick={this.logout} text={'Выйти'} style={buttonStyleMobile} disabled={''}></CustomButton> 
+                    }
                 <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
                 </>}
             </div>
