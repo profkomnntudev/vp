@@ -15,7 +15,13 @@ client.connect();
 client.query("insert sql query")
 */
 
-const clientPg = new pg.Client(conString);
+const clientPg = new pg.Client({
+    user: 'vp_admin',
+    host: '95.163.233.230',
+    database: 'vp_database',
+    password: 'vp_admin',
+    port: 5432,
+  });
 
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || 'http://localhost';
