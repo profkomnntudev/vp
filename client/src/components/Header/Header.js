@@ -27,6 +27,7 @@ class Header extends React.Component {
         if(token!=="undefined"){
             console.log(undefined===true)
             this.setState({'loggedIn': true})
+            console.log(this.state.loggedIn)
         }
     }
 
@@ -87,7 +88,7 @@ class Header extends React.Component {
                 {!isTabletOrMobile ? 
                 <>
                     <img src={window.location.origin + '/logo.svg'} className={"logo"}/>
-                    {this.state.loggedIn 
+                    {!this.state.loggedIn 
                         ? 
                         <Login buttonStyle={buttonStyle}></Login> 
                         :
@@ -96,10 +97,8 @@ class Header extends React.Component {
                </>
                 :
                 <>
-                че нахуй
-                {this.state.loggedIn 
+                {!this.state.loggedIn 
                         ? 
-                        
                         <Login buttonStyle={buttonStyleMobile}></Login> 
                         :
                         <CustomButton onClick={this.logout} text={'Выйти'} style={buttonStyleMobile} disabled={''}></CustomButton> 

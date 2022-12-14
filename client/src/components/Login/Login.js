@@ -6,6 +6,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import {domen} from "../../App"
 import Modal from 'react-modal';
+import './Login.css'
 import device from "current-device"
 
 
@@ -46,26 +47,24 @@ class Login extends React.Component {
             })
             .then(res=>console.log(res))
             .catch(err=>console.error(err))
+        this.closeModal();
     }
 
     render() {
         const { modalIsOpen} = this.state;
         const customStyles = {
             content: {
-                width: 500,
+                width: 350,
                 height: 500,
                 margin: 'auto',
               maxHeight: '70%',
               textAlign: 'center',
               display: 'flex',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                backgroundImage: 'url("https://vremya-pervih.ru/static/media/background.995ec146d1d0f3eced5f.jpg")',
+                borderRadius: '10px',
             },
           };
-        const buttonStyle = {
-            outline: "none",
-            width: "220px",
-            height: "40px",
-        }
         return (
             <>
             <CustomButton onClick={this.openModal} text={'Войти'} style={this.props.buttonStyle} disabled={''}></CustomButton>
@@ -77,9 +76,12 @@ class Login extends React.Component {
                 contentLabel="Example Modal"
                 style={customStyles}
                 >
-                <VK apiId={51502517}>
-                    <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
-                </VK>
+                    <div className={'loginWhrapper'}>
+                        <div className='loginWhrapper__text'>Войти через ВК</div>
+                        <VK apiId={51502517}>
+                            <Auth options={{width: 100, onAuth: this.handleVkResponse}}/>
+                        </VK> 
+                    </div>
             </Modal>
             </>
         )

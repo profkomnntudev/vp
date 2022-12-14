@@ -1,0 +1,17 @@
+.loginWhrapper{
+}
+
+.loginWhrapper__text{
+    font-family:"Fashion Fetish Light";
+    /*font-style: normal;*/
+    font-weight: lighter;
+    font-size: 24px;
+    line-height: 36px;
+    display: flex;
+    align-items: center;
+
+    /* Ink */
+    color: #27282B;
+
+    padding-bottom: 50px;
+}
