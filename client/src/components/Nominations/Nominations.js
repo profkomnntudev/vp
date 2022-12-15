@@ -55,7 +55,15 @@ class Nominations extends React.Component{
     }
 
     setNominations(){
-        this.setState({used: this.props.nominants ? this.props.nominants : this.props.isEvent ? this.state.events : this.props.isStudent? this.state.students: this.state.teachers})
+        this.setState({used: 
+            this.props.nominants 
+            ? this.props.nominants 
+            : this.props.isEvent 
+                ? this.state.events 
+                : this.props.isStudent 
+                    ? this.state.students 
+                    : this.state.teachers
+        })
     }
 
     async componentWillMount() {

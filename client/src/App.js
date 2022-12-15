@@ -6,6 +6,7 @@ import  Main from '../src/components/Main/Main.js'
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Vote from './components/Vote/Vote'
+import Admin from './components/Admin/Admin';
 
 function App() {
   return (
@@ -13,10 +14,11 @@ function App() {
       <Header/>
       <BrowserRouter>
         <Routes>
-             <Route path="/" element={<Main/>}/>
+        <Route path="/admin" element={<Admin/>}/>    
+          <Route path="/" element={<Main/>}/>
           <Route path="/vote/" >
             <Route path=":voteId" element={<Vote />} />
-          </Route>        
+          </Route>    
         </Routes>
       </ BrowserRouter>
       <Footer/>

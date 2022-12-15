@@ -7,7 +7,6 @@ import { withCookies, Cookies } from 'react-cookie';
 import {domen} from "../../App"
 import Modal from 'react-modal';
 import './Login.css'
-import device from "current-device"
 
 
 
