@@ -175,9 +175,11 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
 
     const hh = crypto.createHash("md5").update(`${app_id}${vkId}${secretKey}`).digest("hex")
 
+    console.log(`hash: ${hash}`)
+    console.log(`hh: ${hh}`)
+
     if (hash !== hh){
-        console.log(`hash: ${hash}`)
-        console.log(`hh: ${hh}`)
+
         res.status(404).send("UnAuthorization")
     }
 
