@@ -2,12 +2,13 @@ const express = require("express"),
     path = require('path'),
     pg = require('pg'),
     cors = require("cors"),
-    axios = require("axios").default;
-    var http = require('http');
-    var https = require('https');
+    axios = require("axios").default,
+    http = require('http'),
+    https = require('https'),
+    crypto = require('crypto')
 
 
-const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
+//const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
 
 /* in requests:
 const client = new pg.Client(conString);
@@ -15,13 +16,16 @@ client.connect();
 client.query("insert sql query")
 */
 
-const clientPg = new pg.Client({
+const clientPg = new pg.Pool({
     user: 'vp_admin',
     host: '95.163.233.230',
     database: 'vp_database',
     password: 'vp_admin',
     port: 5432,
   });
+
+const app_id = "51502517"
+const secretKey = "mIOcXE7SwgnSAyVRFkJt"
 
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || 'http://localhost';
@@ -46,53 +50,53 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-//ПОлучить массив имён таблиц(НЕБЕЗОПАСНО)
-app.get("/api/tables", (req, res) => {
-  // clientPg.connect(err => {
-  //   if (err) {
-  //     console.error('Не удалось установить соединение с базой данных');
-  //     res.status(500).send('Error');
-  //   }
-  //   else {
-  //     clientPg.query('SELECT\n' +
-  //         '    table_schema || \'.\' || table_name as table_name\n' +
-  //         'FROM\n' +
-  //         '    information_schema.tables\n' +
-  //         'WHERE\n' +
-  //         '    table_type = \'BASE TABLE\'\n' +
-  //         'AND\n' +
-  //         '    table_schema NOT IN (\'pg_catalog\', \'information_schema\');')
-  //         .then(result => {
-  //           console.log(result['rows']);
-  //           return res.send(result['rows']);
-  //         })
-  //         .catch(e => {
-  //           console.error(e);
-  //         })
-  //         .finally(()=>{
-  //           clientPg.end();
-  //         })
-  //
-  //   }
-  // });
-  clientPg.query('SELECT\n' +
-      '    table_schema || \'.\' || table_name as table_name\n' +
-      'FROM\n' +
-      '    information_schema.tables\n' +
-      'WHERE\n' +
-      '    table_type = \'BASE TABLE\'\n' +
-      'AND\n' +
-      '    table_schema NOT IN (\'pg_catalog\', \'information_schema\');')
-      .then(result => {
-        console.log(result['rows']);
-        return res.send(result['rows']);
-      })
-      .catch(e => {
-        console.error(e);
-      })
-})
+// //ПОлучить массив имён таблиц(НЕБЕЗОПАСНО)
+// app.get("/api/tables", (req, res) => {
+//   // clientPg.connect(err => {
+//   //   if (err) {
+//   //     console.error('Не удалось установить соединение с базой данных');
+//   //     res.status(500).send('Error');
+//   //   }
+//   //   else {
+//   //     clientPg.query('SELECT\n' +
+//   //         '    table_schema || \'.\' || table_name as table_name\n' +
+//   //         'FROM\n' +
+//   //         '    information_schema.tables\n' +
+//   //         'WHERE\n' +
+//   //         '    table_type = \'BASE TABLE\'\n' +
+//   //         'AND\n' +
+//   //         '    table_schema NOT IN (\'pg_catalog\', \'information_schema\');')
+//   //         .then(result => {
+//   //           console.log(result['rows']);
+//   //           return res.send(result['rows']);
+//   //         })
+//   //         .catch(e => {
+//   //           console.error(e);
+//   //         })
+//   //         .finally(()=>{
+//   //           clientPg.end();
+//   //         })
+//   //
+//   //   }
+//   // });
+//   clientPg.query('SELECT\n' +
+//       '    table_schema || \'.\' || table_name as table_name\n' +
+//       'FROM\n' +
+//       '    information_schema.tables\n' +
+//       'WHERE\n' +
+//       '    table_type = \'BASE TABLE\'\n' +
+//       'AND\n' +
+//       '    table_schema NOT IN (\'pg_catalog\', \'information_schema\');')
+//       .then(result => {
+//         console.log(result['rows']);
+//         return res.send(result['rows']);
+//       })
+//       .catch(e => {
+//         console.error(e);
+//       })
+// })
 
-//Получить массив номинаций
+//Получить список номинаций
 app.get("/api/nominations", (req, res) => {
 
     const isTeacher = req.query['nominant'] ? (req.query['nominant'] === 'teacher' ? true : (req.query['nominant'] === 'student' ? false : undefined)) : undefined;
@@ -159,11 +163,11 @@ app.get("/api/candidates", (req, res) => {
 //Пользователь вошёл в систему
 app.post("/api/voted/login", jsonParse, (req, res)=>{
 
-    const googleId = req.body['googleID'];
+    const vkId = req.body['vkID'];
 
     //console.log(req.body);
 
-    if (!googleId) {
+    if (!vkId) {
         console.log('Отсутствуют необходимые параметры');
         return res.status(400).send('Rejected');
     }
@@ -180,15 +184,15 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
         'nomination8, ' +
         'nomination9, ' +
         'nomination10) values ($1, $2, $2, $2, $2, $2, $2, $2, $2, $2, $2)',
-        [googleId, null])
+        [vkId, null])
         .then(result => {
             console.log(`Затронуто строк: ${result.rowCount}`);
-            console.log(`Избиратель '${googleId}' успешно добавлен`);
+            console.log(`Избиратель '${vkId}' успешно добавлен`);
             return res.status(201).send({status: 'created'});
         })
         .catch(err => {
             if (err.code === '23505'){
-                console.log(`Избиратель '${googleId}' вошёл в систему`);
+                console.log(`Избиратель '${vkId}' вошёл в систему`);
                 return res.status(200).send({status: 'exist'});
             }
             console.log('Ошибка');
@@ -198,47 +202,61 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
 })
 
 app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
-    const token = req.body['idToken'],
+    const userId = req.body['idToken'],
+        hash = req.body['hash'],
         nomination = searchNomination(req.body['nomination']);
-    console.log(token)
+    //console.log(token)
     console.log(nomination)
 
-    if (nomination === undefined || !token){
+    if (nomination === undefined || !userId){
         console.error('Неверная номинация или токен');
         return res.status(400).send({status: 'rejected'});
     }
 
-    const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
-    let voterId;
+    //const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
 
-    axios.get(googleCheck, {
-        params: {
-            id_token: token
-        }
-    })
-        .then(result => {
-            if (!result || !result.data || !result.data['sub']){
-                throw new Error('Непонятно почему, но googleId не пришёл');
-            }
-            voterId = result.data['sub'];
-            return clientPg.query(`select ${nomination} as nom from "Voted" where id = $1`, [voterId])
-        })
+    const hh = crypto.createHash("md5").update(`${app_id}${userId}${secretKey}`).digest("hex")
+
+    if (hash !== hh){
+        console.log(`hash: ${hash}`)
+        console.log(`hh: ${hh}`)
+        res.status(404).send("UnAuthorization")
+    }
+
+    clientPg.query(`select ${nomination} as nom from "Voted" where id = $1`, [userId])
         .then(src => {
             //console.log(src['rows']);
             const id = src['rows'].length === 0 ? null : src['rows'][0]['nom'];
             //console.log(id);
             res.send({id: id});
         })
-        // .catch(err => {
-        //     if (err && err.response && err.response.status && err.response.status === 400){
-        //         console.error('Неверный токен');
-        //         return res.status(404).send({status: 'invalid token'});
-        //     }
-        //     console.log('Ошибка');
-        //     console.error(err);
-        //     res.status(500).send({status: 'unknown error'});
-        // })
-        .catch(err => catchGoogle(err, res))
+        .catch(err=>{
+            console.error(err)
+            res.status(500).send("unknown error")
+        })
+
+    // axios.get(googleCheck, {
+    //     params: {
+    //         id_token: token
+    //     }
+    // })
+    //     .then(result => {
+    //         if (!result || !result.data || !result.data['sub']){
+    //             throw new Error('Непонятно почему, но googleId не пришёл');
+    //         }
+    //         voterId = result.data['sub'];
+    //     })
+    //
+    //     // .catch(err => {
+    //     //     if (err && err.response && err.response.status && err.response.status === 400){
+    //     //         console.error('Неверный токен');
+    //     //         return res.status(404).send({status: 'invalid token'});
+    //     //     }
+    //     //     console.log('Ошибка');
+    //     //     console.error(err);
+    //     //     res.status(500).send({status: 'unknown error'});
+    //     // })
+    //     .catch(err => catchGoogle(err, res))
 })
 
 //Обработка ошибок при гугл запросе
@@ -478,11 +496,14 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Application started on URL ${HOST}:${PORT} ?`);
-    clientPg.connect((error)=> {
-      if (error) {console.error('Ошибка установки связи с бд'); return}
-      console.log('Связь с бд установлена');
+    clientPg.connect((error) => {
+        if (error) {
+            console.error('Ошибка установки связи с бд');
+            return
+        }
+        console.log('Связь с бд установлена');
     });
-  });
+})
 
 //Формирует строку запроса для логгирования
 function formDate(request) {
