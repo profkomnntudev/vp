@@ -166,7 +166,7 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
     const vkId = req.body['vkID'],
         hash = req.body['hash']
 
-    //console.log(req.body);
+    console.log(req.body);
 
     if (!vkId || !hash) {
         console.log('Отсутствуют необходимые параметры');
