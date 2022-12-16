@@ -6,7 +6,7 @@ const express = require("express"),
 
 //const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
 
-const clientPg = new pg.Pool({
+const clientPg = new pg.Client({
     user: 'vp_admin',
     host: '95.163.233.230',
     database: 'vp_database',
