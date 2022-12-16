@@ -260,7 +260,7 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
             }
             const nom = searchNomination(nomination);
             return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
-                [nomId, voterId]);
+                [nomId, userId]);
         })
         .then(updateResult => {
             console.log(`Затронуто строк: ${updateResult['rowCount']}`)
