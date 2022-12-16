@@ -163,7 +163,7 @@ app.get("/api/candidates", (req, res) => {
 //Пользователь вошёл в систему
 app.post("/api/voted/login", jsonParse, (req, res)=>{
 
-    const vkId = req.body['vkID'];
+    const vkId = req.body['googleID'];
 
     //console.log(req.body);
 
