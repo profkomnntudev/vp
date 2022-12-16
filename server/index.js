@@ -352,7 +352,7 @@ app.get("/api/nominations/winners", async (req, res) => {
 })
 
 //ПОлучить картинку номиннта
-app.get("/api/nominations/image/:img", async (req,res)=>{
+app.get("/api/nominations/:img", async (req,res)=>{
     const image = req.params["img"]
     if (!image){
         return res.status(404).send("Not found")
