@@ -33,7 +33,9 @@ class Header extends React.Component {
         const { cookies } = this.props;
         //чистим куки
         cookies.remove('id_token');
+        cookies.remove('hash');
         this.setState({'loggedIn': false})
+        window.location.href = '/'
     }
 
     login = () => {

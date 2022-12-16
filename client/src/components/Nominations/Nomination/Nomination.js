@@ -23,7 +23,6 @@ class Nomination extends React.Component{
     }
 
     render(){
-        console.log("rendered")
         const { cookies } = this.props;
         const token = cookies.get('id_token');
         const buttonStyleAbout = {

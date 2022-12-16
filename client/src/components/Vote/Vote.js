@@ -32,8 +32,8 @@ class Votee extends React.Component{
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
-            case "theMostKind":
-                tempTitle = "Самый умный"
+            case "theMostCreative":
+                tempTitle = "Самый творческий"
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
@@ -52,18 +52,18 @@ class Votee extends React.Component{
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
+            case "theMostMedia":
+                tempTitle = "Самый медийный"
+                noms=tempTitle;
+                //тут спарсить номинантов
+                break
             case "bestLector":
                 tempTitle = "Лучший лектор"
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
-            case "theMostPositive":
-                tempTitle = "Самый позитивный"
-                noms=tempTitle;
-                //тут спарсить номинантов
-                break
-            case "theMostInnovative":
-                tempTitle = "Самый инновационный"
+            case "theSoulOfTheCompany":
+                tempTitle = "Душа компании"
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
