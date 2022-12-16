@@ -17,7 +17,7 @@ class Admin extends React.Component{
     }
 
     async getNominations(){
-        const domen = `https://vremya-pervih.ru/`;
+        const domen = `https://vremya-pervih.ru`;
         let stud=[];
         let teach=[];
         let event=[];
