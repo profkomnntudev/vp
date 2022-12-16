@@ -415,7 +415,8 @@ app.get('/.well-known/acme-challenge/_1C78JO_hv4b52eJ7pdBhnio0wzDWeB7XC41ZHs_kiE
 
 //Основной сайт
 app.get('*', async (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+    console.log('front')
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 });
 
 app.listen(PORT, () => {
