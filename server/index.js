@@ -80,7 +80,7 @@ app.use(cors());
 // })
 
 //Получить список номинаций
-app.get("/api/nominations", (req, res) => {
+app.get("/api/nominations", async (req, res) => {
 
     const isTeacher = req.query['nominant'] ? (req.query['nominant'] === 'teacher' ? true : (req.query['nominant'] === 'student' ? false : undefined)) : undefined;
 
@@ -94,7 +94,7 @@ app.get("/api/nominations", (req, res) => {
 })
 
 //Добавить номинацию
-app.post("/api/nominations/add", jsonParse, (req, res)=>{
+app.post("/api/nominations/add", jsonParse, async (req, res)=>{
 
     if (!req.body['nominationName'] || typeof(req.body['nominationName']) !== 'string'){
         console.log('Номинация не является строкой');
@@ -123,7 +123,7 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
 })
 
 //Список кандидатов
-app.get("/api/candidates", (req, res) => {
+app.get("/api/candidates", async (req, res) => {
     const nomination = req.query['nomination'];
     if (!nomination){
         console.error('Неверная номинация');
@@ -144,7 +144,7 @@ app.get("/api/candidates", (req, res) => {
 })
 
 //Пользователь вошёл в систему
-app.post("/api/voted/login", jsonParse, (req, res)=>{
+app.post("/api/voted/login", jsonParse, async (req, res)=>{
 
     const vkId = req.body['vkId'],
         hash = req.body['hash']
@@ -192,7 +192,7 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
         })
 })
 
-app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
+app.put("/api/voted/checkNomination", jsonParse, async (req, res) => {
     const userId = req.body['vkId'],
         hash = req.body['hash'],
         nomination = searchNomination(req.body['nomination']);
@@ -235,7 +235,7 @@ app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
 // }
 
 //Учёт голоса
-app.post("/api/voted/getVote", jsonParse, (req, res) => {
+app.post("/api/voted/getVote", jsonParse, async (req, res) => {
 
     const userId = req.body['vkId'],
         nomId = req.body['nomineeID'],
@@ -304,7 +304,7 @@ function searchNomination(nomination){
 }
 
 //Промежуточные итоги
-app.get("/api/nominations/result", (req, res) => {
+app.get("/api/nominations/result", async (req, res) => {
     //Старый запрос
     clientPg.query('select nomination, name, surname, patronymic, (select count(*) from "Voted" as vot where ' +
         '   vot.nomination1 = can.id' +
@@ -333,7 +333,7 @@ app.get("/api/nominations/result", (req, res) => {
 })
 
 //Получить победителей в номинации
-app.get("/api/nominations/winners", (req, res) => {
+app.get("/api/nominations/winners", async (req, res) => {
     clientPg.query(
         "select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\" as c1" +
         "   where " +
@@ -351,8 +351,18 @@ app.get("/api/nominations/winners", (req, res) => {
         })
 })
 
+//ПОлучить картинку номиннта
+app.get("/api/nominations/image/:img", async (req,res)=>{
+    const image = req.params["img"]
+    if (!image){
+        return res.status(404).send("Not found")
+    }
+
+    res.sendFile(path.resolve(__dirname, "..") + `/client/public/nominants/${image}`)
+})
+
 //Добавить кандидата
-app.post("/api/candidates/add", jsonParse, (req, res) =>{
+app.post("/api/candidates/add", jsonParse, async (req, res) =>{
 
     //Проверка на существование полей
     if (!req.body
@@ -404,8 +414,8 @@ app.get('/.well-known/acme-challenge/_1C78JO_hv4b52eJ7pdBhnio0wzDWeB7XC41ZHs_kiE
   });
 
 //Основной сайт
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+app.get('*', async (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
 });
 
 app.listen(PORT, () => {
