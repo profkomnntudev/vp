@@ -124,8 +124,11 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
 
 //Список кандидатов
 app.get("/api/candidates", (req, res) => {
-
     const nomination = req.query['nomination'];
+    if (!nomination){
+        console.error('Неверная номинация');
+        return res.status(400).send({status: 'rejected'});
+    }
     clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id, about, img from \"Candidates\"\n" +
         (nomination ? `where nomination = '${nomination}'` : '') +
         "order by nomination, \"countVotes\" desc")
