@@ -163,13 +163,22 @@ app.get("/api/candidates", (req, res) => {
 //Пользователь вошёл в систему
 app.post("/api/voted/login", jsonParse, (req, res)=>{
 
-    const vkId = req.body['googleID'];
+    const vkId = req.body['vkID'],
+        hash = req.body['hash']
 
     //console.log(req.body);
 
-    if (!vkId) {
+    if (!vkId || !hash) {
         console.log('Отсутствуют необходимые параметры');
         return res.status(400).send('Rejected');
+    }
+
+    const hh = crypto.createHash("md5").update(`${app_id}${vkId}${secretKey}`).digest("hex")
+
+    if (hash !== hh){
+        console.log(`hash: ${hash}`)
+        console.log(`hh: ${hh}`)
+        res.status(404).send("UnAuthorization")
     }
 
     clientPg.query('insert into "Voted" (' +
@@ -202,13 +211,13 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
 })
 
 app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
-    const userId = req.body['idToken'],
+    const userId = req.body['vkId'],
         hash = req.body['hash'],
         nomination = searchNomination(req.body['nomination']);
     //console.log(token)
     console.log(nomination)
 
-    if (nomination === undefined || !userId){
+    if (nomination === undefined || !userId || !hash){
         console.error('Неверная номинация или токен');
         return res.status(400).send({status: 'rejected'});
     }
@@ -277,32 +286,27 @@ function catchGoogle(err, res){
 //Учёт голоса
 app.post("/api/voted/getVote", jsonParse, (req, res) => {
 
-    const token = req.body['idToken'],
+    const userId = req.body['vkId'],
         nomId = req.body['nomineeID'],
+        hash = req.body['hash'],
         nomination = req.body['nomination'];
         //voterId = req.body['voterId'];
 
-    if (!token || !nomId || !nomination)
+    if (!userId || !nomId || !nomination || !hash)
     {
         console.log('Отсутствуют необходимые параметры');
         return res.status(400).send('Rejected');
     }
 
-    const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
-    let voterId;
+    const hh = crypto.createHash("md5").update(`${app_id}${userId}${secretKey}`).digest("hex")
 
-    axios.get(googleCheck, {
-        params: {
-            id_token: token
-        }
-    })
-        .then(result => {
-            if (!result || !result.data || !result.data['sub']){
-                throw new Error('Непонятно почему, но googleId не пришёл');
-            }
-            voterId = result.data['sub'];
-            return clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId]);
-        })
+    if (hash !== hh){
+        console.log(`hash: ${hash}`)
+        console.log(`hh: ${hh}`)
+        res.status(404).send("UnAuthorization")
+    }
+
+    clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId])
         .then(src => {
             //console.log(src);
             if (src['rows'].length === 0){
@@ -322,8 +326,46 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
             res.status(201).send({status: true});
         })
         .catch(err => {
-            catchGoogle(err, res);
+            console.error(err)
+            res.status(500).send("unknown error")
         })
+
+    // const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
+    // let voterId;
+    //
+    // axios.get(googleCheck, {
+    //     params: {
+    //         id_token: userId
+    //     }
+    // })
+    //     .then(result => {
+    //         if (!result || !result.data || !result.data['sub']){
+    //             throw new Error('Непонятно почему, но googleId не пришёл');
+    //         }
+    //         voterId = result.data['sub'];
+    //         return clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId]);
+    //     })
+    //     .then(src => {
+    //         //console.log(src);
+    //         if (src['rows'].length === 0){
+    //             throw new Error('Не залогинен');
+    //         }
+    //         const nom = searchNomination(nomination);
+    //         //console.log(nom);
+    //         return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
+    //             [nomId, voterId]);
+    //     })
+    //     // .then(updt => {
+    //     //
+    //     // })
+    //     .then(updateResult => {
+    //         console.log(`Затронуто строк: ${updateResult['rowCount']}`)
+    //         console.log(`Голос успешно учтён`);
+    //         res.status(201).send({status: true});
+    //     })
+    //     .catch(err => {
+    //         catchGoogle(err, res);
+    //     })
 
     //res.send('ok');
 })
