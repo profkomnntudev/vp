@@ -5,8 +5,6 @@ import axios from "axios";
  import Modal from "../Modal/Modal"
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import ReactModal from "react-modal";
-import CustomButton from "../CustomButton/CustomButton";
 import {domen} from "../../App"
 import device from "current-device"
 
@@ -37,14 +35,15 @@ class Nominations extends React.Component{
         let event=[];
         await axios.get(domen+ "/api/nominations")
             .then(res=>{
+                console.log(res.data)
                 for(let i=0;i<res.data.length;i++){
-                    if(res.data[i]['teacher'] ==='student'){
+                    if(res.data[i]['teacher'] ==='Студент'){
                         stud.push(res.data[i]);
                     }
-                    if(res.data[i]['teacher'] ==='teacher'){
+                    if(res.data[i]['teacher'] ==='Преподаватель'){
                         teach.push(res.data[i]);
                     }
-                    if(res.data[i]['teacher'] ==='event'){
+                    if(res.data[i]['teacher'] ==='Мероприятие'){
                         event.push(res.data[i]);
                     }
                 }
@@ -127,6 +126,7 @@ class Nominations extends React.Component{
     render(){
         const isTabletOrMobile = device.type == 'mobile'
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
+        console.log(this.state.used)
         return (
             <>
             {!isTabletOrMobile ? <div className="nominations">
