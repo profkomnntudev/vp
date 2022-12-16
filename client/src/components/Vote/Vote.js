@@ -78,7 +78,7 @@ class Votee extends React.Component{
                 break
         }
         this.setState({title: tempTitle});
-        const domen = `https://vremya-pervih.ru/`;
+        const domen = `https://vremya-pervih.ru`;
         let nominee = [];
         let photos = [];
         await  axios.get(domen + "/api/candidates", {

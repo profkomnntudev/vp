@@ -44,7 +44,7 @@ class Login extends React.Component {
         cookies.set('hash', hash, {path: '/'})
         //посылаем на бек запрос с response.googleId
         axios.post(domen + "/api/voted/login", {
-            googleID: token,
+            vkId: token,
             hash: hash
             })
             .then(res=>console.log(res))

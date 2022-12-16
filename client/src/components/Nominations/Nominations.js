@@ -32,7 +32,6 @@ class Nominations extends React.Component{
         };
     }
     async getNominations(){
-        const domen = `https://vremya-pervih.ru/`;
         let stud=[];
         let teach=[];
         let event=[];
@@ -79,7 +78,7 @@ class Nominations extends React.Component{
         const token = cookies.get('id_token');
         const hash = cookies.get('hash');
         axios.post(domen+"/api/voted/getVote", {
-            idToken: token,
+            vkId: token,
             nomination: nomination,
             nomineeID: id,
             hash: hash,
@@ -97,7 +96,7 @@ class Nominations extends React.Component{
         const token = cookies.get('id_token');
         const hash = cookies.get('hash');
         if(token){axios.put(domen+"/api/voted/checkNomination", {
-            idToken: token,
+            vkId: token,
             nomination: nomination,
             hash: hash,
         })
