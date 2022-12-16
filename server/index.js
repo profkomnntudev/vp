@@ -194,7 +194,7 @@ app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
         hash = req.body['hash'],
         nomination = searchNomination(req.body['nomination']);
 
-    if (nomination === undefined || !userId || !hash){
+    if (nomination === undefined || nomination === "" || !userId || !hash){
         console.error('Неверная номинация или токен');
         return res.status(400).send({status: 'rejected'});
     }
