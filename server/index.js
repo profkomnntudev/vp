@@ -2,19 +2,9 @@ const express = require("express"),
     path = require('path'),
     pg = require('pg'),
     cors = require("cors"),
-    axios = require("axios").default,
-    http = require('http'),
-    https = require('https'),
     crypto = require('crypto')
 
-
 //const conString = "postgres://fczedzaw:CxR7MBjzFFI1_PcRXKFdb8aaALiRsifO@castor.db.elephantsql.com/fczedzaw";
-
-/* in requests:
-const client = new pg.Client(conString);
-client.connect();
-client.query("insert sql query")
-*/
 
 const clientPg = new pg.Pool({
     user: 'vp_admin',
@@ -38,17 +28,10 @@ app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.use(function (request, response, next) {
     console.log(formDate(request));
-    //response.set('Content-Type', 'text/plain');
-
-    //fs.appendFile("server.log", data + "\n", function(){});
     next();
 });
 
 app.use(cors());
-
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
 
 // //ПОлучить массив имён таблиц(НЕБЕЗОПАСНО)
 // app.get("/api/tables", (req, res) => {
@@ -112,7 +95,6 @@ app.get("/api/nominations", (req, res) => {
 
 //Добавить номинацию
 app.post("/api/nominations/add", jsonParse, (req, res)=>{
-    //console.log(req.body);
 
     if (!req.body['nominationName'] || typeof(req.body['nominationName']) !== 'string'){
         console.log('Номинация не является строкой');
@@ -137,7 +119,6 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
             console.error(err);
             return res.status(500).send({status: 'unknown error'});
         })
-
     //return res.send('Ничего не произошло, но ты всё равно молодец');
 })
 
@@ -145,7 +126,6 @@ app.post("/api/nominations/add", jsonParse, (req, res)=>{
 app.get("/api/candidates", (req, res) => {
 
     const nomination = req.query['nomination'];
-    //console.log(nomination)
     clientPg.query("select nomination, name, surname, patronymic, \"countVotes\", id, about, img from \"Candidates\"\n" +
         (nomination ? `where nomination = '${nomination}'` : '') +
         "order by nomination, \"countVotes\" desc")
@@ -174,9 +154,6 @@ app.post("/api/voted/login", jsonParse, (req, res)=>{
     }
 
     const hh = crypto.createHash("md5").update(`${app_id}${vkId}${secretKey}`).digest("hex")
-
-    console.log(`hash: ${hash}`)
-    console.log(`hh: ${hh}`)
 
     if (hash !== hh){
 
@@ -216,74 +193,43 @@ app.put("/api/voted/checkNomination", jsonParse, (req, res) => {
     const userId = req.body['vkId'],
         hash = req.body['hash'],
         nomination = searchNomination(req.body['nomination']);
-    //console.log(token)
-    console.log(nomination)
 
     if (nomination === undefined || !userId || !hash){
         console.error('Неверная номинация или токен');
         return res.status(400).send({status: 'rejected'});
     }
 
-    //const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
-
     const hh = crypto.createHash("md5").update(`${app_id}${userId}${secretKey}`).digest("hex")
 
     if (hash !== hh){
-        console.log(`hash: ${hash}`)
-        console.log(`hh: ${hh}`)
         res.status(404).send("UnAuthorization")
     }
 
     clientPg.query(`select ${nomination} as nom from "Voted" where id = $1`, [userId])
         .then(src => {
-            //console.log(src['rows']);
             const id = src['rows'].length === 0 ? null : src['rows'][0]['nom'];
-            //console.log(id);
             res.send({id: id});
         })
         .catch(err=>{
             console.error(err)
             res.status(500).send("unknown error")
         })
-
-    // axios.get(googleCheck, {
-    //     params: {
-    //         id_token: token
-    //     }
-    // })
-    //     .then(result => {
-    //         if (!result || !result.data || !result.data['sub']){
-    //             throw new Error('Непонятно почему, но googleId не пришёл');
-    //         }
-    //         voterId = result.data['sub'];
-    //     })
-    //
-    //     // .catch(err => {
-    //     //     if (err && err.response && err.response.status && err.response.status === 400){
-    //     //         console.error('Неверный токен');
-    //     //         return res.status(404).send({status: 'invalid token'});
-    //     //     }
-    //     //     console.log('Ошибка');
-    //     //     console.error(err);
-    //     //     res.status(500).send({status: 'unknown error'});
-    //     // })
-    //     .catch(err => catchGoogle(err, res))
 })
 
-//Обработка ошибок при гугл запросе
-function catchGoogle(err, res){
-    if (err && err.response && err.response.status && err.response.status === 400){
-        console.error('Неверный токен');
-        return res.status(404).send({status: 'invalid token'});
-    }
-    // if (err === 'token not equal sub'){
-    //     console.error('Токен пользователя не принадлежит ему');
-    //     return res.status(405).send({status: 'invalid token or id'});
-    // }
-    console.log('Ошибка');
-    console.error(err);
-    res.status(500).send({status: 'unknown error'});
-}
+// //Обработка ошибок при гугл запросе
+// function catchGoogle(err, res){
+//     if (err && err.response && err.response.status && err.response.status === 400){
+//         console.error('Неверный токен');
+//         return res.status(404).send({status: 'invalid token'});
+//     }
+//     // if (err === 'token not equal sub'){
+//     //     console.error('Токен пользователя не принадлежит ему');
+//     //     return res.status(405).send({status: 'invalid token or id'});
+//     // }
+//     console.log('Ошибка');
+//     console.error(err);
+//     res.status(500).send({status: 'unknown error'});
+// }
 
 //Учёт голоса
 app.post("/api/voted/getVote", jsonParse, (req, res) => {
@@ -292,7 +238,6 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
         nomId = req.body['nomineeID'],
         hash = req.body['hash'],
         nomination = req.body['nomination'];
-        //voterId = req.body['voterId'];
 
     if (!userId || !nomId || !nomination || !hash)
     {
@@ -303,25 +248,20 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
     const hh = crypto.createHash("md5").update(`${app_id}${userId}${secretKey}`).digest("hex")
 
     if (hash !== hh){
-        console.log(`hash: ${hash}`)
-        console.log(`hh: ${hh}`)
+        // console.log(`hash: ${hash}`)
+        // console.log(`hh: ${hh}`)
         res.status(404).send("UnAuthorization")
     }
 
     clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId])
         .then(src => {
-            //console.log(src);
             if (src['rows'].length === 0){
                 throw new Error('Не залогинен');
             }
             const nom = searchNomination(nomination);
-            //console.log(nom);
             return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
                 [nomId, voterId]);
         })
-        // .then(updt => {
-        //
-        // })
         .then(updateResult => {
             console.log(`Затронуто строк: ${updateResult['rowCount']}`)
             console.log(`Голос успешно учтён`);
@@ -331,45 +271,6 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
             console.error(err)
             res.status(500).send("unknown error")
         })
-
-    // const googleCheck = "https://www.googleapis.com/oauth2/v3/tokeninfo";
-    // let voterId;
-    //
-    // axios.get(googleCheck, {
-    //     params: {
-    //         id_token: userId
-    //     }
-    // })
-    //     .then(result => {
-    //         if (!result || !result.data || !result.data['sub']){
-    //             throw new Error('Непонятно почему, но googleId не пришёл');
-    //         }
-    //         voterId = result.data['sub'];
-    //         return clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId]);
-    //     })
-    //     .then(src => {
-    //         //console.log(src);
-    //         if (src['rows'].length === 0){
-    //             throw new Error('Не залогинен');
-    //         }
-    //         const nom = searchNomination(nomination);
-    //         //console.log(nom);
-    //         return clientPg.query(`update "Voted" set ${nom} = $1 where id = $2`,
-    //             [nomId, voterId]);
-    //     })
-    //     // .then(updt => {
-    //     //
-    //     // })
-    //     .then(updateResult => {
-    //         console.log(`Затронуто строк: ${updateResult['rowCount']}`)
-    //         console.log(`Голос успешно учтён`);
-    //         res.status(201).send({status: true});
-    //     })
-    //     .catch(err => {
-    //         catchGoogle(err, res);
-    //     })
-
-    //res.send('ok');
 })
 
 //Перечисление номинаций
@@ -389,13 +290,6 @@ const Nominations = Object.freeze({
 })
 
 
-// //Пересичление категорий
-// const Categories = Object.freeze({
-//     'teacher': 'true',
-//     'student': 'false',
-//
-// })
-
 //Поиск номинации
 function searchNomination(nomination){
     for (let key in Nominations){
@@ -409,8 +303,6 @@ function searchNomination(nomination){
 //Промежуточные итоги
 app.get("/api/nominations/result", (req, res) => {
     //Старый запрос
-    // clientPg.query("select nomination, name, surname, patronymic, \"countVotes\" from \"Candidates\"\n" +
-    //     "order by nomination, \"countVotes\" desc")
     clientPg.query('select nomination, name, surname, patronymic, (select count(*) from "Voted" as vot where ' +
         '   vot.nomination1 = can.id' +
         '   or vot.nomination1 = can.id' +
@@ -448,14 +340,6 @@ app.get("/api/nominations/winners", (req, res) => {
         .then(result => {
             console.log(`Отпрввлено ${result['rows'].length} записей`);
             res.send(result['rows']);
-
-            // let winners = [];
-            // for (let i = 0; i < result['rows'].length; ++i){
-            //     let winner = {
-            //         nomination: result['rows'][i]['nomination'],
-            //
-            //     }
-            // }
         })
         .catch(err => {
             console.log('Ошибка');
@@ -486,16 +370,9 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
         nomination: req.body['nomination']
     }
 
-    // const sql = 'select if (select * from "Candidates" where name = $1 and surname = $2 and patronymic = $3 and nomination = $4,' +
-    //     'insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4),' +
-    //     '0)';
-
-
-
     clientPg.query('select * from "Candidates" where name = $1 and surname = $2 and patronymic = $3 and nomination = $4',
         [cand.name, cand.surname, cand.patronymic, cand.nomination])
         .then(result => {
-            //console.log(result);
             if (result.rowCount === 0 ){
                 return clientPg.query('insert into "Candidates" (name, surname, patronymic, nomination) values ($1, $2, $3, $4)',
                     [cand.name, cand.surname, cand.patronymic, cand.nomination])
@@ -517,16 +394,6 @@ app.post("/api/candidates/add", jsonParse, (req, res) =>{
             return res.status(500).send({status: 'unknown error'});
         })
 })
-
-// //Тест логина в гугле
-// app.get("/api/tests/google/sing", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'tests', 'google', 'sing.html'));
-// })
-
-// //Редирект для авторизированных пользователей с гугла
-// app.get("/user/login", (req, res) => {
-//     res.send("Вы авторизованы");
-// })
 
 app.get('/.well-known/acme-challenge/_1C78JO_hv4b52eJ7pdBhnio0wzDWeB7XC41ZHs_kiE', function(req, res) {
     res.status(200);
@@ -552,19 +419,8 @@ app.listen(PORT, () => {
 //Формирует строку запроса для логгирования
 function formDate(request) {
     let now = new Date();
-    //let day = now.getDay();
-    //let month = now.getMonth();
-    //let year = now.getUTCFullYear();
     let hour = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
     return `${hour}:${minutes}:${seconds} ${request.method} [[${request.url}]] ${request.get("user-agent")}`;
-    //let login = request.session.login ? request.session.login : 'Неавторизован';
-    //if (!request.session.login) request.session.login = 'Неавторизован';
-    // if (force) {
-    //     return `${day}.${month}.${year} ${hour}:${minutes}:${seconds} ${request.method} [[${request.url}]]` +
-    //         ` ${request.session.login} (${request.sessionID}) ${request.get("user-agent")}`;
-    // }
-    // return `${hour}:${minutes}:${seconds} ${request.method} [[${request.url}]]` +
-    //     ` ${request.session.login} (${request.sessionID}) ${request.get("user-agent")}`;
 }
