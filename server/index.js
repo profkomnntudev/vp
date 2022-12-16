@@ -253,7 +253,7 @@ app.post("/api/voted/getVote", jsonParse, (req, res) => {
         res.status(404).send("UnAuthorization")
     }
 
-    clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [voterId])
+    clientPg.query('select 1 as "isExist" from "Voted" where id = $1', [userId])
         .then(src => {
             if (src['rows'].length === 0){
                 throw new Error('Не залогинен');
