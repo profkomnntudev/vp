@@ -10,7 +10,19 @@
 }
 
 .footerlogo{
-    position: fixed;
-    bottom: 3%;
-    left: 121px;
+    position: relative;
+    margin-left: 121px;
+}
+
+.logos{
+    display: flex;
+    flex-direction: row;
+}
+
+.sponsor{
+    position:relative;
+    height: 75px;
+    margin-top: 10px;
+    margin-left: 100px;
+    filter: invert(1)
 }
