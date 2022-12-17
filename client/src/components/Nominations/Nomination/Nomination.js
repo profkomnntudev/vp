@@ -46,7 +46,7 @@ class Nomination extends React.Component{
                 <div className="img">
                     <img className={"img"} src={this.props.img || window.location.origin + '/sampleDude.png'}/>
                 </div>
-                {this.props.isNominant && <HistoryModal name={"Обо мне"} story={this.props.story || ""} />}
+                {this.props.isNominant && <HistoryModal name={"Обо мне"} story={this.props.story || ""} ind={this.props.ind}/>}
                 <CustomButton text={this.props.buttonText} disabled={additionalClassName} onClick={this.props.onClick} style={buttonStyle}/>
                 
             </div>

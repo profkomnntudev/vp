@@ -156,16 +156,26 @@ class Nominations extends React.Component{
                     {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}
                 <div>
-                    {this.state.used.map((item) =>
+                    {this.state.used.map((item, index) =>
                         <div className="formsMobile">
-                            <Nomination story={item.story ? item.story : ""} img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} label={item.title || item.name} buttonText={buttonText} isNominant={!!this.props.nominants} isNonActive={!!this.state.votedFor} isActiveButton={this.state.votedFor === 0} choosen={item.id===this.state.votedFor} onClick={() => {
-                        if (!this.props.nominants){
-                            window.location.href = "/vote/"+item.link
-                        } else {
-                            this.handleSetItem(item)
-                            this.handleOpenModal()
-                        }
-                        }}/>
+                            <Nomination 
+                            story={item.story ? item.story : ""} 
+                            img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} 
+                            label={item.title || item.name} 
+                            buttonText={buttonText} 
+                            isNominant={!!this.props.nominants} 
+                            isNonActive={!!this.state.votedFor} 
+                            isActiveButton={this.state.votedFor === 0} 
+                            choosen={item.id===this.state.votedFor} 
+                            ind={index}
+                            onClick={() => {
+                            if (!this.props.nominants){
+                                window.location.href = "/vote/"+item.link
+                            } else {
+                                this.handleSetItem(item)
+                                this.handleOpenModal()
+                            }
+                            }}/>
 
                         </div>
                         )}
