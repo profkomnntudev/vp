@@ -1,5 +1,5 @@
 @font-face {
-    font-family:"Fashion Fetish Light";
+    font-family: 'Montserrat', sans-serif;
     font-weight: normal;
     font-style:normal;
     src:url("../../../src/static/fonts/Fashion Fetish Regular.ttf");
@@ -33,7 +33,7 @@
 }
 
 .customButtonDisabled div{
-    font-family:"Fashion Fetish Light";
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -42,7 +42,7 @@
 }
 
 .customButton div{
-    font-family:"Fashion Fetish Light";
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
