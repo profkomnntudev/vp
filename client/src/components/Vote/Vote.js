@@ -90,8 +90,11 @@ class Votee extends React.Component{
                 // console.log(res);
                 for(let i=0;i<res.data.length;i++)
                 {
-                    //candidate = {name:res.data[i].name, surname:res.data[i].surname,patronymic: res.data[i].patronymic};
-                    nominee.push({'name': res.data[i].surname || "" + " "+ res.data[i].name + res.data[i].patronymic || "", 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
+                    let name = ""
+                    if (res.data[i].surname) name = res.data[i].surname + '\n'
+                    name = name + res.data[i].name
+                    if (res.data[i].patronymic) name = name + res.data[i].patronymic
+                    nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
                 }
                 this.setState({nominants: nominee});
             })
