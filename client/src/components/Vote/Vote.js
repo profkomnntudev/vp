@@ -18,7 +18,7 @@ class Votee extends React.Component{
             title:''
         };
     }
-    getNominants(){
+    async getNominants(){
         const  voteId  = window.location.pathname.split("/")[2];
         let tempTitle = ""
         let noms=""
@@ -79,30 +79,25 @@ class Votee extends React.Component{
         }
         this.setState({title: tempTitle});
         const domen = `https://vremya-pervih.ru`;
-        let nominee = [];
-        let photos = [];
-        axios.get(domen + "/api/candidates", {
+        return axios.get(domen + "/api/candidates", {
             params:{
                 nomination: noms
             }
         })
-            .then(res=>{
-                // console.log(res);
-                for(let i=0;i<res.data.length;i++)
-                {
-                    let name = ""
-                    if (res.data[i].surname) name = res.data[i].surname + '\n'
-                    name = name + res.data[i].name + " "
-                    if (res.data[i].patronymic) name = name + res.data[i].patronymic 
-                    nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
-                }
-                this.setState({nominants: nominee});
-            })
-        // console.log(this.state.nominants);
     }
     componentWillMount() {
-        this.getNominants()
-
+        this.getNominants().then(res=>{
+            let nominee = []
+            for(let i=0;i<res.data.length;i++)
+            {
+                let name = ""
+                if (res.data[i].surname) name = res.data[i].surname + '\n'
+                name = name + res.data[i].name + " "
+                if (res.data[i].patronymic) name = name + res.data[i].patronymic 
+                nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
+            }
+            this.setState({'nominants': nominee})
+        })
     }
     render() {
         const isTabletOrMobile = device.type == 'mobile'
