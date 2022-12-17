@@ -10,139 +10,117 @@ class Admin extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            teachers : [],
-            students : [],
-            events:[],
+            data: {},
+            isLoading: true,
+            isLoggedIn: false,
+            code: "",
         };
+        this.onSubmit = this.onSubmit.bind(this)
     }
-
-    async getNominations(){
+    async getWinners(){
         const domen = `https://vremya-pervih.ru`;
-        let stud=[];
-        let teach=[];
-        let event=[];
-        await axios.get(domen+ "/api/nominations")
+        let data = {};
+        await axios.get(domen+ "/api/nominations/result")
             .then(res=>{
                 for(let i=0;i<res.data.length;i++){
-                    if(res.data[i]['teacher'] ==='student'){
-                        stud.push(res.data[i]);
-                    }
-                    if(res.data[i]['teacher'] ==='teacher'){
-                        teach.push(res.data[i]);
-                    }
-                    if(res.data[i]['teacher'] ==='event'){
-                        event.push(res.data[i]);
-                    }
+                    data[res.data[i].nomination] = [...data[res.data[i].nomination] || [], res.data[i]]
                 }
-                this.setState({students:stud, teachers: teach, events: event});
+                console.log(data)
+                this.setState({data: data});
+                this.setState({isLoading: false});
             })
-
     }
-    async getNominants(){
-        let tempTitle = ""
-        let noms=""
-        this.setState({title: tempTitle});
-        const domen = `https://vremya-pervih.ru`;
-        let nominee = [];
-        await  axios.get(domen + "/api/candidates", {
-            params:{
-                nomination: noms
-            }
-        })
-            .then(res=>{
-                for(let i=0;i<res.data.length;i++)
-                {
-                    nominee.push({'name': res.data[i].name+" "+res.data[i].surname, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
-                }
-                this.setState({nominants: nominee});
-            })
+
+    getTable(){
+        var objects = []
+        for (var nomination in this.state.data){
+            console.log(nomination)
+            objects.push(
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                        <th>{nomination}</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Отчество</th>
+                        <th>Количество голосов</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.data[nomination].sort((a, b)=> a.countVotes < b.countVotes).map((item, i) => 
+                            <tr>
+                                <td></td>
+                                <td>{item.surname || '-'}</td>
+                                <td>{item.name || '-'}</td>
+                                <td>{item.patronymic || '-'}</td>
+                                <td>{item.countVotes}</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </Table>
+            )
+        }
+        return objects
+    }
+
+    onSubmit(event) {
+        event.preventDefault();
+        console.log(this.state.code)
+        if(this.state.code=='M1sUlRGs'){
+            this.setState({isLoggedIn: true})
+        }
+    }
+
+    async componentWillMount(){
+        await this.getWinners()
     }
     render(){
         return(
             <div className='adminContainer'>
+                {!this.state.isLoggedIn ? 
+                <div className="Auth-form-container">
+                    <form className="Auth-form" onSubmit={this.onSubmit}>
+                        <div className="Auth-form-content">
+                        <h3 className="Auth-form-title">Вход</h3>
+                        <div className="form-group mt-3">
+                            <label>Код</label>
+                            <input
+                            type="password"
+                            className="form-control mt-1"
+                            placeholder="password"
+                            onChange={(evt)=>this.setState({code: evt.target.value})}
+                            />
+                        </div>
+                        <div className="d-grid gap-2 mt-3">
+                            <button type="submit" className="btn btn-primary">
+                            Войти
+                            </button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+                :
                 <Container>
                     <Tab.Container id="ledt-tabs-example" defaultActiveKey={'Посмотреть на номинантов'}>
                         <Row>
                             <Col sm={3}>
                                 <Nav variant="pills" className="flex-column mt-5">
                                     <Nav.Item>
-                                        <Nav.Link eventKey="Посмотреть на номинантов"> Посмотреть на номинантов </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="Добавить номинанта"> Добавить номинанта </Nav.Link>
-                                    </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="Увидеть победителей"> Увидеть победителей </Nav.Link>
+                                        <Nav.Link eventKey="Посмотреть на номинантов"> Таблицы лидеров </Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </Col>
                             <Col sm={9}>
                                 <Tab.Content className="mt-5">
                                     <Tab.Pane eventKey="Посмотреть на номинантов">
-                                        <h4> Номинанты: </h4>
-                                        Студенты:
-                                        <Table striped bordered hover>
-                                            <thead>
-                                                <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Photo</th>
-                                                <th>Story</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {this.state.students.map((item, i) =>
-                                                <tr>
-                                                    <td>{i}</td>
-                                                    <td>{item.title || item.name}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                )}
-                                            </tbody>
-                                        </Table>    
-                                        Преподаватели:
-                                        <Table striped bordered hover>
-                                            <thead>
-                                                <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Photo</th>
-                                                <th>Story</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {this.state.teachers.map((item, i) =>
-                                                <tr>
-                                                    <td>{i}</td>
-                                                    <td>{item.title || item.name}</td>
-                                                    <td><img className={"img"} src={item.img || window.location.origin + '/sampleDude.png'}/></td>
-                                                    <td>{item.story ? item.story : ""}</td>
-                                                </tr>
-                                                )}
-                                            </tbody>
-                                        </Table>  
-                                        Мероприятия:
-                                        <Table striped bordered hover>
-                                            <thead>
-                                                <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Photo</th>
-                                                <th>Story</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {this.state.events.map((item, i) =>
-                                                <tr>
-                                                    <td>{i}</td>
-                                                    <td>{item.title || item.name}</td>
-                                                    <td><img className={"img"} src={item.img || window.location.origin + '/sampleDude.png'}/></td>
-                                                    <td>{item.story ? item.story : ""}</td>
-                                                </tr>
-                                                )}
-                                            </tbody>
-                                        </Table> 
+                                        {this.state.isLoading &&  
+                                        <div className="btnLoader">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div> }
+                                        {!this.state.isLoading && this.getTable().map((item) => item)}
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="Добавить номинанта">
                                         <h4> Добавление номинанта </h4>
@@ -155,6 +133,7 @@ class Admin extends React.Component{
                         </Row>
                     </Tab.Container>
                 </Container>
+                }
             </div>
         )
     }
