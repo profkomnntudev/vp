@@ -13,6 +13,7 @@ class Main extends React.Component{
         const isTabletOrMobile = device.type == 'mobile'
         const isOver = false
         const token = localStorage.token;
+        console.log(token)
         return (
             <div className="App">
                 {
