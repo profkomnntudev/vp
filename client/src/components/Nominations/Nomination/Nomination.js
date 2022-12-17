@@ -29,12 +29,12 @@ class Nomination extends React.Component{
             outline: "none",
             width: "180px",
             height: "40px",
-            left: "11px",
+            left: "20px",
         }
         
         const buttonStyle = {
             bottom: this.props.isNominant ? "-8px" : "-40px",
-            left: "11px",
+            left: "20px",
             width: "180px",
             heigth: "40px",
         }
