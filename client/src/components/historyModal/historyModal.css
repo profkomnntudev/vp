@@ -16,12 +16,33 @@
     margin-top: 48px;
 }
 
+.modalStoryMobile {
+    font-family: Montserrat;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 155%;
+font-size: 11px;
+line-height: 125%;
+
+/* or 25px */
+display: flex;
+align-items: center;
+
+/* Ink */
+color: #27282B;
+margin-top: 24px;
+margin-bottom: 24px;
+
+}
+
 .modalStory {
     font-family: Montserrat;
 font-style: normal;
 font-weight: normal;
 font-size: 16px;
 line-height: 155%;
+
 
 /* or 25px */
 display: flex;

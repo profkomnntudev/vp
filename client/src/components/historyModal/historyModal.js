@@ -11,16 +11,26 @@ const buttonStyle = {
 }
 
 class HistoryModal extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            showModal: false,
+        }
+    }
+    handleOpenModal = () => {
+        this.setState({'showModal': true})
+    }
+
+    handleCloseModal = () => {
+        this.setState({'showModal': false})
+    }
     render () {
-        const isTabletOrMobile = device.type == 'mobile'
+        const isTabletOrMobile = true
         const customStyles = {
             content: {
-              width: isTabletOrMobile ? 250 : 1196,
+              width: isTabletOrMobile ? 320 : 1196,
               height: 500,
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              marginTop: 'auto',
-              marginBottom: 'auto',
+              marginLeft: '-18px',
               maxHeight: '70%',
               textAlign: 'center',
               display: 'flex',
@@ -28,15 +38,26 @@ class HistoryModal extends React.Component{
               backgroundImage: 'url("https://vremya-pervih.ru/static/media/background.995ec146d1d0f3eced5f.jpg")',
               borderRadius: '10px',
             },
+            overlay: {
+                width: '100vw'
+            }
           };
+
+        const buttonStyleAbout = {
+            outline: "none",
+            width: "180px",
+            height: "40px",
+            left: "20px",
+        }
         return (
             <div>
-                <ReactModal isOpen={this.props.showModal} style={customStyles}>
+                <CustomButton text={"Об участнике"} disabled={""} onClick={this.handleOpenModal} style={buttonStyleAbout}/>
+                <ReactModal isOpen={this.state.showModal} style={customStyles}>
                     <div className="aboutWhrapper">
                         <div className="modalName">ОБО МНЕ</div>
-                        <div className="modalStory">{this.props.story}</div>
+                        <div className={isTabletOrMobile ? "modalStoryMobile" : "modalStory"}>{this.props.story}</div>
                         <div className="modalStoryButton">
-                            <CustomButton onClick={this.props.close} style={buttonStyle} text={'Назад'} disabled={""}></CustomButton>
+                            <CustomButton onClick={this.handleCloseModal} style={buttonStyle} text={'Назад'} disabled={""}></CustomButton>
                         </div>
                     </div>
                     
