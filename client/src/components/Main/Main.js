@@ -12,8 +12,7 @@ class Main extends React.Component{
     render() {
         const isTabletOrMobile = device.type == 'mobile'
         const isOver = false
-        const { cookies } = this.props;
-        const token = cookies.get('id_token');
+        const token = localStorage.token;
         return (
             <div className="App">
                 {

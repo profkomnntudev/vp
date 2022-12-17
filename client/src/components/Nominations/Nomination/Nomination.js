@@ -24,7 +24,7 @@ class Nomination extends React.Component{
 
     render(){
         const { cookies } = this.props;
-        const token = cookies.get('id_token');
+        const token = localStorage.token;
         const buttonStyleAbout = {
             outline: "none",
             width: "180px",

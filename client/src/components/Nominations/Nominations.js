@@ -73,8 +73,8 @@ class Nominations extends React.Component{
 
     voting = (nomination, id) => {
         const { cookies } = this.props;
-        const token = cookies.get('id_token');
-        const hash = cookies.get('hash');
+        const token = localStorage.token;
+        const hash = localStorage.hash;
         axios.post(domen+"/api/voted/getVote", {
             vkId: token,
             nomination: nomination,
@@ -90,8 +90,8 @@ class Nominations extends React.Component{
 
     checkVoting = (nomination) => {
         const { cookies } = this.props;
-        const token = cookies.get('id_token');
-        const hash = cookies.get('hash');
+        const token = localStorage.token;
+        const hash = localStorage.hash;
         if(token){axios.put(domen+"/api/voted/checkNomination", {
             vkId: token,
             nomination: nomination,

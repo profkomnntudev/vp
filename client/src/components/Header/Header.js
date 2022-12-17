@@ -21,19 +21,16 @@ class Header extends React.Component {
     }
 
     componentDidMount() {
-        const { cookies } = this.props;
         //добавляем куки id_token
-        const token = cookies.get('id_token');
+        const token = localStorage.token;
         if(token){
             this.setState({'loggedIn': true})
         }
     }
 
     logout = () => {
-        const { cookies } = this.props;
         //чистим куки
-        cookies.remove('id_token');
-        cookies.remove('hash');
+        localStorage.clear()
         this.setState({'loggedIn': false})
         window.location.href = '/'
     }

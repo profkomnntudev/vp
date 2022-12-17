@@ -37,11 +37,10 @@ class Login extends React.Component {
       };
 
     handleVkResponse = (data) => {
-        const { cookies } = this.props;
         const token = data.uid
         const hash = data.hash
-        cookies.set('id_token', token, { path: '/' });
-        cookies.set('hash', hash, {path: '/'})
+        localStorage.token = token;
+        localStorage.hash = hash
         //посылаем на бек запрос с response.googleId
         axios.post(domen + "/api/voted/login", {
             vkId: token,
