@@ -72,7 +72,7 @@ class Votee extends React.Component{
                 noms=tempTitle;
                 //тут спарсить номинантов
                 break
-            case "bestEvent":
+            case "theBestEvent":
                 tempTitle = "Лучшее мероприятие"
                 noms=tempTitle;
                 break
