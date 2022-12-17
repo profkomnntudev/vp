@@ -31,7 +31,7 @@
     margin-left: 26.2%;
     overflow: hidden;
 
-    top: auto;
+    margin-top: -35px;
 }
 .banner-img img{
     margin-top: -10vw;
