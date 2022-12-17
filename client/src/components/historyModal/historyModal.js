@@ -31,7 +31,7 @@ class HistoryModal extends React.Component{
               width: isTabletOrMobile ? 320 : 1196,
               height: 500,
               marginLeft: '5vw',
-              marginTop: 380 + this.props.ind * 340,
+              marginTop: isTabletOrMobile ? 380 + this.props.ind * 340 : auto,
               maxHeight: '70%',
               textAlign: 'center',
               display: 'flex',
