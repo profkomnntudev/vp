@@ -118,7 +118,13 @@ class Votee extends React.Component{
                     <div  className="intro">
                         Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
                     </div>
-                    {this.state.isLoading &&  <div class="loader"></div> }
+                    {this.state.isLoading &&  
+                    <div className="btnLoader">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div> }
                     {!this.state.isLoading && <Nominations nominants={this.state.nominants} nomination={this.state.title}/>}
                 </div> : 
                 <div>
@@ -132,7 +138,13 @@ class Votee extends React.Component{
                     Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
                 </div>
                 <div style={{marginTop: "60px"}}>
-                    {this.state.isLoading &&  <div class="loader"></div> }
+                    {this.state.isLoading &&  
+                    <div className="btnLoader">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div> }
                     {!this.state.isLoading && <Nominations nominants={this.state.nominants} nomination={this.state.title}/>}
                 </div>
             </div>}

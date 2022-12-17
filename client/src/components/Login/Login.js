@@ -70,6 +70,9 @@ class Login extends React.Component {
               backgroundImage: 'url("https://vremya-pervih.ru/static/media/background.995ec146d1d0f3eced5f.jpg")',
               borderRadius: '10px',
             },
+            overlay: {
+              width: '100vw',
+            }
           };
         return (
             <>

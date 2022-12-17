@@ -7,8 +7,7 @@
 .link{
     position: relative;
     top: 92.5px;
-
-    width: 1196px;
+    width: 100%;
     margin-left: 1%;
     text-align: left;
 }
@@ -76,20 +75,65 @@
     padding-top: 72px;
 }
 
-.loader {
-    position: relative;
-    margin-top: 25vh;
-    margin-left: 50vw;
-    border: 16px solid #fff; /* Light grey */
-    border-top: 16px solid #000; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+.btnLoader {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	background-color: inherit;
+	width: 100%;
+}
+.btnLoader span {
+  --dot1: #788c9f;
+  --dot2: #788c9f33;
+  --dot3: #788c9f66;
+  --dot4: #788c9fb3;
+  --duration: 700ms;
+  --easing: linear;
+  --delay: 1ms;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+.btnLoader span:nth-child(1) {
+  background-color: var(--dot1);
+  animation: var(--duration) var(--easing) var(--delay) infinite normal flash1;
+}
+.btnLoader span:nth-child(2) {
+  background-color: var(--dot2);
+  animation: var(--duration) var(--easing) var(--delay) infinite normal flash2;
+}
+.btnLoader span:nth-child(3) {
+  background-color: var(--dot3);
+  animation: var(--duration) var(--easing) var(--delay) infinite normal flash3;
+}
+.btnLoader span:nth-child(4) {
+  background-color: var(--dot4);
+  animation: var(--duration) var(--easing) var(--delay) infinite normal flash4;
+}
+
+@keyframes flash1 {
+  0%, 100% { background-color: var(--dot1) }
+  25% { background-color: var(--dot2) }
+  50% { background-color: var(--dot3) }
+  75% { background-color: var(--dot4) }
+}
+@keyframes flash2 {
+  0%, 100% { background-color: var(--dot4) }
+  25% { background-color: var(--dot1) }
+  50% { background-color: var(--dot2) }
+  75% { background-color: var(--dot3) }
+}
+@keyframes flash3 {
+  0%, 100% { background-color: var(--dot3) }
+  25% { background-color: var(--dot4) }
+  50% { background-color: var(--dot1) }
+  75% { background-color: var(--dot2) }
+}
+@keyframes flash4 {
+  0%, 100% { background-color: var(--dot2) }
+  25% { background-color: var(--dot3) }
+  50% { background-color: var(--dot4) }
+  75% { background-color: var(--dot1) }
+}
 
