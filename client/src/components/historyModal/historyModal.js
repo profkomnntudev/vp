@@ -25,7 +25,7 @@ class HistoryModal extends React.Component{
         this.setState({'showModal': false})
     }
     render () {
-        const isTabletOrMobile = true
+        const isTabletOrMobile = device.type == 'mobile'
         const customStyles = {
             content: {
               width: isTabletOrMobile ? 320 : 1196,
