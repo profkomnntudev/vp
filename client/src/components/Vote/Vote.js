@@ -18,7 +18,7 @@ class Votee extends React.Component{
             title:''
         };
     }
-    async getNominants(){
+    getNominants(){
         const  voteId  = window.location.pathname.split("/")[2];
         let tempTitle = ""
         let noms=""
@@ -81,7 +81,7 @@ class Votee extends React.Component{
         const domen = `https://vremya-pervih.ru`;
         let nominee = [];
         let photos = [];
-        await  axios.get(domen + "/api/candidates", {
+        axios.get(domen + "/api/candidates", {
             params:{
                 nomination: noms
             }
@@ -92,7 +92,7 @@ class Votee extends React.Component{
                 {
                     let name = ""
                     if (res.data[i].surname) name = res.data[i].surname + '\n'
-                    name = name + res.data[i].name + "\n"
+                    name = name + res.data[i].name + " "
                     if (res.data[i].patronymic) name = name + res.data[i].patronymic 
                     nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
                 }
@@ -100,9 +100,8 @@ class Votee extends React.Component{
             })
         // console.log(this.state.nominants);
     }
-    async componentWillMount() {
-        await this.getNominants()
-        this.setState();
+    componentWillMount() {
+        this.getNominants()
 
     }
     render() {
