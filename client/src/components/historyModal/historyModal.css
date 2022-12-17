@@ -7,6 +7,7 @@
 
     /* identical to box height, or 30px */
     display: flex;
+    justify-content: center;
     align-items: center;
 
     /* Ink */
@@ -37,4 +38,11 @@ margin-bottom: 24px;
     width: 220px;
     align-items: center;
     margin: 0 auto;
+}
+
+.aboutWhrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
 }

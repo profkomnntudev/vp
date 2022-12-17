@@ -57,18 +57,18 @@ class Login extends React.Component {
         const { modalIsOpen} = this.state;
         const customStyles = {
             content: {
-                width: this.props.isMobile ? 250 : 350,
-                height: 500,
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                marginTop: 'auto',
-                marginBottom: 'auto',
+              width: this.props.isMobile ? 250 : 350,
+              height: 500,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginTop: 'auto',
+              marginBottom: 'auto',
               maxHeight: '70%',
               textAlign: 'center',
               display: 'flex',
-                justifyContent: 'center',
-                backgroundImage: 'url("https://vremya-pervih.ru/static/media/background.995ec146d1d0f3eced5f.jpg")',
-                borderRadius: '10px',
+              justifyContent: 'center',
+              backgroundImage: 'url("https://vremya-pervih.ru/static/media/background.995ec146d1d0f3eced5f.jpg")',
+              borderRadius: '10px',
             },
           };
         return (
