@@ -96,7 +96,9 @@ class Votee extends React.Component{
                 if (res.data[i].patronymic) name = name + res.data[i].patronymic 
                 nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
             }
-            this.setState({'nominants': nominee})
+            return nominee
+        }).then((data)=>{
+            this.setState({'nominants': data})
         })
     }
     render() {
