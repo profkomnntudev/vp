@@ -15,7 +15,8 @@ class Votee extends React.Component{
         super(props);
         this.state = {
             nominants: [],
-            title:''
+            title:'',
+            isLoading: true
         };
     }
     async getNominants(){
@@ -79,27 +80,29 @@ class Votee extends React.Component{
         }
         this.setState({title: tempTitle});
         const domen = `https://vremya-pervih.ru`;
-        return axios.get(domen + "/api/candidates", {
+        let nominee = [];
+        let photos = [];
+        await  axios.get(domen + "/api/candidates", {
             params:{
                 nomination: noms
             }
         })
+            .then(res=>{
+                // console.log(res);
+                for(let i=0;i<res.data.length;i++)
+                {
+                    let name = ""
+                    if (res.data[i].surname) name = res.data[i].surname + '\n'
+                    name = name + res.data[i].name + " "
+                    if (res.data[i].patronymic) name = name + res.data[i].patronymic 
+                    nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
+                }
+                this.setState({nominants: nominee});
+            })
+        // console.log(this.state.nominants);
     }
-    componentWillMount() {
-        this.getNominants().then(res=>{
-            let nominee = []
-            for(let i=0;i<res.data.length;i++)
-            {
-                let name = ""
-                if (res.data[i].surname) name = res.data[i].surname + '\n'
-                name = name + res.data[i].name + " "
-                if (res.data[i].patronymic) name = name + res.data[i].patronymic 
-                nominee.push({'name': name, 'id': res.data[i].id, 'img': res.data[i].img, 'story': res.data[i].about});
-            }
-            return nominee
-        }).then((data)=>{
-            this.setState({'nominants': data})
-        })
+    async componentWillMount() {
+        await this.getNominants().then(()=>{this.setState({'isLoading': false});})
     }
     render() {
         const isTabletOrMobile = device.type == 'mobile'
@@ -115,7 +118,8 @@ class Votee extends React.Component{
                     <div  className="intro">
                         Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
                     </div>
-                    <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
+                    {this.state.isLoading &&  <div class="loader"></div> }
+                    {!this.state.isLoading && <div class="loader"></div>}
                 </div> : 
                 <div>
                 <div className="link">
@@ -128,7 +132,8 @@ class Votee extends React.Component{
                     Уважаемые посетители! Свой голос можно отдать только за одного участника номинации. Пожалуйста, будьте внимательны при выборе кандидата, так как после нажатия на кнопку Проголосовать, изменить свой выбор уже будет невозможно. Спасибо за участие!
                 </div>
                 <div style={{marginTop: "60px"}}>
-                    <Nominations nominants={this.state.nominants} nomination={this.state.title}/>
+                    {this.state.isLoading &&  <div class="loader"></div> }
+                    {!this.state.isLoading && <Nominations nominants={this.state.nominants} nomination={this.state.title}/>}
                 </div>
             </div>}
             </div>
