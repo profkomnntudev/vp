@@ -35,7 +35,6 @@ class Nominations extends React.Component{
         let event=[];
         await axios.get(domen+ "/api/nominations")
             .then(res=>{
-                console.log(res.data)
                 for(let i=0;i<res.data.length;i++){
                     if(res.data[i]['teacher'] ==='Студент'){
                         stud.push(res.data[i]);
@@ -82,7 +81,6 @@ class Nominations extends React.Component{
             nomineeID: id,
             hash: hash,
         })
-            .catch(err=>{console.log(err)})
         this.checkVoting(nomination)
     }
 
@@ -126,7 +124,6 @@ class Nominations extends React.Component{
     render(){
         const isTabletOrMobile = device.type == 'mobile'
         let buttonText = this.props.nominants ? "Проголосовать" : "Открыть";
-        console.log(this.state.used)
         return (
             <>
             {!isTabletOrMobile ? <div className="nominations">

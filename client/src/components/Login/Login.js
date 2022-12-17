@@ -47,8 +47,6 @@ class Login extends React.Component {
             vkId: token,
             hash: hash
             })
-            .then(res=>console.log(res))
-            .catch(err=>console.error(err))
         this.props.login();
         this.closeModal();
     }
