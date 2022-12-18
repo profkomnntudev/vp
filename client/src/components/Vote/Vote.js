@@ -56,6 +56,7 @@ class Votee extends React.Component{
             case "theMostMedia":
                 tempTitle = "Самый медийный"
                 noms=tempTitle;
+                tempTitle = "Самый инновационный"
                 //тут спарсить номинантов
                 break
             case "bestLector":

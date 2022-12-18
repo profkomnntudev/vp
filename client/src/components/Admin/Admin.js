@@ -25,7 +25,6 @@ class Admin extends React.Component{
                 for(let i=0;i<res.data.length;i++){
                     data[res.data[i].nomination] = [...data[res.data[i].nomination] || [], res.data[i]]
                 }
-                console.log(data)
                 this.setState({data: data});
                 this.setState({isLoading: false});
             })
@@ -34,26 +33,25 @@ class Admin extends React.Component{
     getTable(){
         var objects = []
         for (var nomination in this.state.data){
-            console.log(nomination)
             objects.push(
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                        <th>{nomination}</th>
-                        <th>Фамилия</th>
-                        <th>Имя</th>
-                        <th>Отчество</th>
-                        <th>Количество голосов</th>
+                        <th className='rows'>{nomination}</th>
+                        <th className='rows'>Фамилия</th>
+                        <th className='rows'>Имя</th>
+                        <th className='rows'>Отчество</th>
+                        <th className='rows'>Количество голосов</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.data[nomination].sort((a, b)=> a.countVotes < b.countVotes).map((item, i) => 
                             <tr>
-                                <td></td>
-                                <td>{item.surname || '-'}</td>
-                                <td>{item.name || '-'}</td>
-                                <td>{item.patronymic || '-'}</td>
-                                <td>{item.countVotes}</td>
+                                <td className='rows'></td>
+                                <td className='rows'>{item.surname || '-'}</td>
+                                <td className='rows'>{item.name || '-'}</td>
+                                <td className='rows'>{item.patronymic || '-'}</td>
+                                <td className='rows'>{item.countVotes}</td>
                             </tr>
                         )}
                     </tbody>
@@ -65,7 +63,6 @@ class Admin extends React.Component{
 
     onSubmit(event) {
         event.preventDefault();
-        console.log(this.state.code)
         if(this.state.code=='M1sUlRGs'){
             this.setState({isLoggedIn: true})
         }

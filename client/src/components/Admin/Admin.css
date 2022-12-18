@@ -2,3 +2,7 @@
     margin-top:100px;
     margin-bottom: 100px;
 }
+
+.rows{
+    --bs-body-font-size: 0.5rem
+}
