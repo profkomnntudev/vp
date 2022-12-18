@@ -168,19 +168,21 @@ class Nominations extends React.Component{
                     {this.props.isStudent ? "Номинации для студентов" : this.props.isTeacher ? "Номинации для преподавателей" : "Мероприятия"}
                 </div>}
                 <div>
-                    {this.state.used.map((item, index) =>
-                        <div className="formsMobile">
-                            <Nomination 
-                            story={item.story ? item.story : ""} 
-                            img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} 
-                            label={item.title || item.name} 
-                            buttonText={buttonText} 
-                            isNominant={!!this.props.nominants} 
-                            isNonActive={!!this.state.votedFor} 
-                            isActiveButton={this.state.votedFor === 0} 
-                            choosen={item.id===this.state.votedFor} 
-                            ind={index}
-                            onClick={() => {
+                {this.state.used.map((item) => {
+                        let name = item.title || item.name
+                        if (name === "Самый медийный") name = "Самый инновационный"
+                        return (
+                          <div className="forms">
+                                <Nomination 
+                                story={item.story ? item.story : ""} 
+                                img={item.img ? window.location.origin + '/nominants/'+item.img : window.location.origin + '/sampleDude.png'} 
+                                label={name} 
+                                buttonText={buttonText} 
+                                isNominant={!!this.props.nominants} 
+                                isNonActive={!!this.state.votedFor} 
+                                isActiveButton={this.state.votedFor === 0} 
+                                choosen={item.id===this.state.votedFor} 
+                                onClick={() => {
                             if (!this.props.nominants){
                                 window.location.href = "/vote/"+item.link
                             } else {
@@ -189,7 +191,10 @@ class Nominations extends React.Component{
                             }
                             }}/>
 
-                        </div>
+                            </div>  
+                        )
+                    }
+                        
                         )}
                 </div>
                 <Modal votingFunc={this.voting} showModal={this.state.showModal} close={this.handleCloseModal} cancel={this.handleCancelModal} name={this.state.choosedItem.name}/>
