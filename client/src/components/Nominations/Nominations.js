@@ -75,6 +75,7 @@ class Nominations extends React.Component{
         const { cookies } = this.props;
         const token = localStorage.token;
         const hash = localStorage.hash;
+        if (nomination === "Самый инновационный") nomination = "Самый медийный"
         axios.post(domen+"/api/voted/getVote", {
             vkId: token,
             nomination: nomination,
@@ -92,6 +93,7 @@ class Nominations extends React.Component{
         const { cookies } = this.props;
         const token = localStorage.token;
         const hash = localStorage.hash;
+        if (nomination === "Самый инновационный") nomination = "Самый медийный"
         if(token){axios.put(domen+"/api/voted/checkNomination", {
             vkId: token,
             nomination: nomination,
